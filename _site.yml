@@ -2,7 +2,7 @@ name: "Texas COVID-19 Vaccine Tracker"
 title: "Tracking Vaccine Pace + Distribution in Texas"
 description: |
   Tracking COVID-19 Vaccines in Texas
-output_dir: "docs"
+output_dir: "_site"
 repository_url: https://github.com/utexas-lbjp-data/distill-blog-test
 exclude: ["README.md"]
 navbar:
