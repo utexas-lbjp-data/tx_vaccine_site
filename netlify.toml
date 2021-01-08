@@ -1,6 +1,6 @@
 [context.production]
     command = ""
-    publish = "docs"
+    publish = "_site"
 
 [context.production.environment]
     RUBY_VERSION = "2.2.9"
