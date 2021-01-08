@@ -11,7 +11,6 @@ output:
     css: page_header.css
     toc: yes
     df_print: tibble
-runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
