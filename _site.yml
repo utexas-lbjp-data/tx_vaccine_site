@@ -1,0 +1,33 @@
+name: "Texas COVID-19 Vaccine Tracker"
+title: "Tracking Vaccine Pace + Distribution in Texas"
+description: |
+  Tracking COVID-19 Vaccines in Texas
+output_dir: "docs"
+repository_url: https://github.com/utexas-lbjp-data/distill-blog-test
+exclude: ["README.md"]
+navbar:
+  logo: "lbj_logo.png"
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Dashboard"
+      menu:
+        - text: "English"
+          href: about.html
+        - text: "Espanol"
+          href: about.html
+    - text: "Vaccine Resources"
+      menu:
+        - text: "English"
+          href: cale.html
+        - text: "Espanol"
+          href: noorah.html
+output:
+  distill::distill_article:
+    css: styles.css
+    toc_depth: 2
+collections:
+  posts:
+    categories: true
+    categories_metadata: true
+    authors_metadata: false

@@ -1,0 +1,13 @@
+---
+title: "Vaccine Dashboard"
+description: |
+  Some additional details about the blog
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-screen"}
+knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-explorer-test/", height = "2000px")
+```
