@@ -1,0 +1,47 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "Vaccine Dashboard",
+      "description": "Some additional details about the blog\n",
+      "author": [],
+      "contents": "\n\n\n\n\nPhotography Credit\nPhoto by Daniel Schludi on Unsplash\n\n\n\n",
+      "last_modified": "2021-01-13T00:22:58-06:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Tracking COVID-19 Vaccines in Texas",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2021-01-13T00:22:58-06:00"
+    },
+    {
+      "path": "moderna.html",
+      "title": "Moderna ",
+      "author": [],
+      "contents": "\n\nYou need javascript enabled to view this content or go to source URL.\n\n\n\n\n\n",
+      "last_modified": "2021-01-13T00:22:59-06:00"
+    },
+    {
+      "path": "pfizer.html",
+      "title": "Pfizer",
+      "author": [],
+      "contents": "\n\n\n\n\n\n.panelset {\n   grid-column: page;\n}\n\n\nQuestions About Pfizer’s Vaccine\n\nYou need javascript enabled to view this content or go to source URL.\n\nInformation About Pfizer’s Vaccine\n\nYou need javascript enabled to view this content or go to source URL.\n\n\n\n\n\n",
+      "last_modified": "2021-01-13T00:22:59-06:00"
+    },
+    {
+      "path": "README.html",
+      "author": [],
+      "contents": "\ndistill-blog-test\n\n\n",
+      "last_modified": "2021-01-13T00:22:59-06:00"
+    },
+    {
+      "path": "README.html",
+      "title": "Daily Coronavirus Vaccine Reports from Texas DSHS",
+      "author": [],
+      "contents": "\ndistill-blog-test\n\n\n",
+      "last_modified": "2021-01-13T00:22:59-06:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}
