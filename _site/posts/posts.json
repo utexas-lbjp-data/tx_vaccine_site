@@ -1,22 +1,19 @@
 [
   {
     "path": "posts/welcome/",
-    "title": "Why are we tracking Texas COVID-19 vaccines at the LBJ School?",
-    "description": "Welcome to our new blog, LBJ School Data Blog. We hope you enjoy \nreading what we have to say!",
+    "title": "Tracking Texas COVID-19 Vaccines at the LBJ School",
+    "description": "Having timely and useful resources is vital to the future of society",
     "author": [
       {
-        "name": "Nora Jones",
-        "url": "https://example.com/norajones"
+        "name": "Matt Worthington, M.PAff, M.Ed.",
+        "url": "https://github.com/mrworthington"
       }
     ],
-    "date": "2020-11-24",
-    "categories": [
-      "portfolios",
-      "dygraphs"
-    ],
+    "date": "2020-01-20",
+    "categories": [],
     "contents": "\n\n\n\n",
-    "preview": "posts/welcome/background.jpg",
-    "last_modified": "2021-01-08T09:41:16-06:00",
+    "preview": "posts/welcome/vaccine_background.jpg",
+    "last_modified": "2021-01-12T09:50:10-06:00",
     "input_file": {}
   }
 ]
