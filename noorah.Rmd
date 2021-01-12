@@ -1,11 +1,11 @@
 ---
-title: "Noorah's Course"
-author:
-  - first_name: "Noorah"
-    last_name: "Alhasan"
-    url: https://noorahalhasan.com
-    affiliation: The LBJ School of Public Affairs
-    affiliation_url: https://lbj.utexas.edu
+title: "Pfizer"
+# author:
+#   - first_name: "Noorah"
+#     last_name: "Alhasan"
+#     url: https://noorahalhasan.com
+#     affiliation: The LBJ School of Public Affairs
+#     affiliation_url: https://lbj.utexas.edu
 output: 
   distill::distill_article:
     css: page_header.css
@@ -13,26 +13,45 @@ output:
     df_print: tibble
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+xaringanExtra::style_panelset_tabs()
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{css echo=FALSE}
+.panelset {
+   grid-column: page;
+}
 ```
 
-## Including Plots
+::::: {.panelset}
 
-You can also embed plots, for example:
+::: {.panel}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+## Questions About Pfizer's Vaccine {.panel-name}
+
+```{=html} 
+
+<!-- Markup for HTML (Pfizer-BioNTech COVID-19 Vaccine Questions: Information about the Pfizer-BioNTech COVID-19 Vaccine, including how they work, supply and distribution, and vaccine administration. ) --><div class='rid_a91adcde_415243' data-apiroot='//tools.cdc.gov/api' data-mediatype='html' data-mediaid='415243' data-stripscripts='true' data-stripanchors='false' data-stripimages='false' data-stripcomments='true' data-stripstyles='true' data-cssclasses='syndicate,!no-syndicate' data-ids='' data-xpath='' data-oe='utf-8' data-of='xhtml' data-ns='cdc' data-postprocess='' data-nw='true' data-iframe='true' data-cdc-widget='syndicationIframe' data-apiembedsrc='//tools.cdc.gov/api/embed/html/js/embed-2.0.3.js' data-iframeembedsrc='//tools.cdc.gov/TemplatePackage/contrib/widgets/tp-widget-external-loader.js'></div><script src='//tools.cdc.gov/TemplatePackage/contrib/widgets/tp-widget-external-loader.js' ></script><noscript>You need javascript enabled to view this content or go to <a href='//tools.cdc.gov/api/v2/resources/media/415243/noscript'>source URL</a>.</noscript>
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+:::
+
+::: {.panel}
+
+## Information About Pfizer's Vaccine {.panel-name}
+
+```{=html} 
+
+<!-- Markup for HTML (Information about the Pfizer-BioNTech COVID-19 Vaccine: Name: BNT162b2
+Manufacturer: Pfizer, Inc., and BioNTech
+Type of vaccine: mRNA
+Number of shots: 2 shots, 21 days apart
+How given: Shot in the muscle of the upper arm) --><div class='rid_da7cd507_415228' data-apiroot='//tools.cdc.gov/api' data-mediatype='html' data-mediaid='415228' data-stripscripts='true' data-stripanchors='false' data-stripimages='false' data-stripcomments='true' data-stripstyles='true' data-cssclasses='syndicate,!no-syndicate' data-ids='' data-xpath='' data-oe='utf-8' data-of='xhtml' data-ns='cdc' data-postprocess='' data-nw='true' data-iframe='true' data-cdc-widget='syndicationIframe' data-apiembedsrc='//tools.cdc.gov/api/embed/html/js/embed-2.0.3.js' data-iframeembedsrc='//tools.cdc.gov/TemplatePackage/contrib/widgets/tp-widget-external-loader.js'></div><script src='//tools.cdc.gov/TemplatePackage/contrib/widgets/tp-widget-external-loader.js' ></script><noscript>You need javascript enabled to view this content or go to <a href='//tools.cdc.gov/api/v2/resources/media/415228/noscript'>source URL</a>.</noscript>
+
+```
+
+:::
+
+:::::
