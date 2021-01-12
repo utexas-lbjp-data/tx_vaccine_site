@@ -26,21 +26,21 @@
       "path": "pfizer.html",
       "title": "Pfizer",
       "author": [],
-      "contents": "\n\n\n\n\n\n.panelset {\n   grid-column: page;\n}\n\n\nQuestions About Pfizer’s Vaccine\n\n\nInformation About Pfizer’s Vaccine\n\nYou need javascript enabled to view this content or go to source URL.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCorrections\nIf you see mistakes or want to suggest changes, please create an issue on the source repository.\n\n\n\n\n\n",
-      "last_modified": "2021-01-12T10:16:58-06:00"
+      "contents": "\n\n\n\n\n\n.panelset {\n   grid-column: page;\n}\n\n\nQuestions About Pfizer’s Vaccine\n\nYou need javascript enabled to view this content or go to source URL.\n\nInformation About Pfizer’s Vaccine\n\nYou need javascript enabled to view this content or go to source URL.\n\n\n\n\n\n",
+      "last_modified": "2021-01-12T10:18:14-06:00"
     },
     {
       "path": "README.html",
       "author": [],
       "contents": "\ndistill-blog-test\n\n\n",
-      "last_modified": "2021-01-12T10:16:58-06:00"
+      "last_modified": "2021-01-12T10:18:14-06:00"
     },
     {
       "path": "README.html",
       "title": "Daily Coronavirus Vaccine Reports from Texas DSHS",
       "author": [],
       "contents": "\ndistill-blog-test\n\n\n",
-      "last_modified": "2021-01-12T10:16:58-06:00"
+      "last_modified": "2021-01-12T10:18:14-06:00"
     }
   ],
   "collections": ["posts/posts.json"]
