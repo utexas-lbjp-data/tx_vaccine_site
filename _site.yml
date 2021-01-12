@@ -1,5 +1,5 @@
 name: "Texas COVID-19 Vaccine Tracker"
-title: "Tracking Vaccine Pace + Distribution in Texas"
+title: "Texas COVID-19 Vaccine Tracker"
 description: |
   Tracking COVID-19 Vaccines in Texas
 output_dir: "_site"
