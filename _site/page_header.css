@@ -16,12 +16,12 @@ background:
 background-size:cover !important;
 }
 
-.syndicate {
-font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+.cdc {
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
 
 .highcharts-container {
-    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
 }
 
 .highcharts-container text {

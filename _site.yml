@@ -18,10 +18,10 @@ navbar:
           href: about.html
     - text: "Vaccine Resources"
       menu:
-        - text: "English"
-          href: cale.html
-        - text: "Espanol"
-          href: noorah.html
+        - text: "Moderna"
+          href: moderna.html
+        - text: "Pfizer"
+          href: pfizer.html
 output:
   distill::distill_article:
     css: styles.css
