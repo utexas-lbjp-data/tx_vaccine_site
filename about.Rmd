@@ -1,5 +1,5 @@
 ---
-title: "Vaccine Dashboard"
+title: "Explore Providers"
 description: |
   Some additional details about the blog
 output: 
@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-screen"}
-knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-explorer/", height = "2000px")
+knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-explorer/", height = "1800px")
 ```
 
 ## Photography Credit {.appendix}

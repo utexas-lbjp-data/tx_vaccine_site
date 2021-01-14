@@ -3,31 +3,59 @@ title: "Texas COVID-19 Vaccine Tracker"
 description: |
   Tracking COVID-19 Vaccines in Texas
 output_dir: "_site"
-repository_url: https://github.com/utexas-lbjp-data/distill-blog-test
+repository_url: https://github.com/utexas-lbjp-data/tx_vaccine_site
 exclude: ["README.md"]
 navbar:
-  logo: "lbj_logo.png"
+  logo:
+    image: lbj_logo.png
+    href: https://lbj.utexas.edu
   right:
     - text: "Home"
       href: index.html
     - text: "Dashboard"
       menu:
+        - text: "Provider Explorer"
+        - text: "---------"
+        - text: "English"
+          href: about.html
+        - text: "Espanol"
+          href: about.html
+        - text: "Pace Explorer"
+        - text: "---------"
         - text: "English"
           href: about.html
         - text: "Espanol"
           href: about.html
     - text: "Vaccine Resources"
       menu:
+        - text: "English"
+        - text: "---------"
         - text: "Moderna"
           href: moderna.html
         - text: "Pfizer"
           href: pfizer.html
+        - text: "Spanish"
+        - text: "---------"
+        - text: "Moderna"
+          href: moderna.html
+        - text: "Pfizer"
+          href: pfizer.html
+    - icon: fab fa-github
+      href: https://github.com/utexas-lbjp-data
+    - icon: fab fa-facebook
+      href: https://www.facebook.com/TheLBJSchool/
+    - icon: fab fa-twitter
+      href: https://twitter.com/TheLBJSchool
+    - icon: fab fa-instagram
+      href: https://www.instagram.com/thelbjschool/
 output:
   distill::distill_article:
     css: styles.css
     toc_depth: 2
+base_url: https://festive-mestorf-e42b04.netlify.app
 collections:
   posts:
     categories: true
     categories_metadata: true
     authors_metadata: false
+    share: [twitter, linkedin, facebook]
