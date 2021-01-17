@@ -14,10 +14,13 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## Texas Summary
 
+The chart attempts to capture a holistic snapshot of multiple data points related to state's current efforts to vaccinate the population. At a thirty thousand foot level, this chart is a single bar and that bar represents everyone in Texas aged 16 years and older. 
+
 ```{r echo=FALSE}
 
 library(gt)
 library(tidyverse)
+library(ggforce)
 library(readxl)
 library(janitor)
 
@@ -26,41 +29,147 @@ src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.
 lcl <- basename(src)
 filepath <- paste0(today,"_",lcl,"x")
 download.file(url = src, destfile = filepath) # Downloads The Data
+today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+# today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+time_lbl <- format(Sys.time(), format = "%I:%M %p")
 
-read_excel(filepath, sheet = "By County", skip=0) %>% 
+vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
-  filter(county_name=="Texas") %>% 
+  filter(county_name=="Texas") %>%
   select(county_name, population_16, people_fully_vaccinated, total_doses_allocated, starts_with("population_phase_")) %>% 
-  pivot_longer(cols=starts_with("population_phase_"), names_to = "phase_pop_est", values_to = "value") %>%
+  mutate(population_phase_remaining = population_16 - (population_phase_1a_healthcare_workers +
+                                                       population_phase_1a_long_term_care_residents +
+                                                       population_phase_1b_any_medical_condition),
+         remaining_box_start = population_16 - population_phase_remaining) %>%
+  rename(`Phase 1A - Healthcare Workers`=population_phase_1a_healthcare_workers, 
+         `Phase 1A - Long Term Care`=population_phase_1a_long_term_care_residents, 
+         `Phase 1B - 65+ and High Risk`=population_phase_1b_any_medical_condition,
+         `Future Phases`=population_phase_remaining) %>%
+  pivot_longer(cols=contains("Phase"), names_to = "phase_pop_est", values_to = "value") %>%
+  mutate(order = case_when(
+    phase_pop_est == "Phase 1A - Healthcare Workers" ~ 1,
+    phase_pop_est == "Phase 1A - Long Term Care" ~ 2,
+    phase_pop_est == "Phase 1B - 65+ and High Risk" ~ 3,
+  ),
+  prev_1 = lag(value, 1),
+  prev_2 = lag(value, 2),
+  prev_1 = replace_na(prev_1, 0),
+  prev_2 = replace_na(prev_2, 0)) %>% 
+  mutate(lab_pos = (value/2) + (prev_1 + prev_2)) 
+
+box_start <- unique(vaccine_summ$remaining_box_start)
+box_end <- unique(vaccine_summ$population_16)
+fully_vac_lbl <- scales::comma(unique(vaccine_summ$people_fully_vaccinated))
+shipped_lbl <- scales::comma(unique(vaccine_summ$total_doses_allocated))
+
+vaccine_summ %>%
   ggplot() +
-  geom_col(data = . %>%  slice(1), aes(y=county_name, x=population_16), alpha = .3) +
-  geom_col(aes(y=county_name, x=value, fill = phase_pop_est), alpha=.9) +
-  geom_vline(aes(xintercept=total_doses_allocated), linetype = 2, color = "red") +
-  geom_vline(aes(xintercept=people_fully_vaccinated), linetype = 2, color = "blue") +
-  scale_x_continuous(labels = scales::unit_format(unit = "M", scale = 1e-6)) +
-  theme_minimal(base_family = "Graphik") +
+  geom_col(data = . %>%  slice(1), aes(y=county_name, x=population_16), fill = "#333f48", alpha = .05) +
+  geom_col(data = vaccine_summ %>% filter(phase_pop_est != "Future Phases"), aes(y=county_name, x=value, fill = reorder(phase_pop_est,desc(order))), alpha=.7) +
+  annotate(geom = "rect", alpha = 0, color = "#333f48", linetype = 2, 
+           xmin = box_start, xmax = box_end, ymin = .55, ymax = 1.45) +
+  geom_text(data = . %>% filter(phase_pop_est != "Future Phases"), angle=90, color="white", size = 3.1, family = "Graphik-Semibold",
+            aes(y=county_name, x=lab_pos, label = reorder(phase_pop_est,desc(order)))) +
+  geom_text(data = vaccine_summ %>% filter(phase_pop_est == "Future Phases"), color="#2d2d2d", size = 6,  hjust = 0.35,
+            family = "Graphik-Semibold", aes(y=county_name, x=lab_pos), label = "Remaining Pop. (16+) in Future Phases") +
+  geom_vline(aes(xintercept=total_doses_allocated), linetype = 2, size = .9, color = "#2d2d2d") +
+  geom_vline(aes(xintercept=people_fully_vaccinated), linetype = 2, size = .9, color = "#2d2d2d") +
+  scale_x_continuous(labels = scales::unit_format(unit = "M", accuracy = 1, scale = 1e-6)) +
+  scale_fill_manual(values = c("#005f86",  "#9cadb7","#bf5700")) +
+  guides(fill=guide_legend(title = "Legend",
+                           keyheight = .8)) +
   annotate(
-    geom = "curve", color = "red", x = 2858050, y = 1.55, xend = 2258050, yend = 1.5,
+    geom = "curve", color = "#2d2d2d", x = 2858050, y = 1.55, xend = 2158050, yend = 1.5,
     curvature = .1, arrow = arrow(length = unit(2, "mm"))
   ) +
-  annotate(geom = "label", x = 2958050, y = 1.53, color = "red", label = "Vaccines Shipped (~2mil)", family = "Graphik", hjust = "left") +
+  annotate(geom = "label", x = 2858050, y = 1.53, color = "#2d2d2d", 
+           label = glue::glue("Doses Shipped: {shipped_lbl}"), family = "Graphik", hjust = "left") +
   annotate(
-    geom = "curve", color = "blue", x = 852396, y = .48, xend = 352396, yend = .54 , 
+    geom = "curve", color = "#2d2d2d", x = 852396, y = .48, xend = 252396, yend = .54 , 
     curvature = -.1, arrow = arrow(length = unit(2, "mm"))
   ) +
-  annotate(geom = "label", x = 952396, y = .5, color = "blue", label = "Fully Vacinated (~132k)", family = "Graphik", hjust = "left") +
-  ggthemes::scale_fill_economist() +
-  theme(plot.title = element_text(family = "Graphik-Bold"),
-        legend.position = "top") +
-  labs(title = "Texas Summary of Progress Towards Vaccinations",
-       subtitle = "Source: Texas Department of State Health Services",
-       x = "Texas Population Aged 16 + Above",
+  annotate(geom = "label", x = 852396, y = .5, color = "#2d2d2d", 
+           label = glue::glue("Persons Fully Vacinated: {fully_vac_lbl}"), family = "Graphik", hjust = "left") +
+  theme_minimal(base_family = "Graphik") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.major.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.y = element_blank(),
+        legend.position = "none") +
+  labs(title = "Texas Summary of Vaccination Progress",
+       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       x = NULL,
        y = NULL,
-       fill = "Eligible Phases",
-       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") #+
-  # ggsave("tx_vaccine_summary.png", dpi = 300, width = 12, height = 5)
+       color = NULL,
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") #+
+  # ggsave(paste0(today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
+
+```{r eval=FALSE, include=FALSE}
+today <- Sys.Date()
+src <- "https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv"
+lcl <- basename(src)
+filepath <- paste0(today,"_",lcl)
+download.file(url = src, destfile = filepath)
+
+# provider_locations <- read_rds("clean_data/vaccine_supply_by_site.rds") %>%
+  # select(name, street, lat, lon)
+
+supply_by_provider_type <- read_csv(filepath, skip=0) %>%
+  janitor::clean_names() #%>% 
+  group_by(type) %>% 
+  summarise(tot_shipped = sum(total_shipped),
+            tot_avail = sum(total_available)) 
+
+supply_by_provider_type %>% 
+  drop_na() %>% 
+  ggplot(aes(x=reorder(type, desc(tot_shipped)), y = tot_shipped, fill=type)) +
+  geom_col() +
+  theme_minimal(base_family = "Graphik") +
+  geom_text(angle=90, color="#2d2d2d", size = 3.1, family = "Graphik-Semibold",
+            aes(y= 0, x=type, label = type), hjust = 0) +
+  scale_y_continuous(labels = scales::unit_format(unit = "K", accuracy = 1, scale = 1e-3)) +
+  ggthemes::scale_fill_tableau(palette = "Tableau 20") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.major.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.x = element_blank(),
+        legend.position = "none") +
+  labs(title = "Reported Total Supply by Provider Type",
+       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       x = NULL,
+       y = "Doses (Shipped)",
+       color = NULL,
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") +
+  ggsave(paste0(today,"_","supply_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+
+supply_by_provider_type %>% 
+  drop_na() %>% 
+  ggplot(aes(x=reorder(type, desc(tot_avail)), y = tot_avail, fill=type)) +
+  geom_col() +
+  theme_minimal(base_family = "Graphik") +
+  geom_text(angle=90, color="#2d2d2d", size = 3.1, family = "Graphik-Semibold",
+            aes(y= 0, x=type, label = type), hjust = 0) +
+  scale_y_continuous(labels = scales::unit_format(unit = "K", accuracy = 1, scale = 1e-3)) +
+  ggthemes::scale_fill_tableau(palette = "Tableau 20") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.major.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.x = element_blank(),
+        legend.position = "none") +
+  labs(title = "Reported Availability by Provider Type",
+       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       x = NULL,
+       y = "Doses (Available)",
+       color = NULL,
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") +
+  ggsave(paste0(today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+```
+
 
 <details class = "l-body">
 <summary><strong>Info | </strong>Who is currently eligible in Texas?</summary>
