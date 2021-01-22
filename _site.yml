@@ -18,14 +18,14 @@ navbar:
         - text: "---------"
         - text: "English"
           href: about.html
-        - text: "Espanol"
-          href: about.html
+        # - text: "Espanol"
+        #   href: about.html
         - text: "Pace Explorer"
         - text: "---------"
         - text: "English"
-          href: about.html
-        - text: "Espanol"
-          href: about.html
+          href: pace.html
+        # - text: "Espanol"
+        #   href: pace.html
     - text: "Vaccine Resources"
       menu:
         - text: "English"
@@ -34,12 +34,12 @@ navbar:
           href: moderna.html
         - text: "Pfizer"
           href: pfizer.html
-        - text: "Spanish"
-        - text: "---------"
-        - text: "Moderna"
-          href: moderna.html
-        - text: "Pfizer"
-          href: pfizer.html
+        # - text: "Spanish"
+        # - text: "---------"
+        # - text: "Moderna"
+        #   href: moderna.html
+        # - text: "Pfizer"
+        #   href: pfizer.html
     - icon: fab fa-github
       href: https://github.com/utexas-lbjp-data
     - icon: fab fa-facebook
@@ -59,3 +59,10 @@ collections:
     categories_metadata: true
     authors_metadata: false
     share: [twitter, linkedin, facebook]
+cookie_consent:
+  style: simple
+  type: express
+  palette: light
+  lang: en
+  cookies_policy: url
+

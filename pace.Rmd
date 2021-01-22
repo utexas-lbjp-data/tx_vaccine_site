@@ -1,7 +1,7 @@
 ---
-title: "Explore Providers"
+title: "Explore Pace"
 description: |
-  Which providers are offering the vaccine closest to you? 
+  How fast are we distributing COVID-19 Vaccines?
 output: 
   distill::distill_article:
     toc: true
@@ -12,11 +12,14 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Finding A Vaccine
+## Texas Summary
 
-The tool below is a resource designed to help you find a vaccine provider in your county that has recently reported having availability. To learn more about whether or not you are currently eligible, please read the "Eligible Populations" section below.
+The chart attempts to capture a holistic snapshot of multiple data points related to state's current efforts to vaccinate the population. At a thirty thousand foot level, this chart is a single box that represents everyone in Texas aged 16 years and older. Within the box, you can see how much of is made up of eligible phases and how much of it is made up of the remaining population aged 16 years and older. And then, two lines mark the following:
 
-```{r eval=FALSE, fig.width=11, include=FALSE, layout="l-page"}
+* **Doses Shipped:** How many doses have been shipped compared to the entire 16+ population?
+* **Persons Fully Vaccinated:** How many people have been fully vaccinated compared to the entire 16+ population?
+
+```{r echo=FALSE, fig.width=10, layout="l-page"}
 
 library(gt)
 library(tidyverse)
@@ -108,7 +111,10 @@ vaccine_summ %>%
 
 ```
 
-```{r eval=FALSE, include=FALSE}
+The next chart captures where reported availability of doses is distributed by the of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently reported having available doses and how much do they have?
+
+```{r echo=FALSE, fig.width=10, layout="l-page"}
+
 today <- Sys.Date()
 src <- "https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv"
 lcl <- basename(src)
@@ -124,28 +130,28 @@ supply_by_provider_type <- read_csv(filepath, skip=0) %>%
   summarise(tot_shipped = sum(total_shipped),
             tot_avail = sum(total_available)) 
 
-supply_by_provider_type %>% 
-  drop_na() %>% 
-  ggplot(aes(x=reorder(type, desc(tot_shipped)), y = tot_shipped, fill=type)) +
-  geom_col() +
-  theme_minimal(base_family = "Graphik") +
-  geom_text(angle=90, color="#2d2d2d", size = 3.1, family = "Graphik-Semibold",
-            aes(y= 0, x=type, label = type), hjust = 0) +
-  scale_y_continuous(labels = scales::unit_format(unit = "K", accuracy = 1, scale = 1e-3)) +
-  ggthemes::scale_fill_tableau(palette = "Tableau 20") +
-  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
-        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
-        panel.grid.major.y = element_blank(),
-        plot.margin = margin(t=15, r=15, b=10, l = 15),
-        axis.text.x = element_blank(),
-        legend.position = "none") +
-  labs(title = "Reported Total Supply by Provider Type",
-       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
-       x = NULL,
-       y = "Doses (Shipped)",
-       color = NULL,
-       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") +
-  ggsave(paste0(today,"_","supply_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+# supply_by_provider_type %>% 
+#   drop_na() %>% 
+#   ggplot(aes(x=reorder(type, desc(tot_shipped)), y = tot_shipped, fill=type)) +
+#   geom_col() +
+#   theme_minimal(base_family = "Graphik") +
+#   geom_text(angle=90, color="#2d2d2d", size = 3.1, family = "Graphik-Semibold",
+#             aes(y= 0, x=type, label = type), hjust = 0) +
+#   scale_y_continuous(labels = scales::unit_format(unit = "K", accuracy = 1, scale = 1e-3)) +
+#   ggthemes::scale_fill_tableau(palette = "Tableau 20") +
+#   theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+#         plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+#         panel.grid.major.y = element_blank(),
+#         plot.margin = margin(t=15, r=15, b=10, l = 15),
+#         axis.text.x = element_blank(),
+#         legend.position = "none") +
+#   labs(title = "Reported Total Supply by Provider Type",
+#        subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+#        x = NULL,
+#        y = "Doses (Shipped)",
+#        color = NULL,
+#        caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
+#   # ggsave(paste0(today,"_","supply_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 
 supply_by_provider_type %>% 
   drop_na() %>% 
@@ -167,8 +173,8 @@ supply_by_provider_type %>%
        x = NULL,
        y = "Doses (Available)",
        color = NULL,
-       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") +
-  ggsave(paste0(today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
+  # ggsave(paste0(today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 ```
 
 
@@ -280,10 +286,10 @@ them at increased risk for severe illness from the virus that causes COVID-19, s
 
 </details>
 
-## Vaccine Providers
+## Vaccine Pace Tracker
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-screen-inset"}
-knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-explorer/", height = "1800px")
+knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-pace/", height = "1800px")
 ```
 
 ## Photography Credit {.appendix}

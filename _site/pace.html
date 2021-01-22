@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
   <meta name="generator" content="distill" />
-  <link rel="alternate" type="application/rss+xml" href="https://festive-mestorf-e42b04.netlify.app/index.xml" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -86,26 +85,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>Texas COVID-19 Vaccine Tracker: Tracking COVID-19 Vaccines in Texas</title>
+  <title>Texas COVID-19 Vaccine Tracker: Explore Pace</title>
 
+  <meta property="description" itemprop="description" content="How fast are we distributing COVID-19 Vaccines?"/>
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Texas COVID-19 Vaccine Tracker: Tracking COVID-19 Vaccines in Texas"/>
+  <meta property="og:title" content="Texas COVID-19 Vaccine Tracker: Explore Pace"/>
   <meta property="og:type" content="article"/>
+  <meta property="og:description" content="How fast are we distributing COVID-19 Vaccines?"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Texas COVID-19 Vaccine Tracker"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Texas COVID-19 Vaccine Tracker: Tracking COVID-19 Vaccines in Texas"/>
+  <meta property="twitter:title" content="Texas COVID-19 Vaccine Tracker: Explore Pace"/>
+  <meta property="twitter:description" content="How fast are we distributing COVID-19 Vaccines?"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["Tracking COVID-19 Vaccines in Texas"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Explore Pace"]},{"type":"character","attributes":{},"value":["How fast are we distributing COVID-19 Vaccines?\n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","css"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["dashboard_header.css"]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2347,16 +2349,16 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <!--/radix_placeholder_site_in_header-->
 
-  <link rel="stylesheet" href="styles.css" type="text/css"/>
+  <link rel="stylesheet" href="dashboard_header.css" type="text/css"/>
 
 </head>
 
-<body class="layout-listing">
+<body>
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Tracking COVID-19 Vaccines in Texas","authors":[]}
+{"title":"Explore Pace","description":"How fast are we distributing COVID-19 Vaccines?","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2419,171 +2421,102 @@ Vaccine Resources
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
-<!--radix_placeholder_article_listing-->
-
-
-<script type="application/javascript">
-
-function init_posts_list() {
-
-  function load_image(img) {
-    var src = $(img).attr('data-src');
-    if (src) {
-      $(img).attr('src', src);
-      $(img).load(function() {
-        img.removeAttribute('data-src');
-      });
-    }
-  }
-
-  function set_posts_visible(posts, visible) {
-    if (visible) {
-
-      // show bottom border by default
-      $(posts).removeClass('post-preview-last');
-
-      // apply limits if need be
-      var max_posts = 25;
-      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
-      if (apply_limits && posts.length > max_posts) {
-        posts = $(posts).slice(0, max_posts);
-      } else {
-        $('.posts-more a').addClass('hidden');
-      }
-
-      // apply last style
-      $(posts.slice(-1)[0]).addClass('post-preview-last');
-
-      $(posts).removeClass('hidden');
-      $(posts).find('img[data-src]').each(function(i, img) {
-        load_image(img);
-      });
-    } else {
-      $(posts).addClass('hidden');
-    }
-  }
-
-  function apply_hash_filter() {
-
-    // clear active state
-    $('.categories .active').removeClass('active');
-
-    // mark all posts invisible to start
-    set_posts_visible($('.posts-list').children('a'), false);
-
-    // if we have a hash filter
-    if (window.location.hash && window.location.hash.startsWith("#category:")) {
-
-      // mark posts that match the category visible
-      var page_category = window.location.hash.replace(/^#category:/, "");
-      var posts = $('.post-metadata').map(function(idx, script) {
-        var metadata = $.parseJSON($(script).html());
-        var post = null;
-        $.each(metadata.categories, function(idx, category) {
-          category = category.replace(/ /g,"_");
-          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
-            post = $(script).parent().get();
-            return false;
-          }
-        });
-        return post;
-      });
-      set_posts_visible(posts, true);
-
-      // mark the hash active
-      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
-
-      // update the list_caption
-      var list_caption = $('.posts-list-caption');
-      var caption = (page_category || '').toLowerCase() === "articles"
-        ? list_caption.attr('data-caption')
-        : ('Category: ' + page_category.replace(/_/g," "));
-      list_caption.text(caption);
-
-    } else {
-
-      // no hash filter, make all posts visible (subject to max display)
-      set_posts_visible($('.posts-list').children(), true);
-
-      // reset list caption
-      var list_caption = $('.posts-list-caption');
-      list_caption.text(list_caption.attr('data-caption'));
-
-
-    }
-  }
-
-  // more articles
-  function apply_post_limits(apply) {
-    if (apply) {
-      $('.posts-container').addClass('posts-apply-limit');
-      $('.posts-more a').removeClass('hidden');
-    } else {
-      $('.posts-container').removeClass('posts-apply-limit');
-      $('.posts-more a').addClass('hidden');
-    }
-  }
-
-  // click handling for tags
-  $('.dt-tag').click(function(ev) {
-    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
-    return false;
-  })
-
-  // hash filter handling
-  apply_hash_filter();
-  $(window).on('hashchange',function() {
-    apply_post_limits(true);
-    apply_hash_filter();
-  });
-
-  // more articles link
-  $('.posts-more a').click(function(e) {
-    e.preventDefault();
-    apply_post_limits(false);
-    apply_hash_filter();
-    return false;
-  });
-
-}
-
-</script>
-
-
-
-<div class="posts-container posts-apply-limit l-page">
-<div class="posts-list">
-<h1 class="posts-list-caption" data-caption="Tracking COVID-19 Vaccines in Texas">Tracking COVID-19 Vaccines in Texas</h1>
-<a href="posts/welcome/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Jan. 20, 2020</div>
-</div>
-<div class="thumbnail">
-<img src="posts/welcome/vaccine_background.jpg"/>
-</div>
-<div class="description">
-<h2>Tracking Texas COVID-19 Vaccines at the LBJ School</h2>
-<div class="dt-tags"></div>
-<p>Having timely and useful resources is vital to the future of society</p>
-</div>
-</a>
-</div>
-<div class="posts-more">
-<a href="#">More articles &raquo;</a>
-</div>
-</div>
-<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>Tracking COVID-19 Vaccines in Texas</h1>
+<h1>Explore Pace</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-
+<p><p>How fast are we distributing COVID-19 Vaccines?</p></p>
 </div>
 
 
 <div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#texas-summary">Texas Summary</a></li>
+<li><a href="#eligible-populations">Eligible Populations</a></li>
+<li><a href="#vaccine-pace-tracker">Vaccine Pace Tracker</a></li>
+<li><a href="#photography-credit">Photography Credit</a></li>
+</ul>
+</nav>
+</div>
+<h2 id="texas-summary">Texas Summary</h2>
+<p>The chart attempts to capture a holistic snapshot of multiple data points related to state’s current efforts to vaccinate the population. At a thirty thousand foot level, this chart is a single box that represents everyone in Texas aged 16 years and older. Within the box, you can see how much of is made up of eligible phases and how much of it is made up of the remaining population aged 16 years and older. And then, two lines mark the following:</p>
+<ul>
+<li><strong>Doses Shipped:</strong> How many doses have been shipped compared to the entire 16+ population?</li>
+<li><strong>Persons Fully Vaccinated:</strong> How many people have been fully vaccinated compared to the entire 16+ population?</li>
+</ul>
+<div class="layout-chunk" data-layout="l-page">
+<p><img src="pace_files/figure-html5/unnamed-chunk-1-1.png" width="960" /></p>
+</div>
+<p>The next chart captures where reported availability of doses is distributed by the of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently reported having available doses and how much do they have?</p>
+<div class="layout-chunk" data-layout="l-page">
+<p><img src="pace_files/figure-html5/unnamed-chunk-2-1.png" width="960" /></p>
+</div>
+<h2 id="eligible-populations">Eligible Populations</h2>
+<p>Right now, the state has highlighted two phases of the Texas Population that are eligible to receive available COVID-19 vaccines: Phase 1A and Phase 1B. To learn more about each of the populations, expand the summaries below.</p>
+<details class="l-body">
+<summary>
+<strong>Eligible Population | </strong>Phase 1A
+</summary>
+<p>Below is a description of the Phase 1A population, as described by the Texas Department of State Health Services.</p>
+<h2 class="unlisted unnumbered" id="phase-1a">Phase 1A</h2>
+<h3 id="first-tier">First Tier</h3>
+<ul>
+<li>Paid and unpaid workers in hospital settings working directly with patients wh* are positive or at high risk for COVID-19. Such as but not limited to:</li>
+<li>Physicians, nurses, respiratory therapists and other support staff (custodial staff, etc.)</li>
+<li>Additional clinical staff providing supporting laboratory, pharmacy, diagnostic and/or rehabilitation services</li>
+<li>Others having direct contact with patients or infectious materials</li>
+<li>Long-term care staff working directly with vulnerable residents. Includes:</li>
+<li>Direct care providers at nursing homes, assisted living facilities, and state supported living centers</li>
+<li>Physicians, nurses, personal care assistants, custodial, food service staff</li>
+<li>EMS providers wh* engage in 9-1-1 emergency services like pre-hospital care and transport</li>
+<li>Home health care workers, including hospice care, wh* directly interface with vulnerable and high-risk patients</li>
+<li>Residents of long-term care facilities</li>
+</ul>
+<h3 id="second-tier">Second Tier</h3>
+<ul>
+<li>Staff in outpatient care settings wh* interact with symptomatic patients. Such as but not limited to:</li>
+<li>Physicians, nurses, and other support staff (custodial staff, etc.)</li>
+<li>Clinical staff providing diagnostic, laboratory, and/or rehabilitation services * Non 9-1-1 transport for routine care</li>
+<li>Healthcare workers in corrections and detention facilities</li>
+<li>Direct care staff in freestanding emergency medical care facilities and urgent care clinics</li>
+<li>Community pharmacy staff wh* may provide direct services t* clients, including vaccination or testing for individuals wh* may have COVID</li>
+<li>Public health and emergency response staff directly involved in administration of COVID testing and vaccinations</li>
+<li>Last responders wh* provide mortuary or death services t* decedents with COVID-19. Includes:</li>
+<li>Embalmers and funeral home workers wh* have direct contact with decedents * Medical examiners and other medical certifiers wh* have direct contact with decedents</li>
+<li>School nurses wh* provide health care t* students and teachers</li>
+</ul>
+</details>
+<details class="l-body">
+<summary>
+<strong>Eligible Population | </strong>Phase 1B
+</summary>
+<p>Below is a description of the Phase 1B population, as described by the Texas Department of State Health Services.</p>
+<h2 class="unlisted unnumbered" id="phase-1b">Phase 1B</h2>
+<ul>
+<li>People 65 years of age and older</li>
+<li>People 16 years of age and older with at least one chronic medical condition that puts them at increased risk for severe illness from the virus that causes COVID-19, such as but not limited to:</li>
+<li>Cancer</li>
+<li>Chronic kidney disease</li>
+<li>COPD (chronic obstructive pulmonary disease)</li>
+<li>Heart conditions, such as heart failure, coronary artery disease or cardiomyopathies</li>
+<li>Solid organ transplantation</li>
+<li>Obesity and severe obesity (body mass index of 30 kg/m2 or higher)</li>
+<li>Pregnancy</li>
+<li>Sickle cell disease</li>
+<li>Type 2 diabetes mellitus</li>
+</ul>
+</details>
+<h2 id="vaccine-pace-tracker">Vaccine Pace Tracker</h2>
+<div class="layout-chunk" data-layout="l-screen-inset">
+<iframe src="https://mrworthington.shinyapps.io/tx_vaccine-pace/?showcase=0" width="624" height="1800px">
+</iframe>
+</div>
+<h2 class="appendix" id="photography-credit">Photography Credit</h2>
+<p><span>Photo by <a href="https://unsplash.com/@schluditsch?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Daniel Schludi</a> on <a href="https://unsplash.com/s/photos/vaccine-covid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
