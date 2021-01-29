@@ -2136,10 +2136,23 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;  font-size: 15px;
     font-weight: 600;
     background: #333f48;
-    border-bottom: 2px solid #bf5700;
+  /*  border-bottom: 0px solid #bf5700;
     -webkit-box-shadow: 1px 1px 18px #4d4d4d;
     -moz-box-shadow: 1px 1px 18px #4d4d4d;
-    box-shadow: 1px 1px 18px #4d4d4d;
+    box-shadow: 1px 1px 18px #4d4d4d; */
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #bf5700;
+  white-space: nowrap;
+  font-weight: 300;
   }
 
   .posts-list .post-preview .thumbnail {
@@ -2379,12 +2392,11 @@ Dashboard
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<span class="nav-dropdown-header">Provider Explorer</span>
+<span class="nav-dropdown-header">English</span>
 <hr/>
-<a href="about.html">English</a>
-<span class="nav-dropdown-header">Pace Explorer</span>
-<hr/>
-<a href="pace.html">English</a>
+<a href="about.html">Explore Providers</a>
+<a href="pace.html">Explore Pace</a>
+<a href="equity.html">Explore Equity</a>
 </div>
 </div>
 <div class="nav-dropdown">

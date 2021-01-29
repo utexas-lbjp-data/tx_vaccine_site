@@ -14,16 +14,20 @@ navbar:
       href: index.html
     - text: "Dashboard"
       menu:
-        - text: "Provider Explorer"
-        - text: "---------"
         - text: "English"
+        - text: "---------"
+        - text: "Explore Providers"
           href: about.html
+        - text: "Explore Pace"
+          href: pace.html       
+        - text: "Explore Equity"
+          href: equity.html             
         # - text: "Espanol"
         #   href: about.html
-        - text: "Pace Explorer"
-        - text: "---------"
-        - text: "English"
-          href: pace.html
+        # - text: "Pace Explorer"
+        # - text: "---------"
+        # - text: "English"
+        #   href: pace.html
         # - text: "Espanol"
         #   href: pace.html
     - text: "Vaccine Resources"

@@ -1,0 +1,279 @@
+---
+title: "Explore Equity"
+description: |
+  Are vaccines being responsibly and fairly administered?
+output: 
+  distill::distill_article:
+    toc: true
+    css: equity_header.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Eligible Populations
+
+Right now, the state has highlighted two phases of the Texas Population that are eligible to receive available COVID-19 vaccines: Phase 1A and Phase 1B. To learn more about each of the populations, expand the summaries below.
+
+<details class = "l-body">
+<summary><strong>Eligible Population | </strong>Phase 1A</summary>
+
+\newline
+
+Below is a description of the Phase 1A population, as described by the Texas Department of State Health Services.
+
+## Phase 1A {.unlisted .unnumbered}
+
+### First Tier
+
+* Paid and unpaid workers in hospital settings working directly with patients wh* are positive or at high risk for COVID-19. Such as but not limited to:
+* Physicians, nurses, respiratory therapists and other support staff (custodial staff, etc.)
+* Additional clinical staff providing supporting laboratory, pharmacy, diagnostic and/or rehabilitation services
+* Others having direct contact with patients or infectious materials
+* Long-term care staff working directly with vulnerable residents. Includes:
+* Direct care providers at nursing homes, assisted living facilities, and state supported living centers
+* Physicians, nurses, personal care assistants, custodial, food service staff
+* EMS providers wh* engage in 9-1-1 emergency services like pre-hospital care and
+transport
+* Home health care workers, including hospice care, wh* directly interface with
+vulnerable and high-risk patients
+* Residents of long-term care facilities
+
+### Second Tier
+
+* Staff in outpatient care settings wh* interact with symptomatic patients. Such as but not limited to:
+* Physicians, nurses, and other support staff (custodial staff, etc.)
+* Clinical staff providing diagnostic, laboratory, and/or rehabilitation services * Non 9-1-1 transport for routine care
+* Healthcare workers in corrections and detention facilities
+* Direct care staff in freestanding emergency medical care facilities and urgent care clinics
+* Community pharmacy staff wh* may provide direct services t* clients, including
+vaccination or testing for individuals wh* may have COVID
+* Public health and emergency response staff directly involved in administration of COVID
+testing and vaccinations
+* Last responders wh* provide mortuary or death services t* decedents with COVID-19.
+Includes:
+* Embalmers and funeral home workers wh* have direct contact with decedents * Medical examiners and other medical certifiers wh* have direct contact with
+decedents
+* School nurses wh* provide health care t* students and teachers
+
+</details>
+
+<details class = "l-body">
+<summary><strong>Eligible Population  | </strong>Phase 1B</summary>
+
+\newline
+
+Below is a description of the Phase 1B population, as described by the Texas Department of State Health Services.
+
+## Phase 1B {.unlisted .unnumbered}
+
+* People 65 years of age and older
+* People 16 years of age and older with at least one chronic medical condition that puts
+them at increased risk for severe illness from the virus that causes COVID-19, such as but not limited to:
+* Cancer
+* Chronic kidney disease
+* COPD (chronic obstructive pulmonary disease)
+* Heart conditions, such as heart failure, coronary artery disease or cardiomyopathies
+* Solid organ transplantation
+* Obesity and severe obesity (body mass index of 30 kg/m2 or higher)
+* Pregnancy
+* Sickle cell disease
+* Type 2 diabetes mellitus
+
+</details>
+
+## Statewide Demographic Summaries
+
+Towards the end of January, the Texas Department of State Health Services (DSHS) began publishing breakdowns of vaccinations by across different demographics, specifically age, gender, and race/ethnicity. While there's a lot of unknowns in the data--particularly across entries for "Race/Ethnicity"+"Gender"--and also because we don't have the population estimates for phases 1A and 1B broken down by race/age/gender, the data presented by DSHS struggles to paint an incomplete picture of the profile of vaccinated individuals. That said, the charts below attempt to breakdown that data with as much clarity as possible across all known and unknown classifcations. 
+
+The first chart is broken up into six different panels--one for each classification of a race or ethnicity. Within each of those panels, there's two sets of five-columned bar charts which represent the reported gender. The dark blue colored bars (facing upwards) represent the female population within each race and ethnicity classification while the gray colored bars (facing downwards) represent the male population within each race and ethnicity classification. Each column within a set of blue or gray colored bars represents a different age group. 
+
+```{r echo=FALSE, fig.width=10, fig.height=6.5, layout="l-page"}
+
+library(gt)
+library(tidyverse)
+library(ggforce)
+library(readxl)
+library(sf)
+library(janitor)
+
+# knitr::opts_chunk$set(dev = 'svg')
+
+today <- Sys.Date()
+src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
+lcl <- basename(src)
+filepath <- paste0(today,"_",lcl,"x")
+download.file(url = src, destfile = filepath) # Downloads The Data
+today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+# today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+time_lbl <- format(Sys.time(), format = "%I:%M %p")
+
+# vaccine_summ <- 
+  read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
+  clean_names() %>%
+  filter(!str_detect(gender, "Unknown|Texas")) %>% 
+  mutate(value = ifelse(gender == "Male", -doses_administered, doses_administered)) %>% 
+  ggplot(aes(x = age_group, y = value, fill = gender)) +
+  geom_bar(stat = "identity", width = 1) +
+  # coord_flip() +
+  facet_wrap(~race_ethnicity, nrow=1) +
+  scale_y_continuous(labels = function(y) paste0(abs(y / 1000), "k")) +
+  scale_x_discrete(labels = function(x) gsub("Age | years", "", x)) +
+  scale_fill_manual(values = c("#005f86","#9cadb7","#bf5700")) +
+  guides(fill=guide_legend(title = "Legend", keyheight = .8)) +
+  theme_minimal(base_family = "Graphik") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.minor.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.x = element_text(angle = 90),
+        legend.position = "top") +
+  labs(title = "Texas Distribution of All Administered Doses\nby Race, Age, and Reported Gender",
+       subtitle = paste0("This chart shows break downs by the number of doses administered in Texas. Excluded are the overall Texas number and gender\nthat the state reported as unknown. Administered doses is a summary figure of persons who have received a single dose\nand persons who are fully vaccinated. Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       x = NULL,
+       y = NULL,
+       color = NULL,
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") +
+  ggsave(paste0(today,"_","tx_shots_by_race_age_known_gender.png"), dpi = 300, width = 11, height = 8)
+
+  
+  read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
+  clean_names() %>%
+  filter(str_detect(gender, "Unknown")) %>% 
+  ggplot(aes(x = age_group, y = doses_administered, fill = age_group)) +
+  geom_bar(stat = "identity", width = 1) +
+  facet_wrap(~race_ethnicity, nrow=1) +
+  scale_y_continuous(labels = function(y) paste0(abs(y / 1000), "k")) +
+  scale_x_discrete(labels = function(x) gsub("Age | years", "", x)) +
+  scale_fill_manual(values = c("#005f86","#9cadb7","#bf5700", "#333f48", "#579d42")) +
+  guides(fill=guide_legend(title = "Legend", keyheight = .8)) +
+  theme_minimal(base_family = "Graphik") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.minor.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.x = element_text(angle = 90),
+        legend.position = "top") +
+  labs(title = "Texas Distribution of All Administered Doses\nby Race, Age, and Unknown Gender",
+       subtitle = paste0("This chart shows break downs by the number of doses administered in Texas. Excluded are the overall Texas number and genders\nthat the state reported as known. Administered doses is a summary figure of persons who have received a single dose\nand persons who are fully vaccinated. Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       x = NULL,
+       y = NULL,
+       color = NULL,
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") +
+  ggsave(paste0(today,"_","tx_shots_by_race_age_unknown_gender.png"), dpi = 300, width = 11, height = 8)
+  
+
+```
+
+The next chart captures where reported availability of doses is distributed by the of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently reported having available doses and how much do they have?
+
+```{r eval=FALSE, fig.width=10, include=FALSE, layout="l-page"}
+
+today <- Sys.Date()
+src <- "https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv"
+lcl <- basename(src)
+filepath <- paste0(today,"_",lcl)
+download.file(url = src, destfile = filepath)
+
+# provider_locations <- read_rds("clean_data/vaccine_supply_by_site.rds") %>%
+  # select(name, street, lat, lon)
+
+supply_by_provider_type <- read_csv(filepath, skip=0) %>%
+  janitor::clean_names() %>% 
+  group_by(type) %>% 
+  summarise(tot_shipped = sum(total_shipped),
+            tot_avail = sum(total_available)) 
+
+# supply_by_provider_type %>% 
+#   drop_na() %>% 
+#   ggplot(aes(x=reorder(type, desc(tot_shipped)), y = tot_shipped, fill=type)) +
+#   geom_col() +
+#   theme_minimal(base_family = "Graphik") +
+#   geom_text(angle=90, color="#2d2d2d", size = 3.1, family = "Graphik-Semibold",
+#             aes(y= 0, x=type, label = type), hjust = 0) +
+#   scale_y_continuous(labels = scales::unit_format(unit = "K", accuracy = 1, scale = 1e-3)) +
+#   ggthemes::scale_fill_tableau(palette = "Tableau 20") +
+#   theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+#         plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+#         panel.grid.major.y = element_blank(),
+#         plot.margin = margin(t=15, r=15, b=10, l = 15),
+#         axis.text.x = element_blank(),
+#         legend.position = "none") +
+#   labs(title = "Reported Total Supply by Provider Type",
+#        subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+#        x = NULL,
+#        y = "Doses (Shipped)",
+#        color = NULL,
+#        caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
+#   # ggsave(paste0(today,"_","supply_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+
+supply_by_provider_type %>% 
+  drop_na() %>% 
+  ggplot(aes(x=reorder(type, desc(tot_avail)), y = tot_avail, fill=type)) +
+  geom_col() +
+  theme_minimal(base_family = "Graphik") +
+  geom_text(angle=90, color="#2d2d2d", size = 3.1, family = "Graphik-Semibold",
+            aes(y= 0, x=type, label = type), hjust = 0) +
+  scale_y_continuous(labels = scales::unit_format(unit = "K", accuracy = 1, scale = 1e-3)) +
+  ggthemes::scale_fill_tableau(palette = "Tableau 20") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.major.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.x = element_blank(),
+        legend.position = "none") +
+  labs(title = "Reported Availability by Provider Type",
+       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       x = NULL,
+       y = "Doses (Available)",
+       color = NULL,
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
+  # ggsave(paste0(today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+```
+
+
+
+
+<!-- ## Accessibility -->
+
+```{r eval=FALSE, include=FALSE}
+library(mapboxapi)
+
+vaccine_sites_sf <- read_csv("https://utexas-lbjp-data.github.io/txcovidvaccinedata/clean_data/vaccine_provider_raw.csv") %>%
+    st_as_sf(coords = c("lon", "lat"), crs = 4326, remove = FALSE) %>% 
+    select(-Address) %>% 
+    mutate(Address = paste0(Street, ", ", City, ", TX ", Zip)) %>% 
+    select(-Street, -City, -Zip) %>% 
+    mutate(Time = format(as.POSIXct(`Time Updated`), format = "%I:%M %p")) %>% 
+    select(1:2, `Total Available`, `Last Updated`,Time, Phone, Address, everything())
+
+ev_sites <- read_rds("data/tarrant_EV_sites.rds")
+
+walking_isos <- mb_isochrone(
+  vaccine_sites_sf,
+  profile = "walking",
+  time = 20,
+  id = "Provider Name"
+)
+
+driving_isos <- mb_isochrone(
+  vaccine_sites_sf,
+  profile = "driving",
+  time = 20,
+  id = "Provider Name"
+)
+
+mapbox_map <- leaflet() %>%
+  addMapboxTiles(style_id = "streets-v11",
+                 username = "mapbox") 
+
+mapbox_map %>%
+  addPolygons(data = walking_isos,
+              popup = ~id)
+```
+
+
+## Photography Credit {.appendix}
+
+<span>Photo by <a href="https://unsplash.com/@schluditsch?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Daniel Schludi</a> on <a href="https://unsplash.com/s/photos/vaccine-covid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
