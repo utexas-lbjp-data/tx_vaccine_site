@@ -89,7 +89,126 @@ Towards the end of January, the Texas Department of State Health Services (DSHS)
 
 The first chart is broken up into six different panels--one for each classification of a race or ethnicity. Within each of those panels, there's two sets of five-columned bar charts which represent the reported gender. The dark blue colored bars (facing upwards) represent the female population within each race and ethnicity classification while the gray colored bars (facing downwards) represent the male population within each race and ethnicity classification. Each column within a set of blue or gray colored bars represents a different age group. 
 
-```{r echo=FALSE, fig.width=10, fig.height=6.5, layout="l-page"}
+```{r include=FALSE}
+
+library(gt)
+library(tidyverse)
+library(highcharter)
+library(readxl)
+library(sf)
+library(janitor)
+
+vaccine_hc <- hc_theme_merge(
+  hc_theme_smpl(),
+  hc_theme(chart = list(backgroundColor = "#fff", 
+                        style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                                     fontSize = "28px",  fontWeight = "bold",
+                                     color="#4d4d4d", textTransform="initial")),
+           title = list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                                     fontWeight="bold",
+                                     color="#2d2d2d"),
+                        align = "left"), 
+           subtitle = list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                                        color="#7d7d7d",
+                                        textTransform="initial",
+                                        fontWeight="400",
+                                        fontSize = "14px"),
+                           align = "left"), 
+           legend = list(align = "right", 
+                         style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#6d6d6d"),
+                         itemStyle = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color = '#6d6d6d'),
+                         itemHoverStyle = list(color = 'gray'),   
+                         verticalAlign = "top"),
+           credits = list(style = list(color = "#2d2d2d")),
+           xAxis = list(labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                                                  color="#2d2d2d")), 
+                        title = list(style = list(color = "#4d4d4d", fontSize = "12px", 
+                                                  color="#4d4d4d",fontWeight="500")),
+                        gridLineWidth = 0,
+                        gridLineColor = "#9d9d9d", 
+                        lineColor = 'rgba(0,0,0,0.7)', 
+                        minorGridLineColor = 'rgba(0,0,0,0.7)', 
+                        tickColor = "#9d9d9d", 
+                        tickWidth = 1), 
+           yAxis = list(labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d")), 
+                        title = list(style = list(color = "#fff", fontSize = "12px", 
+                                                  color="#fff",fontWeight="500")), 
+                        gridLineWidth = .5,
+                        gridLineColor = 'rgba(0,0,0,0.15)', 
+                        lineColor = 'rgba(0,0,0,0.15)', 
+                        minorGridLineColor = 'rgba(0,0,0,0.15)', 
+                        tickColor = "#9d9d9d", 
+                        tickWidth = 2)))
+```
+
+
+```{r, layout="l-page"}
+
+
+# knitr::opts_chunk$set(dev = 'svg')
+
+today <- Sys.Date()
+src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
+lcl <- basename(src)
+filepath <- paste0(today,"_",lcl,"x")
+download.file(url = src, destfile = filepath) # Downloads The Data
+today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+# today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+time_lbl <- format(Sys.time(), format = "%I:%M %p")
+
+re_groups <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
+  clean_names() %>% 
+  select(race_ethnicity) %>% 
+  distinct() %>% 
+  simplify()
+
+df <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
+      clean_names() %>%
+      filter(!str_detect(gender, "Unknown|Texas")) %>% 
+      mutate(value = ifelse(gender == "Male", -doses_administered, doses_administered),
+             age_group = str_remove(age_group, " years")) %>% 
+  arrange(race_ethnicity,age_group)
+
+categories_grouped <- df %>%
+  select(race_ethnicity, age_group) %>%
+  distinct() %>% 
+  group_by(name = race_ethnicity) %>% 
+  summarise(categories = list(age_group)) %>% 
+  list_parse()
+
+df %>% 
+  hchart(type="column", 
+         hcaes(x = age_group, y = value, group=gender)) %>% 
+  hc_title(text="Texas Distribution of All Administered Doses\nby Race, Age, and Reported Gender") %>% 
+  hc_subtitle(text = paste0("This chart shows break downs by the number of doses administered in Texas. Excluded are the overall Texas number and gender\nthat the state reported as unknown. Administered doses is a summary figure of persons who have received a single dose\nand persons who are fully vaccinated. Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl)) %>% 
+  hc_yAxis(opposite = TRUE,
+           labels = list(formatter = JS(paste0("function () {return Math.abs(this.value)/1000 + 'K';}")))) %>% 
+  hc_xAxis(categories = categories_grouped,
+           labels = list(groupedOptions = JS("[{
+                         style: {color: '#bf5700'},
+                         rotation: 0
+                         }]"),
+                         rotation = -90),
+           title = NA,
+           opposite=FALSE) %>%
+  hc_add_dependency("plugins/grouped-categories.js") %>% 
+  # hc_legend(enabled=FALSE) %>%
+  # hc_tooltip(table = TRUE,
+  #            sort = TRUE,
+  #            shared=TRUE) %>%
+  hc_plotOptions(series = list(stacking = "normal")) %>%
+  hc_colors(colors = list('#005f86', '#9cadb7')) %>% 
+  # hc_colors(colors = list('rgba(0, 95, 134,0.3)','rgba(0, 95, 134,1)')) %>%
+  hc_caption("Chart by: Matt Worthington") %>%
+  hc_credits(
+    enabled = TRUE,
+    text = "Data From: Texas DSHS 'Accessible Vaccine Dashboard Data'",
+    href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>%
+  hc_add_theme(vaccine_hc)
+```
+
+
+```{r fig.height=6.5, fig.width=10, include=FALSE, layout="l-page"}
 
 library(gt)
 library(tidyverse)

@@ -10,14 +10,14 @@ navbar:
     image: lbj_logo.png
     href: https://lbj.utexas.edu
   right:
-    - text: "Home"
-      href: index.html
+    # - text: "Home"
+    #   href: index.html
     - text: "Dashboard"
       menu:
         - text: "English"
         - text: "---------"
         - text: "Explore Providers"
-          href: about.html
+          href: providers.html
         - text: "Explore Pace"
           href: pace.html       
         - text: "Explore Equity"

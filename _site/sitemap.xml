@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
-    <loc>https://festive-mestorf-e42b04.netlify.app/about.html</loc>
-    <lastmod>2021-01-22T13:20:08-06:00</lastmod>
-  </url>
-  <url>
     <loc>https://festive-mestorf-e42b04.netlify.app/equity.html</loc>
-    <lastmod>2021-01-29T12:01:59-06:00</lastmod>
+    <lastmod>2021-01-30T03:11:26-06:00</lastmod>
   </url>
   <url>
     <loc>https://festive-mestorf-e42b04.netlify.app/</loc>
@@ -18,11 +14,15 @@
   </url>
   <url>
     <loc>https://festive-mestorf-e42b04.netlify.app/pace.html</loc>
-    <lastmod>2021-01-28T23:47:12-06:00</lastmod>
+    <lastmod>2021-01-29T23:52:59-06:00</lastmod>
   </url>
   <url>
     <loc>https://festive-mestorf-e42b04.netlify.app/pfizer.html</loc>
     <lastmod>2021-01-12T10:33:41-06:00</lastmod>
+  </url>
+  <url>
+    <loc>https://festive-mestorf-e42b04.netlify.app/providers.html</loc>
+    <lastmod>2021-01-22T13:20:08-06:00</lastmod>
   </url>
   <url>
     <loc>https://festive-mestorf-e42b04.netlify.app/README.html</loc>
