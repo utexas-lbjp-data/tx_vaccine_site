@@ -9,7 +9,84 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set()
+library(gt)
+library(tidyverse)
+library(ggforce)
+library(highcharter)
+library(readxl)
+library(janitor)
+library(reactable)
+library(htmltools)
+library(tippy)
+
+today <- Sys.Date()
+today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+time_lbl <- format(Sys.time(), format = "%I:%M %p")
+
+src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
+lcl <- basename(src)
+filepath <- paste0("raw_data/", today,"_",lcl,"x")
+download.file(url = src, destfile = filepath) # Downloads The Data
+
+src_providers <- "https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv"
+lcl_providers <- basename(src_providers)
+filepath_providers <- paste0("raw_data/",today,"_",lcl_providers)
+download.file(url = src_providers, destfile = filepath_providers)
+
+
+with_tooltip <- function(value, tooltip, ...) {
+  div(style = "text-decoration: underline; text-decoration-style: dotted; cursor: help",
+      tippy(value, tooltip, ...))
+}
+
+bar_chart <- function(label, width = "100%", height = "16px", fill = "#005f86", background = NULL) {
+  bar <- div(style = list(background = fill, width = width, height = height))
+  chart <- div(style = list(flexGrow = 1, marginLeft = "8px", background = background), bar)
+  div(style = list(display = "flex", alignItems = "center"), label, chart)
+}
+
+
+vaccine_hc <- hc_theme_merge(
+  hc_theme_smpl(),
+  hc_theme(chart = list(backgroundColor = "#fff", 
+                        style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                                     fontSize = "28px",  fontWeight = "bold",
+                                     color="#4d4d4d", textTransform="initial")),
+           title = list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', 
+                                     fontWeight="bold",
+                                     color="#2d2d2d"),
+                        align = "left"), 
+           subtitle = list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+                                        color="#7d7d7d",
+                                        textTransform="initial",
+                                        fontWeight="400",
+                                        fontSize = "14px"),
+                           align = "left"), 
+           legend = list(align = "right", 
+                         style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#6d6d6d"),
+                         itemStyle = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color = '#6d6d6d'),
+                         itemHoverStyle = list(color = 'gray'),   
+                         verticalAlign = "top"),
+           credits = list(style = list(color = "#fff")),
+           xAxis = list(labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d")), 
+                        title = list(style = list(color = "#4d4d4d", fontSize = "12px", 
+                                                  color="#4d4d4d",fontWeight="500")),
+                        gridLineWidth = 0,
+                        gridLineColor = "#9d9d9d", 
+                        lineColor = 'rgba(0,0,0,0.7)', 
+                        minorGridLineColor = 'rgba(0,0,0,0.7)', 
+                        tickColor = "#9d9d9d", 
+                        tickWidth = 1), 
+           yAxis = list(labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d")), 
+                        title = list(style = list(color = "#fff", fontSize = "12px", 
+                                                  color="#fff",fontWeight="500")), 
+                        gridLineWidth = .5,
+                        gridLineColor = 'rgba(0,0,0,0.15)', 
+                        lineColor = 'rgba(0,0,0,0.15)', 
+                        minorGridLineColor = 'rgba(0,0,0,0.15)', 
+                        tickColor = "#9d9d9d", 
+                        tickWidth = 2)))
 ```
 
 ## Eligible Populations
@@ -57,43 +134,6 @@ Includes:
 decedents
 * School nurses wh* provide health care t* students and teachers
 
-```{r eval=FALSE, include=FALSE}
-
-library(gt)
-library(tidyverse)
-library(readxl)
-library(janitor)
-
-today <- Sys.Date()
-src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
-lcl <- basename(src)
-filepath <- paste0(today,"_",lcl,"x")
-download.file(url = src, destfile = filepath) # Downloads The Data
-
-read_excel(filepath, sheet = "By County", skip=0) %>% 
-  clean_names() %>% 
-  select(county_name, total_doses_allocated, vaccine_doses_administered) %>% 
-  mutate(total_doses_allocated = as.numeric(total_doses_allocated),
-         vaccine_doses_administered = as.numeric(vaccine_doses_administered)) %>% 
-  filter(county_name=="Texas") %>% 
-  pivot_longer(cols=c(total_doses_allocated, vaccine_doses_administered), names_to = "type", values_to = "value") %>% 
-  gt() %>% 
-  tab_header(title = md("**Phase 1B Eligibility**"),
-             subtitle = "Source: Texas Department of State Health Services | As of January 10th at 3:00PM CST") %>%
-  tab_source_note(
-    source_note = "*Unable to deduplicate figures for Commercial labs."
-  ) %>% 
-  tab_footnote(footnote = md("[Data: From the 'Accessible Dashboard Data' File, under the 'Tests' tab.](https://www.dshs.state.tx.us/coronavirus/additionaldata/)"), locations = cells_title("subtitle")) %>% 
-    fmt_number(columns="value", suffixing=TRUE) %>% 
-  cols_label(county_name=md("**Location**"),
-             type=md("**Type**"),
-             value=md("**Value**")) %>% 
-  tab_options(
-    grand_summary_row.background.color = "#f5f5f5",
-    heading.title.font.weight = "800",
-  )
-```
-
 </details>
 
 <details class = "l-body">
@@ -128,21 +168,6 @@ The chart attempts to capture a holistic snapshot of multiple data points relate
 * **Persons Fully Vaccinated:** How many people have been fully vaccinated compared to the entire 16+ population?
 
 ```{r echo=FALSE, fig.width=10, layout="l-page"}
-
-library(gt)
-library(tidyverse)
-library(ggforce)
-library(readxl)
-library(janitor)
-
-today <- Sys.Date()
-src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
-lcl <- basename(src)
-filepath <- paste0(today,"_",lcl,"x")
-download.file(url = src, destfile = filepath) # Downloads The Data
-today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
-# today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
-time_lbl <- format(Sys.time(), format = "%I:%M %p")
 
 vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
@@ -218,51 +243,48 @@ vaccine_summ %>%
        y = NULL,
        color = NULL,
        caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") #+
-  # ggsave(paste0(today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
+  # ggsave(paste0("figures/",today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
 
-The next chart captures where reported availability of doses is distributed by the of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently reported having available doses and how much do they have?
+The next chart captures where the reported supply of doses has been distributed, by the type of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently received shipments of doses and how much were they shipped?
 
 ```{r echo=FALSE, fig.width=10, layout="l-page"}
 
-today <- Sys.Date()
-src <- "https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv"
-lcl <- basename(src)
-filepath <- paste0(today,"_",lcl)
-download.file(url = src, destfile = filepath)
-
-# provider_locations <- read_rds("clean_data/vaccine_supply_by_site.rds") %>%
-  # select(name, street, lat, lon)
-
-supply_by_provider_type <- read_csv(filepath, skip=0) %>%
+supply_by_provider_type <- read_csv(filepath_providers, skip=0) %>%
   janitor::clean_names() %>% 
   group_by(type) %>% 
   summarise(tot_shipped = sum(total_shipped),
             tot_avail = sum(vaccines_available)) 
 
-# supply_by_provider_type %>% 
-#   drop_na() %>% 
-#   ggplot(aes(x=reorder(type, desc(tot_shipped)), y = tot_shipped, fill=type)) +
-#   geom_col() +
-#   theme_minimal(base_family = "Graphik") +
-#   geom_text(angle=90, color="#2d2d2d", size = 3.1, family = "Graphik-Semibold",
-#             aes(y= 0, x=type, label = type), hjust = 0) +
-#   scale_y_continuous(labels = scales::unit_format(unit = "K", accuracy = 1, scale = 1e-3)) +
-#   ggthemes::scale_fill_tableau(palette = "Tableau 20") +
-#   theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
-#         plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
-#         panel.grid.major.y = element_blank(),
-#         plot.margin = margin(t=15, r=15, b=10, l = 15),
-#         axis.text.x = element_blank(),
-#         legend.position = "none") +
-#   labs(title = "Reported Total Supply by Provider Type",
-#        subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
-#        x = NULL,
-#        y = "Doses (Shipped)",
-#        color = NULL,
-#        caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
-#   # ggsave(paste0(today,"_","supply_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+supply_by_provider_type %>%
+  drop_na() %>%
+  ggplot(aes(x=reorder(type, desc(tot_shipped)), y = tot_shipped, fill=type)) +
+  geom_col() +
+  theme_minimal(base_family = "Graphik") +
+  geom_text(angle=90, color="#2d2d2d", size = 3.1, family = "Graphik-Semibold",
+            aes(y= 0, x=type, label = type), hjust = 0) +
+  scale_y_continuous(labels = scales::unit_format(unit = "K", accuracy = 1, scale = 1e-3)) +
+  ggthemes::scale_fill_tableau(palette = "Tableau 20") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.major.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.x = element_blank(),
+        legend.position = "none") +
+  labs(title = "Reported Total Supply by Provider Type",
+       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       x = NULL,
+       y = "Doses (Shipped)",
+       color = NULL,
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
+  # ggsave(paste0("figures/",today,"_","supply_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+
+```
+
+Similar to the last one, this chart focuses on reported availability. In other words, how much of the shipped doses are provider types reporting to be still available at the time the chart was generated? 
+
+```{r echo=FALSE, fig.width=10, layout="l-page"}
 
 supply_by_provider_type %>% 
   drop_na() %>% 
@@ -285,48 +307,21 @@ supply_by_provider_type %>%
        y = "Doses (Available)",
        color = NULL,
        caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
-  # ggsave(paste0(today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
+  # ggsave(paste0("figures/",today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 ```
 
 ## Per Capita Trends
 
-```{r vaccine data import, message=FALSE, warning=FALSE, include=FALSE}
-library(gt)
-library(tidyverse)
-library(ggforce)
-library(readxl)
-library(janitor)
-library(reactable)
-library(htmltools)
-library(tippy)
-
-today <- Sys.Date()
-src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
-lcl <- basename(src)
-filepath <- paste0(today,"_",lcl,"x")
-download.file(url = src, destfile = filepath) # Downloads The Data
-today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
-time_lbl <- format(Sys.time(), format = "%I:%M %p")
-
-with_tooltip <- function(value, tooltip, ...) {
-  div(style = "text-decoration: underline; text-decoration-style: dotted; cursor: help",
-      tippy(value, tooltip, ...))
-}
-
-bar_chart <- function(label, width = "100%", height = "16px", fill = "#005f86", background = NULL) {
-  bar <- div(style = list(background = fill, width = width, height = height))
-  chart <- div(style = list(flexGrow = 1, marginLeft = "8px", background = background), bar)
-  div(style = list(display = "flex", alignItems = "center"), label, chart)
-}
-
-```
-
-## Notes about the table below
+<details class = "l-body">
+<summary><strong>Notes about the table below</strong></summary>
 
 * Data shown below comes from the "Accessible Vaccine Dashboard Data" published by the Texas Department of State Health Services, which can be found at this link: `r src`
 * It was last pulled on `r today_lbl` at `r time_lbl`
 
-## Data dictionary for the table below
+</details>
+
+<details class = "l-body">
+<summary><strong> Data dictionary for the table below </strong></summary>
 
 * **County**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the county for which DSHS has collected data.
 * **Popuplation (16+)"**:  This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons aged 16 years and older in Texas. This number is reported given that vaccines authorized for emergency use have only authorized for use in persons aged 16 years and older. 
@@ -334,6 +329,8 @@ bar_chart <- function(label, width = "100%", height = "16px", fill = "#005f86", 
 * **Full Vaccinations**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons who are fully vaccinated in a given Texas county.
 * **Doses Allocated (Per Capita)**: This is a custom calculation that is derived by taking the number of total doses allocated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.  
 * **Full Vaccinations (Per Capita)**: This is a custom calculation that is derived by taking the number of persons who are fully vaccinated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.  
+
+</details>
 
 ## Vaccine Data Table 
 
@@ -415,7 +412,7 @@ reactable(data =vaccine_cnty_summ,
 
 ```
 
-## Vaccine Pace Tracker
+# Vaccine Pace Tracker
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-screen-inset"}
 knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-pace/", height = "1800px")

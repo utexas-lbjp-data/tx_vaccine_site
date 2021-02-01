@@ -10,93 +10,26 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-```
-
-## Eligible Populations
-
-Right now, the state has highlighted two phases of the Texas Population that are eligible to receive available COVID-19 vaccines: Phase 1A and Phase 1B. To learn more about each of the populations, expand the summaries below.
-
-<details class = "l-body">
-<summary><strong>Eligible Population | </strong>Phase 1A</summary>
-
-\newline
-
-Below is a description of the Phase 1A population, as described by the Texas Department of State Health Services.
-
-## Phase 1A {.unlisted .unnumbered}
-
-### First Tier
-
-* Paid and unpaid workers in hospital settings working directly with patients wh* are positive or at high risk for COVID-19. Such as but not limited to:
-* Physicians, nurses, respiratory therapists and other support staff (custodial staff, etc.)
-* Additional clinical staff providing supporting laboratory, pharmacy, diagnostic and/or rehabilitation services
-* Others having direct contact with patients or infectious materials
-* Long-term care staff working directly with vulnerable residents. Includes:
-* Direct care providers at nursing homes, assisted living facilities, and state supported living centers
-* Physicians, nurses, personal care assistants, custodial, food service staff
-* EMS providers wh* engage in 9-1-1 emergency services like pre-hospital care and
-transport
-* Home health care workers, including hospice care, wh* directly interface with
-vulnerable and high-risk patients
-* Residents of long-term care facilities
-
-### Second Tier
-
-* Staff in outpatient care settings wh* interact with symptomatic patients. Such as but not limited to:
-* Physicians, nurses, and other support staff (custodial staff, etc.)
-* Clinical staff providing diagnostic, laboratory, and/or rehabilitation services * Non 9-1-1 transport for routine care
-* Healthcare workers in corrections and detention facilities
-* Direct care staff in freestanding emergency medical care facilities and urgent care clinics
-* Community pharmacy staff wh* may provide direct services t* clients, including
-vaccination or testing for individuals wh* may have COVID
-* Public health and emergency response staff directly involved in administration of COVID
-testing and vaccinations
-* Last responders wh* provide mortuary or death services t* decedents with COVID-19.
-Includes:
-* Embalmers and funeral home workers wh* have direct contact with decedents * Medical examiners and other medical certifiers wh* have direct contact with
-decedents
-* School nurses wh* provide health care t* students and teachers
-
-</details>
-
-<details class = "l-body">
-<summary><strong>Eligible Population  | </strong>Phase 1B</summary>
-
-\newline
-
-Below is a description of the Phase 1B population, as described by the Texas Department of State Health Services.
-
-## Phase 1B {.unlisted .unnumbered}
-
-* People 65 years of age and older
-* People 16 years of age and older with at least one chronic medical condition that puts
-them at increased risk for severe illness from the virus that causes COVID-19, such as but not limited to:
-* Cancer
-* Chronic kidney disease
-* COPD (chronic obstructive pulmonary disease)
-* Heart conditions, such as heart failure, coronary artery disease or cardiomyopathies
-* Solid organ transplantation
-* Obesity and severe obesity (body mass index of 30 kg/m2 or higher)
-* Pregnancy
-* Sickle cell disease
-* Type 2 diabetes mellitus
-
-</details>
-
-## Statewide Demographic Summaries
-
-Towards the end of January, the Texas Department of State Health Services (DSHS) began publishing breakdowns of vaccinations by across different demographics, specifically age, gender, and race/ethnicity. While there's a lot of unknowns in the data--particularly across entries for "Race/Ethnicity"+"Gender"--and also because we don't have the population estimates for phases 1A and 1B broken down by race/age/gender, the data presented by DSHS struggles to paint an incomplete picture of the profile of vaccinated individuals. That said, the charts below attempt to breakdown that data with as much clarity as possible across all known and unknown classifcations. 
-
-The first chart is broken up into six different panels--one for each classification of a race or ethnicity. Within each of those panels, there's two sets of five-columned bar charts which represent the reported gender. The dark blue colored bars (facing upwards) represent the female population within each race and ethnicity classification while the gray colored bars (facing downwards) represent the male population within each race and ethnicity classification. Each column within a set of blue or gray colored bars represents a different age group. 
-
-```{r include=FALSE}
-
 library(gt)
 library(tidyverse)
 library(highcharter)
 library(readxl)
 library(sf)
 library(janitor)
+library(ggforce)
+library(mapboxapi)
+library(leaflet)
+library(tidycensus)
+options(tigris_use_cache = TRUE)
+
+today <- Sys.Date()
+src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
+lcl <- basename(src)
+filepath <- paste0(today,"_",lcl,"x")
+download.file(url = src, destfile = filepath) # Downloads The Data
+today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+# today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+time_lbl <- format(Sys.time(), format = "%I:%M %p")
 
 vaccine_hc <- hc_theme_merge(
   hc_theme_smpl(),
@@ -141,20 +74,84 @@ vaccine_hc <- hc_theme_merge(
                         tickWidth = 2)))
 ```
 
+## Eligible Populations
 
-```{r, layout="l-page"}
+Right now, the state has highlighted two phases of the Texas Population that are eligible to receive available COVID-19 vaccines: Phase 1A and Phase 1B. To learn more about each of the populations, expand the summaries below.
+
+<details class = "l-body">
+<summary><strong>Eligible Population | </strong>Phase 1A</summary>
+
+\newline
+
+Below is a description of the Phase 1A population, as described by the Texas Department of State Health Services.
+
+### First Tier
+
+* Paid and unpaid workers in hospital settings working directly with patients wh* are positive or at high risk for COVID-19. Such as but not limited to:
+* Physicians, nurses, respiratory therapists and other support staff (custodial staff, etc.)
+* Additional clinical staff providing supporting laboratory, pharmacy, diagnostic and/or rehabilitation services
+* Others having direct contact with patients or infectious materials
+* Long-term care staff working directly with vulnerable residents. Includes:
+* Direct care providers at nursing homes, assisted living facilities, and state supported living centers
+* Physicians, nurses, personal care assistants, custodial, food service staff
+* EMS providers wh* engage in 9-1-1 emergency services like pre-hospital care and
+transport
+* Home health care workers, including hospice care, wh* directly interface with
+vulnerable and high-risk patients
+* Residents of long-term care facilities
+
+### Second Tier
+
+* Staff in outpatient care settings wh* interact with symptomatic patients. Such as but not limited to:
+* Physicians, nurses, and other support staff (custodial staff, etc.)
+* Clinical staff providing diagnostic, laboratory, and/or rehabilitation services * Non 9-1-1 transport for routine care
+* Healthcare workers in corrections and detention facilities
+* Direct care staff in freestanding emergency medical care facilities and urgent care clinics
+* Community pharmacy staff wh* may provide direct services t* clients, including
+vaccination or testing for individuals wh* may have COVID
+* Public health and emergency response staff directly involved in administration of COVID
+testing and vaccinations
+* Last responders wh* provide mortuary or death services t* decedents with COVID-19.
+Includes:
+* Embalmers and funeral home workers wh* have direct contact with decedents * Medical examiners and other medical certifiers wh* have direct contact with
+decedents
+* School nurses wh* provide health care t* students and teachers
+
+</details>
+
+<details class = "l-body">
+<summary><strong>Eligible Population  | </strong>Phase 1B</summary>
+
+\newline
+
+Below is a description of the Phase 1B population, as described by the Texas Department of State Health Services.
+
+* People 65 years of age and older
+* People 16 years of age and older with at least one chronic medical condition that puts
+them at increased risk for severe illness from the virus that causes COVID-19, such as but not limited to:
+* Cancer
+* Chronic kidney disease
+* COPD (chronic obstructive pulmonary disease)
+* Heart conditions, such as heart failure, coronary artery disease or cardiomyopathies
+* Solid organ transplantation
+* Obesity and severe obesity (body mass index of 30 kg/m2 or higher)
+* Pregnancy
+* Sickle cell disease
+* Type 2 diabetes mellitus
+
+</details>
 
 
-# knitr::opts_chunk$set(dev = 'svg')
+# Vaccines + Equity
 
-today <- Sys.Date()
-src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
-lcl <- basename(src)
-filepath <- paste0(today,"_",lcl,"x")
-download.file(url = src, destfile = filepath) # Downloads The Data
-today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
-# today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
-time_lbl <- format(Sys.time(), format = "%I:%M %p")
+## Statewide Demographic Summaries
+
+Towards the end of January, the Texas Department of State Health Services (DSHS) began publishing breakdowns of vaccinations by across different demographics, specifically age, gender, and race/ethnicity. While there's a lot of unknowns in the data--particularly across entries for "Race/Ethnicity"+"Gender"--and also because we don't have the population estimates for phases 1A and 1B broken down by race/age/gender, the data presented by DSHS struggles to paint an incomplete picture of the profile of vaccinated individuals. That said, the charts below attempt to breakdown that data with as much clarity as possible across all known and unknown classifcations. 
+
+The first chart is broken up into six different panels--one for each classification of a race or ethnicity. Within each of those panels, there's two sets of five-columned bar charts which represent the reported gender. The dark blue colored bars (facing upwards) represent the female population within each race and ethnicity classification while the gray colored bars (facing downwards) represent the male population within each race and ethnicity classification. Each column within a set of blue or gray colored bars represents a different age group. 
+
+
+```{r dem_chart_hc, eval=FALSE, include=FALSE, layout="l-page"}
 
 re_groups <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
   clean_names() %>% 
@@ -208,25 +205,7 @@ df %>%
 ```
 
 
-```{r fig.height=6.5, fig.width=10, include=FALSE, layout="l-page"}
-
-library(gt)
-library(tidyverse)
-library(ggforce)
-library(readxl)
-library(sf)
-library(janitor)
-
-# knitr::opts_chunk$set(dev = 'svg')
-
-today <- Sys.Date()
-src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
-lcl <- basename(src)
-filepath <- paste0(today,"_",lcl,"x")
-download.file(url = src, destfile = filepath) # Downloads The Data
-today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
-# today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
-time_lbl <- format(Sys.time(), format = "%I:%M %p")
+```{r dem_chart_ggplot, echo=FALSE, fig.height=6.5, fig.width=10, layout="l-page"}
 
 # vaccine_summ <- 
   read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
@@ -285,9 +264,9 @@ time_lbl <- format(Sys.time(), format = "%I:%M %p")
 
 ```
 
-The next chart captures where reported availability of doses is distributed by the of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently reported having available doses and how much do they have?
+# Vaccines + Access
 
-```{r eval=FALSE, fig.width=10, include=FALSE, layout="l-page"}
+```{r vaccine_available_by_type, eval=FALSE, fig.width=10, include=FALSE, layout="l-page"}
 
 today <- Sys.Date()
 src <- "https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv"
@@ -351,13 +330,10 @@ supply_by_provider_type %>%
   # ggsave(paste0(today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 ```
 
+##  Where Accessible Populations Live in Texas
 
+```{r walking_accessibility, eval=FALSE, include=FALSE}
 
-
-<!-- ## Accessibility -->
-
-```{r eval=FALSE, include=FALSE}
-library(mapboxapi)
 
 vaccine_sites_sf <- read_csv("https://utexas-lbjp-data.github.io/txcovidvaccinedata/clean_data/vaccine_provider_raw.csv") %>%
     st_as_sf(coords = c("lon", "lat"), crs = 4326, remove = FALSE) %>% 
@@ -367,29 +343,302 @@ vaccine_sites_sf <- read_csv("https://utexas-lbjp-data.github.io/txcovidvaccined
     mutate(Time = format(as.POSIXct(`Time Updated`), format = "%I:%M %p")) %>% 
     select(1:2, `Total Available`, `Last Updated`,Time, Phone, Address, everything())
 
-ev_sites <- read_rds("data/tarrant_EV_sites.rds")
+vaccine_sites_sf_travis <- vaccine_sites_sf %>% 
+  filter(County=="Travis")
 
 walking_isos <- mb_isochrone(
-  vaccine_sites_sf,
+  vaccine_sites_sf_travis,
   profile = "walking",
-  time = 20,
-  id = "Provider Name"
-)
+  time = 30,
+  id = "Provider Name",
+  rate_limit = 2500,
+) %>% 
+  st_transform(4326) %>% 
+  st_as_sf() 
 
-driving_isos <- mb_isochrone(
-  vaccine_sites_sf,
-  profile = "driving",
-  time = 20,
-  id = "Provider Name"
-)
+walking_combined <- st_union(walking_isos) %>% 
+  st_cast(to="POLYGON") %>% 
+  st_transform(4326) %>% 
+  st_as_sf() 
+
+write_rds(walking_isos, "clean_data/walking_isos_30.rds")
+write_rds(walking_combined, "clean_data/walking_combined_30.rds")
+
+walking_isos <- read_rds("clean_data/walking_isos_30.rds")
+walking_combined <- read_rds("clean_data/walking_combined_30.rds")
+
+# demvars <-  c(White = "B03002_003",
+#               Black = "B03002_004",
+#               Asian = "B03002_006",
+#               Hispanic = "B03002_012")
+# 
+# travis_dems <- get_acs(geography = "block group", 
+#                        variables = demvars,
+#                        state="TX",
+#                        county = "Travis County",
+#                        survey = "acs5",
+#                        show_call = TRUE,
+#                        geometry = TRUE,
+#                        summary_var = "B01003_001")
+
+# travis_pop_blox <- get_acs(geography = "block group", 
+#                       variables = "B01003_001",
+#                       state="TX",
+#                       county = "Travis County",
+#                       survey = "acs5",
+#                       geometry = TRUE,
+#                       show_call = TRUE) %>% 
+#   filter(estimate!=0) %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf()
+
+inaccessible_walking <- st_difference(travis_pop_blox,st_union(walking_combined)) %>% 
+  st_cast(to="POLYGON") %>% 
+  st_transform(4326) %>% 
+  st_as_sf()  %>% 
+  mutate(est_lab = scales::comma(estimate, accuracy=1, suffix = " People"))
+
+inaccessible_walk_summ <- inaccessible_walking %>% 
+  as_tibble() %>% 
+  distinct(GEOID, .keep_all = TRUE) %>% 
+  mutate(state="TX") %>% 
+  group_by(state) %>% 
+  summarise(sum_inaccessible = sum(estimate))
 
 mapbox_map <- leaflet() %>%
-  addMapboxTiles(style_id = "streets-v11",
+  addMapboxTiles(style_id = "light-v9",
+                 username = "mapbox") 
+
+# bins <- c(0, 10, 20, 50, 100, 200, 500, 1000, Inf)
+pal <- colorBin("Reds", domain = inaccessible_walking$estimate)
+
+mapbox_map %>%
+  addPolygons(data = inaccessible_walking,
+              stroke = FALSE,
+              color = "#03F",
+              fill = TRUE,
+              # fillColor = ~pal(estimate),
+              fillOpacity = 0.7,
+              dashArray = NULL,
+              smoothFactor = 1,
+              popup = ~est_lab) %>% 
+  addLegend("bottomleft",
+            data = inaccessible_walking,
+            values = ~estimate,
+            # labFormat = labelFormat(
+            #   suffix = "%"),
+            pal = pal,
+            title = "Population Est.")
+```
+
+```{r accessible_pop,  echo=FALSE, layout = "l-page"}
+
+vaccine_sites_sf <- read_csv("https://utexas-lbjp-data.github.io/txcovidvaccinedata/clean_data/vaccine_provider_raw.csv") %>%
+    st_as_sf(coords = c("lon", "lat"), crs = 4326, remove = FALSE) %>% 
+    select(-Address) %>% 
+    mutate(Address = paste0(Street, ", ", City, ", TX ", Zip)) %>% 
+    select(-Street, -City, -Zip) %>% 
+    mutate(Time = format(as.POSIXct(`Time Updated`), format = "%I:%M %p")) %>% 
+    select(1:2, `Total Available`, `Last Updated`,Time, Phone, Address, everything())
+
+vaccine_sites_sf_hub <- vaccine_sites_sf %>% 
+  filter(`Organization Type`=="Vaccine Hub")
+
+# driving_isos <- mb_isochrone(
+#   vaccine_sites_sf_hub,
+#   profile = "driving",
+#   time = 15,
+#   id = "Provider Name"
+# ) %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf() 
+# 
+# driving_combined <- st_union(driving_isos) %>% 
+#   st_cast(to="POLYGON") %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf() 
+# 
+# driving_isos_20 <- mb_isochrone(
+#   vaccine_sites_sf_hub,
+#   profile = "driving",
+#   time = 20,
+#   id = "Provider Name"
+# ) %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf()
+# 
+# driving_combined_20 <- st_union(driving_isos_20) %>% 
+#   st_cast(to="POLYGON") %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf() 
+# 
+# driving_isos_30 <- mb_isochrone(
+#   vaccine_sites_sf_hub,
+#   profile = "driving",
+#   time = 30,
+#   id = "Provider Name"
+# ) %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf() 
+# 
+# driving_combined_30 <- st_union(driving_isos_30) %>% 
+#   st_cast(to="POLYGON") %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf() 
+
+# write_rds(driving_isos, "clean_data/driving_isos_15.rds")
+# write_rds(driving_isos_20, "clean_data/driving_isos_20.rds")
+# write_rds(driving_isos_30, "clean_data/driving_isos_30.rds")
+# write_rds(driving_combined, "clean_data/driving_combined_15.rds")
+# write_rds(driving_combined_20, "clean_data/driving_combined_20.rds")
+# write_rds(driving_combined_30, "clean_data/driving_combined_30.rds")
+
+# driving_isos <- read_rds("clean_data/driving_isos_15.rds")
+# driving_isos_20 <- read_rds("clean_data/driving_isos_20.rds")
+# driving_isos_30 <- read_rds("clean_data/driving_isos_30.rds")
+driving_combined <- read_rds("clean_data/driving_combined_15.rds")
+driving_combined_20 <- read_rds("clean_data/driving_combined_20.rds")
+driving_combined_30 <- read_rds("clean_data/driving_combined_30.rds")
+
+mapbox_map <- leaflet() %>%
+  addMapboxTiles(style_id = "light-v9",
                  username = "mapbox") 
 
 mapbox_map %>%
-  addPolygons(data = walking_isos,
-              popup = ~id)
+  addPolygons(data = driving_combined_30,
+              stroke = FALSE,
+              color = "red",
+              fill = TRUE,
+              # fillColor = ~pal(estimate),
+              fillOpacity = 0.5,
+              dashArray = NULL,
+              smoothFactor = 1) %>% 
+    addPolygons(data = driving_combined_20,
+              stroke = FALSE,
+              color = "blue",
+              fill = TRUE,
+              # fillColor = ~pal(estimate),
+              fillOpacity = .8,
+              dashArray = NULL,
+              smoothFactor = 1) %>%
+    addPolygons(data = driving_combined,
+              stroke = FALSE,
+              color = "black",
+              fill = TRUE,
+              # fillColor = ~pal(estimate),
+              fillOpacity = .8,
+              dashArray = NULL,
+              smoothFactor = 1)
+```
+
+
+## Where Inaccessible Populations Live in Texas
+
+```{r inaccessible_pop, echo=FALSE, fig.height=11, fig.width=11, layout="l-body"}
+
+# texas_pop <- get_acs(geography = "tract", 
+#                       variables = "B01003_001",
+#                       state="TX",
+#                       survey = "acs5",
+#                       geometry = TRUE,
+#                       show_call = TRUE) %>% 
+#   filter(estimate!=0) %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf()
+
+# texas_pop_blox <- get_acs(geography = "block group",
+#                       variables = "B01003_001",
+#                       state="TX",
+#                       survey = "acs5",
+#                       geometry = TRUE,
+#                       show_call = TRUE) %>%
+#   filter(estimate!=0) %>%
+#   st_transform(4326) %>%
+#   st_as_sf()
+# 
+# texas_pop_block_grps <- get_acs(geography = "block group",
+#                       variables = "B01003_001",
+#                       state="TX",
+#                       survey = "acs5",
+#                       geometry = TRUE,
+#                       show_call = TRUE) %>%
+#   # filter(estimate==0) %>%
+#   st_transform(4326) %>%
+#   st_as_sf()
+
+# write_rds(texas_pop_block_grps, "clean_data/texas_pop_acs_block_groups.rds")
+
+# texas_pop_block_grps <-read_rds("clean_data/texas_pop_acs_block_groups.rds")
+# 
+# texas_pop_blox <- texas_pop_block_grps %>% 
+#   filter(estimate!=0)
+
+# inaccessible_vaccine_hub <- st_difference(texas_pop_blox,st_union(driving_combined_30)) %>% 
+#   st_cast(to="POLYGON") %>% 
+#   st_transform(4326) %>% 
+#   st_as_sf()  %>% 
+#   mutate(est_lab = scales::comma(estimate, accuracy=1, suffix = " People"))
+
+# write_rds(inaccessible_vaccine_hub, "clean_data/inaccessible_vaccine_hub.rds")
+
+inaccessible_vaccine_hub <-read_rds("clean_data/inaccessible_vaccine_hub.rds")
+
+# inaccessible_hub_summ <- inaccessible_vaccine_hub %>% 
+#   as_tibble() %>% 
+#   distinct(GEOID, .keep_all = TRUE) %>% 
+#   mutate(state="TX") %>% 
+#   group_by(state) %>% 
+#   summarise(sum_inaccessible = sum(estimate))
+
+# mapbox_map %>%
+#   addPolygons(data = driving_combined_30,
+#               stroke = FALSE,
+#               color = "#03F",
+#               fill = TRUE,
+#               # fillColor = ~pal(estimate),
+#               fillOpacity = 0.7,
+#               dashArray = NULL,
+#               smoothFactor = 1) %>%
+#  addPolygons(data = inaccessible_vaccine_hub,
+#               stroke = FALSE,
+#               color = "#03F",
+#               fill = TRUE,
+#               # fillColor = ~pal(estimate),
+#               fillOpacity = 0.7,
+#               dashArray = NULL,
+#               smoothFactor = 1,
+#               popup = ~GEOID)# %>% 
+    # addPolygons(data = texas_pop_block_grps,
+    #           stroke = TRUE,
+    #           color = "black",
+    #           fill = FALSE,
+    #           # fillColor = ~pal(estimate),
+    #           fillOpacity = 0.7,
+    #           dashArray = NULL,
+    #           smoothFactor = 1,
+    #           popup = ~GEOID)
+
+  ggplot() +
+  geom_sf(data = inaccessible_vaccine_hub, fill="#5da5da", color = NA, show.legend = TRUE) +
+  # geom_sf(data = driving_combined_30, fill="#bf5700", color = NA) +
+  # geom_sf(data = texas_pop_block_grps, fill=NA, color = "black", lwd=.2) + 
+  theme_minimal(base_family = "Graphik") +
+  coord_sf(datum = NA) +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.major.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.x = element_blank(),
+        legend.position = "none") +
+  labs(title = "~7.4 million Texans live more than 30min\naway from a Vaccine Hub",
+       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       x = NULL,
+       y = NULL,
+       color = NULL,
+       caption = "Data File: 'Texas Vaccine Provider Data' | U.S. Census Bureau, ACS 5-Year Series \nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
+      # ggsave(paste0(today,"_","inaccessible_hub_30min.png"), dpi = 300, width = 11, height = 11)
+
+  
 ```
 
 
