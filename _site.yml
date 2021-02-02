@@ -67,6 +67,6 @@ cookie_consent:
   style: headline
   type: express
   palette: light
-  lang: es
+  lang: en
   cookies_policy: url
 
