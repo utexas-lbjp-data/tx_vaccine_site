@@ -1,0 +1,42 @@
+---
+title: "Moderna "
+# author:
+#   - first_name: "D. Cale"
+#     last_name: "Reeves"
+#     url: http://www.dcalereeves.com
+#     affiliation: The LBJ School of Public Affairs
+#     affiliation_url: https://lbj.utexas.edu
+#     orcid_id: 0000-0001-5156-594X
+output: 
+  distill::distill_article: 
+    css: page_header.css
+    toc: yes
+    df_print: kable
+---
+
+```{r panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+xaringanExtra::style_panelset_tabs()
+```
+
+```{css echo=FALSE}
+.panelset {
+   grid-column: page;
+}
+```
+
+::::: {.panelset}
+
+::: {.panel}
+
+## Información acerca de la vacuna contra el COVID-19 de Moderna {.panel-name}
+
+```{=html} 
+
+<!-- Markup for HTML (Informaci&#243;n acerca de la vacuna contra el&#160;COVID-19 de Moderna  | CDC) --><div class='rid_03455817_415696' data-apiroot='//tools.cdc.gov/api' data-mediatype='html' data-mediaid='415696' data-stripscripts='true' data-stripanchors='false' data-stripimages='false' data-stripcomments='true' data-stripstyles='true' data-cssclasses='syndicate,!no-syndicate' data-ids='' data-xpath='' data-oe='utf-8' data-of='xhtml' data-ns='cdc' data-postprocess='' data-nw='true' data-iframe='true' data-cdc-widget='syndicationIframe' data-apiembedsrc='//tools.cdc.gov/api/embed/html/js/embed-2.0.3.js' data-iframeembedsrc='//tools.cdc.gov/TemplatePackage/contrib/widgets/tp-widget-external-loader.js'></div><script src='//tools.cdc.gov/TemplatePackage/contrib/widgets/tp-widget-external-loader.js' ></script><noscript>You need javascript enabled to view this content or go to <a href='//tools.cdc.gov/api/v2/resources/media/415696/noscript'>source URL</a>.</noscript>
+
+```
+
+:::
+
+:::::

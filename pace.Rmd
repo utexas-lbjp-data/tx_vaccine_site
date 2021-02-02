@@ -100,39 +100,35 @@ Right now, the state has highlighted two phases of the Texas Population that are
 
 Below is a description of the Phase 1A population, as described by the Texas Department of State Health Services.
 
-## Phase 1A {.unlisted .unnumbered}
-
 ### First Tier
 
-* Paid and unpaid workers in hospital settings working directly with patients wh* are positive or at high risk for COVID-19. Such as but not limited to:
+Paid and unpaid workers in hospital settings working directly with patients who are positive or at high risk for COVID-19. Such as but not limited to:
+
 * Physicians, nurses, respiratory therapists and other support staff (custodial staff, etc.)
 * Additional clinical staff providing supporting laboratory, pharmacy, diagnostic and/or rehabilitation services
 * Others having direct contact with patients or infectious materials
 * Long-term care staff working directly with vulnerable residents. Includes:
-* Direct care providers at nursing homes, assisted living facilities, and state supported living centers
-* Physicians, nurses, personal care assistants, custodial, food service staff
-* EMS providers wh* engage in 9-1-1 emergency services like pre-hospital care and
-transport
-* Home health care workers, including hospice care, wh* directly interface with
-vulnerable and high-risk patients
+  - Direct care providers at nursing homes, assisted living facilities, and state supported living centers
+  - Physicians, nurses, personal care assistants, custodial, food service staff
+* EMS providers who engage in 9-1-1 emergency services like pre-hospital care and transport
+* Home health care workers, including hospice care, who directly interface with vulnerable and high-risk patients
 * Residents of long-term care facilities
 
 ### Second Tier
 
-* Staff in outpatient care settings wh* interact with symptomatic patients. Such as but not limited to:
+Staff in outpatient care settings who interact with symptomatic patients. Such as but not limited to:
+
 * Physicians, nurses, and other support staff (custodial staff, etc.)
-* Clinical staff providing diagnostic, laboratory, and/or rehabilitation services * Non 9-1-1 transport for routine care
+* Clinical staff providing diagnostic, laboratory, and/or rehabilitation services to Non 9-1-1 transport for routine care
 * Healthcare workers in corrections and detention facilities
 * Direct care staff in freestanding emergency medical care facilities and urgent care clinics
-* Community pharmacy staff wh* may provide direct services t* clients, including
-vaccination or testing for individuals wh* may have COVID
+* Community pharmacy staff who may provide direct services to clients, including
+vaccination or testing for individuals who may have COVID
 * Public health and emergency response staff directly involved in administration of COVID
 testing and vaccinations
-* Last responders wh* provide mortuary or death services t* decedents with COVID-19.
-Includes:
-* Embalmers and funeral home workers wh* have direct contact with decedents * Medical examiners and other medical certifiers wh* have direct contact with
-decedents
-* School nurses wh* provide health care t* students and teachers
+* Last responders who provide mortuary or death services to decedents with COVID-19. Includes:
+    - Embalmers and funeral home workers who have direct contact with decedents to Medical examiners and other medical certifiers who have direct contact with decedents
+* School nurses who provide health care to students and teachers
 
 </details>
 
@@ -142,8 +138,6 @@ decedents
 \newline
 
 Below is a description of the Phase 1B population, as described by the Texas Department of State Health Services.
-
-## Phase 1B {.unlisted .unnumbered}
 
 * People 65 years of age and older
 * People 16 years of age and older with at least one chronic medical condition that puts
@@ -167,7 +161,7 @@ The chart attempts to capture a holistic snapshot of multiple data points relate
 * **Doses Shipped:** How many doses have been shipped compared to the entire 16+ population?
 * **Persons Fully Vaccinated:** How many people have been fully vaccinated compared to the entire 16+ population?
 
-```{r echo=FALSE, fig.width=10, layout="l-page"}
+```{r echo=FALSE, fig.width=11, layout="l-page"}
 
 vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
@@ -208,7 +202,7 @@ vaccine_summ %>%
   geom_col(data = vaccine_summ %>% filter(phase_pop_est != "Future Phases"), aes(y=county_name, x=value, fill = reorder(phase_pop_est,desc(order))), alpha=.7) +
   annotate(geom = "rect", alpha = 0, color = "#333f48", linetype = 2, 
            xmin = box_start, xmax = box_end, ymin = .55, ymax = 1.45) +
-  geom_text(data = . %>% filter(phase_pop_est != "Future Phases"), angle=90, color="white", size = 3.1, family = "Graphik-Semibold",
+  geom_text(data = . %>% filter(phase_pop_est != "Future Phases"), angle=90, color="white", size = 3, family = "Graphik-Semibold",
             aes(y=county_name, x=lab_pos, label = reorder(phase_pop_est,desc(order)))) +
   geom_text(data = vaccine_summ %>% filter(phase_pop_est == "Future Phases"), color="#2d2d2d", size = 6,  hjust = 0.35,
             family = "Graphik-Semibold", aes(y=county_name, x=lab_pos), label = "Remaining Pop. (16+) in Future Phases") +
@@ -334,7 +328,7 @@ supply_by_provider_type %>%
 
 ## Vaccine Data Table 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, layout="l-page"}
+```{r echo=FALSE, message=FALSE, warning=FALSE, layout="l-screen-inset"}
 
 vaccine_cnty_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
@@ -414,7 +408,7 @@ reactable(data =vaccine_cnty_summ,
 
 # Vaccine Pace Tracker
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-screen-inset"}
+```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-page"}
 knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-pace/", height = "1800px")
 ```
 

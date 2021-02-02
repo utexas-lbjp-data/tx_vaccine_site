@@ -38,12 +38,12 @@ navbar:
           href: moderna.html
         - text: "Pfizer"
           href: pfizer.html
-        # - text: "Spanish"
-        # - text: "---------"
-        # - text: "Moderna"
-        #   href: moderna.html
-        # - text: "Pfizer"
-        #   href: pfizer.html
+        - text: "Espanol"
+        - text: "---------"
+        - text: "Moderna"
+          href: moderna_es.html
+        - text: "Pfizer"
+          href: pfizer_es.html
     - icon: fab fa-github
       href: https://github.com/utexas-lbjp-data
     - icon: fab fa-facebook
@@ -64,9 +64,9 @@ collections:
     authors_metadata: false
     share: [twitter, linkedin, facebook]
 cookie_consent:
-  style: simple
+  style: headline
   type: express
   palette: light
-  lang: en
+  lang: es
   cookies_policy: url
 
