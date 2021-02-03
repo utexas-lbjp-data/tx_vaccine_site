@@ -149,8 +149,201 @@ them at increased risk for severe illness from the virus that causes COVID-19, s
 
 Towards the end of January, the Texas Department of State Health Services (DSHS) began publishing breakdowns of vaccinations by across different demographics, specifically age, gender, and race/ethnicity. While there's a lot of unknowns in the data--particularly across entries for "Race/Ethnicity"+"Gender"--and also because we don't have the population estimates for phases 1A and 1B broken down by race/age/gender, the data presented by DSHS struggles to paint an incomplete picture of the profile of vaccinated individuals. That said, the charts below attempt to breakdown that data with as much clarity as possible across all known and unknown classifcations. 
 
-The first chart is broken up into six different panels--one for each classification of a race or ethnicity. Within each of those panels, there's two sets of five-columned bar charts which represent the reported gender. The dark blue colored bars (facing upwards) represent the female population within each race and ethnicity classification while the gray colored bars (facing downwards) represent the male population within each race and ethnicity classification. Each column within a set of blue or gray colored bars represents a different age group. 
+```{r covid_case_fatality_dem_chart, eval=FALSE, include=FALSE}
 
+## PULL ACS CENSUS DEMOGRAPHIC DATA ##
+
+demvars <-  c(White = "B03002_003",
+              Black = "B03002_004",
+              Asian = "B03002_006",
+              Hispanic = "B03002_012",
+              Other = "B03002_005", #AIAN
+              Other = "B03002_007", #NHPI
+              Other = "B03002_008", #Some Other Race
+              Other = "B03002_009") #Two Races
+
+dem_tx_data <- get_acs(geography = "state",
+                       variables = demvars,
+                       state="TX",
+                       survey = "acs5",
+                       show_call = TRUE,
+                       summary_var = "B01003_001") %>%
+  group_by(variable) %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  mutate(measure = "State Population",
+         # data="ACS 2019",
+         pct = round(estimate/summary_est, digits=4)) %>% 
+  select(dem_group = variable, pop_value = estimate, pop_pct = pct)
+
+## PULL DSHS COVID CASE FATALITY DEMOGRAPHIC DATA ##
+
+today <- Sys.Date()
+src_cf_data <- "https://dshs.texas.gov/coronavirus/TexasCOVID19Demographics.xlsx.asp" # URL For Daily CF Data
+src_cf_file <- "https://dshs.texas.gov/coronavirus/TexasCOVID19Demographics.xlsx" # URL For Daily CF Data
+lcl_cf_data <- basename(src_cf_file)
+filepath_cf_data <- paste0("raw_data/",today,"_",lcl_cf_data)
+download.file(url = src_cf_data, destfile = filepath_cf_data) # Downloads The Data
+
+sheets <- excel_sheets(filepath_cf_data) %>% set_names()
+
+dem_cf_data <- map_df(sheets,
+                    ~read_excel(filepath_cf_data, sheet=.x) %>% 
+                      rename(dem_group=1,value=2,pct=3),
+                    .id="Sheet") %>% 
+  separate(Sheet, into=c("measure","dem_type"), sep = " by ") %>% 
+  filter(str_detect(dem_type, regex("Race", ignore_case = TRUE)),
+         !str_detect(dem_group, regex("Total", ignore_case = TRUE))) %>% 
+  select(-dem_type) %>% 
+  mutate(data="Case + Fatality")
+
+## PULL DSHS COVID VACCINE DEMOGRAPHIC DATA ##
+
+dem_vax_data_summ <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
+  clean_names() %>%
+  filter(!str_detect(gender, "Texas")) %>% 
+  group_by(dem_group=race_ethnicity) %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  ungroup() %>% 
+  pivot_longer(cols=2:4,
+               names_to = "measure",
+               values_to = "value") %>% 
+  group_by(measure) %>% 
+  summarise(sum = sum(value))
+
+dem_vax_data <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
+  clean_names() %>%
+  filter(!str_detect(gender, "Texas")) %>% 
+  group_by(dem_group=race_ethnicity) %>% 
+  summarise(across(where(is.numeric), sum)) %>% 
+  ungroup() %>% 
+  pivot_longer(cols=2:4,
+               names_to = "measure",
+               values_to = "value") %>%
+  left_join(dem_vax_data_summ, by = "measure") %>% 
+  mutate(pct=round(value/sum, digits=4)) %>% 
+  select(-sum) %>% 
+  mutate(measure = str_replace(measure,"doses_administered","Doses Administered"),
+         measure = str_replace(measure,"people_vaccinated_with_at_least_one_dose","Partially Vaccinated"),
+         measure = str_replace(measure,"people_fully_vaccinated","Fully Vaccinated"),
+         data="Vaccines")
+
+## CREATE UNIFIED DEMOGRAPHIC DATASET ##
+
+dem_data_full <- bind_rows(dem_cf_data,
+                           dem_vax_data) %>% 
+  select(data, measure,dem_group,value,pct) %>% 
+  mutate(measure_f = factor(measure, levels=c('Doses Administered','Partially Vaccinated','Fully Vaccinated','Cases', 'Fatalities', 'State Population'))) %>% 
+  left_join(dem_tx_data, by = "dem_group") %>% 
+  # filter(measure!='Doses Administered') %>% 
+  filter(!str_detect(measure,'Partially Vaccinated|Fully Vaccinated')) %>%
+  mutate(pct_difference = pct-pop_pct)
+
+  ggplot() +
+  geom_col(data=dem_data_full %>% filter(measure!="State Population", dem_group!="Unknown"),
+           aes(y=reorder(dem_group, pct_difference), x=pct_difference, fill=dem_group), stat="identity", na.rm=TRUE, width=.9) +
+  facet_wrap(~measure, ncol=1) +
+  # geom_vline(data=dem_data_full %>% filter(measure=="State Population", dem_group!="Unknown"), aes(xintercept=pct)) +
+  # geom_bar(data=dem_data_full %>% filter(measure!="State Population", dem_group!="Unknown"),
+  #          aes(y=reorder(dem_group, pct), x=pct, fill=dem_group), stat="identity", na.rm=TRUE, width=.9) +
+  # geom_bar(data=dem_data_full %>% filter(measure=="State Population", dem_group!="Unknown") %>% select(-measure,-measure_f), 
+  #          aes(y=reorder(dem_group, pct), x=pct), fill="#ffffff", color = NA, 
+  #          alpha=.7,stat="identity", na.rm=TRUE, width=.9, show.legend=FALSE) +
+  # geom_bar(data=dem_data_full %>% filter(measure=="State Population", dem_group!="Unknown") %>% select(-measure,-measure_f), 
+  #          aes(y=reorder(dem_group, pct), x=pct), fill=NA, color = "#3d3d3d", 
+  #          lwd = .5, linetype = 2, stat="identity", na.rm=TRUE, width=.9,, show.legend = FALSE) +
+  hrbrthemes::scale_x_percent(limits = c(-.5, .5)) +
+  ggthemes::scale_fill_tableau(palette = "Tableau 10") +
+  guides(fill=guide_legend(title = md("**Legend** | Dashed Box Indicates 2019 ACS Population"), 
+                           title.position = "top",
+                           keyheight = .8)) +
+  theme_minimal(base_family = "Graphik") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.minor.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        plot.caption = element_markdown(lineheight = 1, hjust=0),
+        axis.text.x = element_text(angle = 90),
+        legend.title = element_markdown(), 
+        legend.position = "bottom") +
+  labs(title = "Comparing Cases, Fatalities, & Vaccines to Population Trends",
+       subtitle = paste0("This chart shows break downs of known COVID Cases, COVID Fatalities, and Vaccine Data for Texas. Excluded are the overall\nrace and ethnic groups classified as 'Unknown' by DSHS. Administered doses is a summary figure of persons who have\nreceived a single dose and persons who are fully vaccinated.\nData pulled from sources on ", today_lbl, " at ", time_lbl),
+       x = NULL,
+       y = NULL,
+       color = NULL,
+       # fill = "Legend",
+       caption = md("**Population Data**: 2019 ACS 5-Yr Series, Pulled with Tidycensus.<br>**Case Fatality Data**: 'Accessible Dashboard Data', Texas DSHS<br>**Vaccine Data**: 'Accessible Vaccine Dashboard Data', Texas DSHS<br>Chart by: @mrworthington")) #+
+  # ggsave(paste0(today,"_","tx_covid_equity_analysis.png"), dpi = 300, width = 10, height = 8)
+
+
+# library(waffle)
+# library(hrbrthemes)
+#   
+# tibble(
+#   parts = factor(rep(month.abb[1:3], 3), levels=month.abb[1:3]),
+#   values = c(10, 20, 30, 6, 14, 40, 30, 20, 10),
+#   fct = c(rep("Thing 1", 3), rep("Thing 2", 3), rep("Thing 3", 3))
+# ) -> xdf
+# 
+# dem_waffle <- dem_data_full %>% 
+#   filter(measure!="State Population", 
+#          dem_group!="Unknown",
+#          dem_group!="Other") %>% 
+#   mutate(waffle_pct = round(pct*100, digits =0))
+# 
+# install_fa_fonts()
+# 
+# dem_waffle %>% 
+#   ggplot(aes(label = dem_group, values = waffle_pct)) +
+#   facet_wrap(~measure_f, ncol=1) +
+#   geom_pictogram(
+#     n_rows = 20, size = 6, aes(colour = dem_group), flip = TRUE,
+#     family = "FontAwesome5Brands-Regular"
+#   ) +
+#   scale_color_manual(
+#     name = NULL,
+#     values = c("#073f9c", "black", "#f34323", "#bf5700"),
+#     labels = c("BitBucket", "GitHub", "Other", "Home")
+#   ) +
+#   scale_label_pictogram(
+#     name = NULL,
+#     values = c("bitbucket", "github", "git-alt", "apple"),
+#     labels = c("BitBucket", "GitHub", "Other", "Home")
+#   ) +
+#   coord_equal() +
+#   # theme_ipsum_rc(grid="") +
+#   theme_enhance_waffle() +
+#   theme(legend.text = element_text(hjust = 0, vjust = 1))
+# 
+# ggplot(data=dem_waffle, aes(fill=dem_group, values=waffle_pct)) +  
+#   geom_waffle(color = "white", size=1, flip=TRUE) +
+#   facet_wrap(~measure_f) +
+#   scale_x_discrete(expand=c(0,0)) +
+#   scale_y_discrete(expand=c(0,0)) +
+#   coord_equal() +
+#   ggthemes::scale_fill_tableau(palette = "Tableau 10") +
+#   guides(fill=guide_legend(title = md("**Legend** | Dashed Box Indicates 2019 ACS Population"), 
+#                            title.position = "top",
+#                            keyheight = .8)) +
+#   theme_minimal(base_family = "Graphik") +
+#   theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+#         plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+#         panel.grid.minor.y = element_blank(),
+#         plot.margin = margin(t=15, r=15, b=10, l = 15),
+#         plot.caption = element_markdown(lineheight = 1, hjust=0),
+#         axis.text.x = element_text(angle = 90),
+#         legend.title = element_markdown(), 
+#         legend.position = "bottom") +
+#   labs(title = "Comparing Cases, Fatalities, & Vaccines to Population Trends",
+#        subtitle = paste0("This chart shows break downs of known COVID Cases, COVID Fatalities, and Vaccine Data for Texas. Excluded are the overall\nrace and ethnic groups classified as 'Unknown' by DSHS. Administered doses is a summary figure of persons who have\nreceived a single dose and persons who are fully vaccinated.\nData pulled from sources on ", today_lbl, " at ", time_lbl),
+#        x = NULL,
+#        y = NULL,
+#        color = NULL,
+#        # fill = "Legend",
+#        caption = md("**Population Data**: 2019 ACS 5-Yr Series, Pulled with Tidycensus.<br>**Case Fatality Data**: 'Accessible Dashboard Data', Texas DSHS<br>**Vaccine Data**: 'Accessible Vaccine Dashboard Data', Texas DSHS<br>Chart by: @mrworthington")) +
+#   ggsave(paste0(today,"_","tx_covid_equity_analysis.png"), dpi = 300, width = 10, height = 8)
+```
+
+The next chart is broken up into six different panels--one for each classification of a race or ethnicity. Within each of those panels, there's two sets of five-columned bar charts which represent the reported gender. The dark blue colored bars (facing upwards) represent the female population within each race and ethnicity classification while the gray colored bars (facing downwards) represent the male population within each race and ethnicity classification. Each column within a set of blue or gray colored bars represents a different age group. 
 
 ```{r dem_chart_hc, eval=FALSE, include=FALSE, layout="l-page"}
 
@@ -368,7 +561,7 @@ vaccine_sites_sf_travis <- vaccine_sites_sf %>%
 walking_isos <- read_rds("clean_data/walking_isos_30.rds")
 walking_combined <- read_rds("clean_data/walking_combined_30.rds")
 
-vars_2019 <- load_variables(2019, "acs5") %>% 
+vars_2019 <- load_variables(2019, "acs5") #%>% 
   filter(str_detect(concept,"POPULATION 16 YEARS AND OVER"),
          label=="Estimate!!Total:")
 
