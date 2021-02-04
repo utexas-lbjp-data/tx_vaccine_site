@@ -149,7 +149,7 @@ them at increased risk for severe illness from the virus that causes COVID-19, s
 
 Towards the end of January, the Texas Department of State Health Services (DSHS) began publishing breakdowns of vaccinations by across different demographics, specifically age, gender, and race/ethnicity. While there's a lot of unknowns in the data--particularly across entries for "Race/Ethnicity"+"Gender"--and also because we don't have the population estimates for phases 1A and 1B broken down by race/age/gender, the data presented by DSHS struggles to paint an incomplete picture of the profile of vaccinated individuals. That said, the charts below attempt to breakdown that data with as much clarity as possible across all known and unknown classifcations. 
 
-```{r covid_case_fatality_dem_chart, eval=FALSE, include=FALSE}
+```{r covid_case_fatality_dem_chart, echo=FALSE, fig.height=6.5, fig.width=10, layout = "l-page"}
 
 ## PULL ACS CENSUS DEMOGRAPHIC DATA ##
 
