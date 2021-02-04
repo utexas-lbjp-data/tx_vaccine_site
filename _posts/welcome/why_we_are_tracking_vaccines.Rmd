@@ -1,9 +1,10 @@
 ---
-title: "Tracking Texas COVID-19 Vaccines at the LBJ School"
+title: "Tracking our way out of COVID-19 in Texas"
 description: |
-  Having timely and useful resources is vital to the future of society
+  With vaccine rollouts well underway, ending the chaos of coronavirus requires tracking the path charted by officials to the finish line
 author:
-  - name: Matt Worthington, M.PAff
+  - last_name: Worthington
+    first_name: Matt
     url: https://github.com/mrworthington
     affiliation: The LBJ School of Public Affairs
     affiliation_url: https://lbj.utexas.edu
@@ -12,7 +13,7 @@ output:
   distill::distill_article:
     css: welcome_header.css
     self_contained: false
-preview: vaccine_background.jpg
+preview: erik-mclean-nOQO6Z-Q0Ig-unsplash.jpg
 # categories:
 #   - public health
 #   - dygraphs
@@ -20,11 +21,79 @@ preview: vaccine_background.jpg
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-
+library(tidyverse)
+library(janitor)
+library(highcharter)
+library(lbjdata)
 # Learn more about creating blogs with Distill at:
 # https://rstudio.github.io/distill/blog.html
 
+
 ```
 
+When COVID-19 first began creeping through the United States in late February, search interest for the 2011 box-office thriller ["Contagion"](https://en.wikipedia.org/wiki/Contagion_(2011_film)) began skyrocketing as a search term on Google Trends. With a total run-time of 1 hour and 46 minutes, the film follows the spread of a novel virus that rapidly circulates across the globe, wreaking havoc on the world's public health and its economy. Like our own pandemic, a vaccine is pursued throughout the film and---spoiler-alert---ultimately delivered. Despite its countless similarities, the most notable difference between the world of Contagion and the world of COVID-19 is the vaccine rollout, which only accounts for less than 20% of the movie.
 
 
+```{r echo=FALSE, layout="l-screen"}
+
+color_theme <- "#005f86" # extracted with chrome extension
+
+read_csv("raw_data/contagion_google_trends.csv", skip=1) %>%
+  clean_names() %>% 
+  hchart("areaspline", 
+         hcaes(x=week, y =contagion_united_states),
+         marker = list(enabled=FALSE),
+         name = "Interest Score: ") %>% 
+  hc_title(text="Searches for 'Contagion' on Google Trends") %>% 
+  hc_add_theme(hc_theme_lbj(header_align = "center")) %>% 
+  hc_tooltip(
+    pointFormat = "<span  style='color: {series.color}'> {series.name} <b>{point.y}</b><br/></span>",
+    shadow = FALSE,
+    backgroundColor = "transparent",
+    style = list(textOutline = "3px #fff"),
+    borderColor = "transparent",
+    borderWidth = 0
+  ) %>% 
+  hc_xAxis(
+    title = list(text = NULL),
+    opposite = TRUE,
+    gridLineWidth = 1,
+    gridLineOpacity = 0.5,
+    gridLineColor = "rgba(0, 95, 134,0.3)", # vertical lines
+    tickColor = "rgba(0, 95, 134,0.5)",
+    lineColor = "transparent",  # horizontal line,
+    labels = list(style = list(color = color_theme, opacity = 0.8, fontSize = "16px"))
+    # tickInterval = 8 * 24 * 3600 * 1000 # interval of 1 day (in your case = 60)
+    ) %>%
+  hc_yAxis(
+    title = list(text = ""),
+    opposite = TRUE,
+    max = 100,
+    maxPadding=10,
+    gridLineColor = "transparent",
+    showFirstLabel = FALSE,
+    labels = list(
+      style = list(color = color_theme, fontSize = "16px"),
+      align = "left",
+      x = -100
+    )
+  ) %>%
+  hc_plotOptions(
+    series = list(
+      color = color_theme,
+      fillColor = hex_to_rgba(color_theme, 0.20),
+      marker = list(enabled = FALSE)
+    )
+  ) %>%
+  hc_chart(
+    spacingBottom =  0,
+    spacingLeft =  -6,
+    spacingRight =  -55 # just plying to get these numbers
+  ) %>% 
+  hc_size(height = 300) %>% 
+  # hc_title(text = "Diamonds Are Forever") %>%
+  hc_subtitle(text = "Source: Diamonds data set") %>%
+  hc_credits(enabled = TRUE,
+             text = "Source: Google Trends - 'Contagion' Search Term.",
+             href = "https://trends.google.com/trends/explore?hl=en-US&tz=360&geo=US&q=contagion&sni=3")
+```

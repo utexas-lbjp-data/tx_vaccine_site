@@ -44,6 +44,28 @@ navbar:
           href: moderna_es.html
         - text: "Pfizer"
           href: pfizer_es.html
+    - text: "About"
+      menu:
+        - text: "Our Schools"
+        - text: "---------"
+        - text: "The LBJ School"
+          href: https://lbj.utexas.edu
+        # - text: "Dell Medical School"
+        #   href: https://dellmed.utexas.edu
+        - text: "Our Research"
+        - text: "---------"
+        - text: "Credits"
+          href: index.html       
+        - text: "Methods & Data"
+          href: index.html            
+        # - text: "Espanol"
+        #   href: about.html
+        # - text: "Pace Explorer"
+        # - text: "---------"
+        # - text: "English"
+        #   href: pace.html
+        # - text: "Espanol"
+        #   href: pace.html
     - icon: fab fa-github
       href: https://github.com/utexas-lbjp-data
     - icon: fab fa-facebook
