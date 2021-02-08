@@ -1,0 +1,165 @@
+---
+title: "Explore Access"
+description: |
+  Are vaccines being responsibly and fairly administered?
+output: 
+  distill::distill_article:
+    toc: true
+    css: equity_header.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(janitor)
+library(bsselectR)
+library(readxl)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars, eval=FALSE, include=FALSE}
+
+today <- Sys.Date()
+today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
+time_lbl <- format(Sys.time(), format = "%I:%M %p")
+
+src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
+lcl <- basename(src)
+filepath <- paste0("raw_data/", today,"_",lcl,"x")
+download.file(url = src, destfile = filepath) # Downloads The Data
+
+vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
+  clean_names() %>% 
+  mutate(across(total_doses_allocated:population_16_64_any_medical_condition, as.numeric)) %>%
+  select(county_name, population_16, people_fully_vaccinated, total_doses_allocated, 
+         starts_with("population_phase_"), population_16_64_any_medical_condition) %>% 
+  mutate(population_phase_remaining = population_16 - (population_phase_1a_healthcare_workers +
+                                                       population_phase_1a_long_term_care_residents +
+                                                       population_16_64_any_medical_condition),
+         remaining_box_start = population_16 - population_phase_remaining) %>%
+  rename(`Phase 1A - Healthcare Workers`=population_phase_1a_healthcare_workers, 
+         `Phase 1A - Long Term Care`=population_phase_1a_long_term_care_residents, 
+         `Phase 1B - 65+ and High Risk`=population_16_64_any_medical_condition,
+         `Future Phases`=population_phase_remaining) %>%
+  pivot_longer(cols=contains("Phase"), names_to = "phase_pop_est", values_to = "value") %>%
+  group_by(county_name) %>% 
+  mutate(order = case_when(
+    phase_pop_est == "Phase 1A - Healthcare Workers" ~ 1,
+    phase_pop_est == "Phase 1A - Long Term Care" ~ 2,
+    phase_pop_est == "Phase 1B - 65+ and High Risk" ~ 3,
+  ),
+  prev_1 = lag(value, 1),
+  prev_2 = lag(value, 2),
+  prev_1 = replace_na(prev_1, 0),
+  prev_2 = replace_na(prev_2, 0)) %>% 
+  mutate(lab_pos = (value/2) + (prev_1 + prev_2)) %>% 
+  ungroup()
+
+counties <- vaccine_summ %>% 
+  filter(county_name!="Federal Long-Term Care Vaccination Program",
+         county_name!="*Other") %>% 
+  distinct(county_name) %>% 
+  arrange(county_name) %>% 
+  simplify()
+
+plots <- lapply(counties, function(x) {
+  
+  county_lbl <- vaccine_summ %>% 
+    filter(county_name == x) %>% 
+    distinct(county_name) %>% 
+    simplify()
+  
+  vaccine_summ_cnty <- vaccine_summ %>% 
+    filter(county_name==x)
+  
+  box_start <- unique(vaccine_summ_cnty$remaining_box_start)
+  box_end <- unique(vaccine_summ_cnty$population_16)
+  fully_vac_lbl <- scales::comma(unique(vaccine_summ_cnty$people_fully_vaccinated))
+  shipped_lbl <- scales::comma(unique(vaccine_summ_cnty$total_doses_allocated))
+  fully_vac_xend <- unique(vaccine_summ_cnty$people_fully_vaccinated)
+  shipped_xend <- unique(vaccine_summ_cnty$total_doses_allocated)
+  
+  vaccine_summ_cnty %>% 
+    ggplot() +
+    geom_col(data = . %>%  slice(1), aes(y=county_name, x=population_16), fill = "#333f48", alpha = .05) +
+    geom_col(data = vaccine_summ_cnty %>% filter(phase_pop_est != "Future Phases"), aes(y=county_name, x=value, fill = reorder(phase_pop_est,desc(order))), alpha=.7) +
+    annotate(geom = "rect", alpha = 0, color = "#333f48", linetype = 2,
+             xmin = box_start, xmax = box_end, ymin = .55, ymax = 1.45) +
+    geom_text(data = . %>% filter(phase_pop_est != "Future Phases"), angle=90, color="white", size = 3, family = "Graphik-Semibold",
+              aes(y=county_name, x=lab_pos, label = reorder(phase_pop_est,desc(order)))) +
+    geom_text(data = vaccine_summ_cnty %>% filter(phase_pop_est == "Future Phases"), color="#2d2d2d", size = 6,  hjust = 0.35,
+              family = "Graphik-Semibold", aes(y=county_name, x=lab_pos), label = "Remaining Pop. (16+)\n in Future Phases") +
+    geom_vline(aes(xintercept=total_doses_allocated), linetype = 2, size = .9, color = "#2d2d2d") +
+    geom_vline(aes(xintercept=people_fully_vaccinated), linetype = 2, size = .9, color = "#2d2d2d") +
+    # scale_x_continuous(labels = scales::unit_format(unit = "M", accuracy = 1, scale = 1e-6)) +
+    scale_fill_manual(values = c("#005f86",  "#9cadb7","#bf5700")) +
+    guides(fill=guide_legend(title = "Legend",
+                             keyheight = .8)) +
+    annotate(
+      geom = "curve", color = "#2d2d2d", x = shipped_xend*1.15, y = 1.55, xend = shipped_xend*1.02, yend = 1.5,
+      curvature = .1, arrow = arrow(length = unit(2, "mm"))
+    ) +
+    annotate(geom = "label", x = shipped_xend*1.17, y = 1.53, color = "#2d2d2d",
+             label = glue::glue("Doses Shipped: {shipped_lbl}"), family = "Graphik", hjust = "left") +
+    annotate(
+      geom = "curve", color = "#2d2d2d", x = fully_vac_xend*2.25, y = .48, xend = fully_vac_xend*1.2, yend = .54 ,
+      curvature = 0, arrow = arrow(length = unit(2, "mm"))
+    ) +
+    annotate(geom = "label", x = fully_vac_xend*2.5, y = .5, color = "#2d2d2d",
+             label = glue::glue("Persons Fully Vacinated: {fully_vac_lbl}"), family = "Graphik", hjust = "left") +
+    theme_minimal(base_family = "Graphik") +
+    theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+          plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+          panel.grid.major.y = element_blank(),
+          plot.margin = margin(t=15, r=15, b=10, l = 15),
+          axis.text.y = element_blank(),
+          legend.position = "none") +
+    labs(title = paste0(county_lbl, " Summary of Vaccination Progress"),
+         subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+         x = NULL,
+         y = NULL,
+         color = NULL,
+         caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington")
+  
+})
+
+paths <- paste0("vax_summary/", counties, ".png")
+paths_today <- paste0("vax_summary/archive/", counties,"_",today, ".png")
+
+pwalk(list(paths, plots), ggsave, path = "figures", width = 11, height = 4.5, dpi = 300)
+pwalk(list(paths_today, plots), ggsave, path = "figures", width = 11, height = 4.5, dpi = 300)
+
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r echo=FALSE, fig.width = 4.5, fig.height = 11, layout = "l-page"}
+
+cnty_plots <- paste0(list.files("figures/vax_summary", 
+                                full.names = TRUE))
+
+# cnty_plots[-grep("2021",cnty_plots)]
+  
+
+names(cnty_plots) <- str_replace_all(cnty_plots, 
+                                      c("\\.png" = "", 
+                                        "figures/vax_summary/" = ""))
+
+bsselect(cnty_plots, type = "img", selected = "Texas", 
+         frame_height = 450, frame_width = 1100,
+         size = 5, style = "btn-info", live_search = TRUE, show_tick = TRUE)
+
+```
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
