@@ -11,8 +11,8 @@ links:
     url: "pace.html"
   - label: Equity
     url: "equity.html"
-  - label: Access
-    url: "providers.html"
+  # - label: Access
+  #   url: "providers.html"
   # - label: Blog
   #   url: "blog.html"
 site: distill::distill_website
