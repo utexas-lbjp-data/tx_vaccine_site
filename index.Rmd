@@ -48,6 +48,10 @@ background-size:cover !important;
 border-radius: 0%!important;
 }
 
+h3 {
+  font-weight:700;
+}
+
 img {
 height: 3rem !important;
 }
@@ -59,6 +63,71 @@ h1 {
 
 p {
   font-size: 1.25rem !important;
+}
+
+@media only screen and (max-width: 600px) {
+
+body {
+background: transparent !important;
+background: linear-gradient(120deg, rgba(51, 63, 72, .8) 50%, 
+      rgba(191, 87, 0, 0.35) 150%),
+    /* bottom, image */
+    url(textures_ut_thick_panels.jpg) no-repeat center center fixed !important;
+-webkit-background-size: cover !important;
+-moz-background-size: cover !important;
+-o-background-size: cover !important;
+background-size:cover !important;
+}
+
+.col-lg-6 {
+  -ms-flex: 0 0 50%;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.rounded-circle {
+  border-radius: 0%!important;
+}
+
+img {
+  height: 1.5rem !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  font-weight:900;
+  font-size: 2.5rem !important;
+  text-align:center !important;
+}
+
+h3 {
+  font-weight:700;
+  text-align:center !important;
+}
+
+button {
+  background-color: rgba(191, 87, 0, 0.85) !important;
+  color: white  !important;
+  font-weight: 600 !important;
+  border-color: rgba(191, 87, 0, 0.85)  !important;
+}
+
+p {
+  font-size: 1.05rem !important;
+  text-align:center !important;
+
+}          
+
+.pl-5, .px-5 {
+padding-left: 0rem!important;
+}
+
+.pb-1, .py-1 {
+padding-bottom: 0rem!important;
+}
+
 }
 
 ```

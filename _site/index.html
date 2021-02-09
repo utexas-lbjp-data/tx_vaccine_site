@@ -814,7 +814,7 @@
             <h1>Texas COVID-19 Vaccine Resource</h1>
           </div>
           <div class="pl-5 py-3">
-            <div style="border: thin solid lightgray; width: 100px;"></div>
+            <div style="border: thin solid lightgray; width: 100%;"></div>
           </div>
           <div class="px-5 py-1">
             <p>The reach of COVID-19 on Texas and the world has been devastating. As our state joins a global effort to put coronavrius into our past, we are tracking the Texas vaccine roll-out as it unfolds in real-time.</p>
@@ -844,6 +844,10 @@
             border-radius: 0%!important;
             }
 
+            h3 {
+              font-weight:700;
+            }
+
             img {
             height: 3rem !important;
             }
@@ -857,12 +861,8 @@
               font-size: 1.25rem !important;
             }
 
-            /* Portrait and Landscape */
-            @media only screen 
-              and (min-device-width: 375px) 
-              and (max-device-width: 812px) 
-              and (-webkit-min-device-pixel-ratio: 3) { 
-                
+            @media only screen and (max-width: 600px) {
+
             body {
             background: transparent !important;
             background: linear-gradient(120deg, rgba(51, 63, 72, .8) 50%, 
@@ -882,108 +882,46 @@
             }
 
             .rounded-circle {
-            border-radius: 0%!important;
+              border-radius: 0%!important;
             }
 
             img {
-            height: 1.5rem !important;
+              height: 1.5rem !important;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
             }
 
             h1 {
               font-weight:900;
               font-size: 2.5rem !important;
+              text-align:center !important;
+            }
+
+            h3 {
+              font-weight:700;
+              text-align:center !important;
+            }
+
+            button {
+              background-color: rgba(191, 87, 0, 0.85) !important;
+              color: white  !important;
+              font-weight: 600 !important;
+              border-color: rgba(191, 87, 0, 0.85)  !important;
             }
 
             p {
               font-size: 1.05rem !important;
+              text-align:center !important;
+
+            }          
+
+            .pl-5, .px-5 {
+            padding-left: 0rem!important;
             }
 
-            }
-
-            /* Portrait */
-            @media only screen 
-              and (min-device-width: 375px) 
-              and (max-device-width: 812px) 
-              and (-webkit-min-device-pixel-ratio: 3)
-              and (orientation: portrait) { \
-
-                body {
-            background: transparent !important;
-            background: linear-gradient(120deg, rgba(51, 63, 72, .8) 50%, 
-                  rgba(191, 87, 0, 0.35) 150%),
-                /* bottom, image */
-                url(textures_ut_thick_panels.jpg) no-repeat center center fixed !important;
-            -webkit-background-size: cover !important;
-            -moz-background-size: cover !important;
-            -o-background-size: cover !important;
-            background-size:cover !important;
-            }
-
-            .col-lg-6 {
-              -ms-flex: 0 0 50%;
-              flex: 0 0 100%;
-              max-width: 100%;
-            }
-
-            .rounded-circle {
-            border-radius: 0%!important;
-            }
-
-            img {
-            height: 1.5rem !important;
-            }
-
-            h1 {
-              font-weight:900;
-              font-size: 2.5rem !important;
-            }
-
-            p {
-              font-size: 1.05rem !important;
-            }
-
-            }
-
-            /* Landscape */
-            @media only screen 
-              and (min-device-width: 375px) 
-              and (max-device-width: 812px) 
-              and (-webkit-min-device-pixel-ratio: 3)
-              and (orientation: landscape) { 
-                
-            body {
-            background: transparent !important;
-            background: linear-gradient(120deg, rgba(51, 63, 72, .8) 50%, 
-                  rgba(191, 87, 0, 0.35) 150%),
-                /* bottom, image */
-                url(textures_ut_thick_panels.jpg) no-repeat center center fixed !important;
-            -webkit-background-size: cover !important;
-            -moz-background-size: cover !important;
-            -o-background-size: cover !important;
-            background-size:cover !important;
-            }
-
-            .col-lg-6 {
-              -ms-flex: 0 0 50%;
-              flex: 0 0 100%;
-              max-width: 100%;
-            }
-
-            .rounded-circle {
-            border-radius: 0%!important;
-            }
-
-            img {
-            height: 1.5rem !important;
-            }
-
-            h1 {
-              font-weight:900;
-              font-size: 2.5rem !important;
-            }
-
-            p {
-              font-size: 1.05rem !important;
+            .pb-1, .py-1 {
+            padding-bottom: 0rem!important;
             }
 
             }
@@ -1037,7 +975,7 @@
             <h1>Texas COVID-19 Vaccine Resource</h1>
           </div>
           <div class="pl-5 py-3">
-            <div style="border: thin solid lightgray; width: 100px;"></div>
+            <div style="border: thin solid lightgray; width: 100%;"></div>
           </div>
           <div class="px-5 py-1">
             <p>The reach of COVID-19 on Texas and the world has been devastating. As our state joins a global effort to put coronavrius into our past, we are tracking the Texas vaccine roll-out as it unfolds in real-time.</p>
@@ -1067,6 +1005,10 @@
             border-radius: 0%!important;
             }
 
+            h3 {
+              font-weight:700;
+            }
+
             img {
             height: 3rem !important;
             }
@@ -1080,12 +1022,8 @@
               font-size: 1.25rem !important;
             }
 
-            /* Portrait and Landscape */
-            @media only screen 
-              and (min-device-width: 375px) 
-              and (max-device-width: 812px) 
-              and (-webkit-min-device-pixel-ratio: 3) { 
-                
+            @media only screen and (max-width: 600px) {
+
             body {
             background: transparent !important;
             background: linear-gradient(120deg, rgba(51, 63, 72, .8) 50%, 
@@ -1105,108 +1043,46 @@
             }
 
             .rounded-circle {
-            border-radius: 0%!important;
+              border-radius: 0%!important;
             }
 
             img {
-            height: 1.5rem !important;
+              height: 1.5rem !important;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
             }
 
             h1 {
               font-weight:900;
               font-size: 2.5rem !important;
+              text-align:center !important;
+            }
+
+            h3 {
+              font-weight:700;
+              text-align:center !important;
+            }
+
+            button {
+              background-color: rgba(191, 87, 0, 0.85) !important;
+              color: white  !important;
+              font-weight: 600 !important;
+              border-color: rgba(191, 87, 0, 0.85)  !important;
             }
 
             p {
               font-size: 1.05rem !important;
+              text-align:center !important;
+
+            }          
+
+            .pl-5, .px-5 {
+            padding-left: 0rem!important;
             }
 
-            }
-
-            /* Portrait */
-            @media only screen 
-              and (min-device-width: 375px) 
-              and (max-device-width: 812px) 
-              and (-webkit-min-device-pixel-ratio: 3)
-              and (orientation: portrait) { \
-
-                body {
-            background: transparent !important;
-            background: linear-gradient(120deg, rgba(51, 63, 72, .8) 50%, 
-                  rgba(191, 87, 0, 0.35) 150%),
-                /* bottom, image */
-                url(textures_ut_thick_panels.jpg) no-repeat center center fixed !important;
-            -webkit-background-size: cover !important;
-            -moz-background-size: cover !important;
-            -o-background-size: cover !important;
-            background-size:cover !important;
-            }
-
-            .col-lg-6 {
-              -ms-flex: 0 0 50%;
-              flex: 0 0 100%;
-              max-width: 100%;
-            }
-
-            .rounded-circle {
-            border-radius: 0%!important;
-            }
-
-            img {
-            height: 1.5rem !important;
-            }
-
-            h1 {
-              font-weight:900;
-              font-size: 2.5rem !important;
-            }
-
-            p {
-              font-size: 1.05rem !important;
-            }
-
-            }
-
-            /* Landscape */
-            @media only screen 
-              and (min-device-width: 375px) 
-              and (max-device-width: 812px) 
-              and (-webkit-min-device-pixel-ratio: 3)
-              and (orientation: landscape) { 
-                
-            body {
-            background: transparent !important;
-            background: linear-gradient(120deg, rgba(51, 63, 72, .8) 50%, 
-                  rgba(191, 87, 0, 0.35) 150%),
-                /* bottom, image */
-                url(textures_ut_thick_panels.jpg) no-repeat center center fixed !important;
-            -webkit-background-size: cover !important;
-            -moz-background-size: cover !important;
-            -o-background-size: cover !important;
-            background-size:cover !important;
-            }
-
-            .col-lg-6 {
-              -ms-flex: 0 0 50%;
-              flex: 0 0 100%;
-              max-width: 100%;
-            }
-
-            .rounded-circle {
-            border-radius: 0%!important;
-            }
-
-            img {
-            height: 1.5rem !important;
-            }
-
-            h1 {
-              font-weight:900;
-              font-size: 2.5rem !important;
-            }
-
-            p {
-              font-size: 1.05rem !important;
+            .pb-1, .py-1 {
+            padding-bottom: 0rem!important;
             }
 
             }
