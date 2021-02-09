@@ -13,8 +13,8 @@ links:
     url: "equity.html"
   - label: Access
     url: "providers.html"
-  - label: Blog
-    url: "blog.html"
+  # - label: Blog
+  #   url: "blog.html"
 site: distill::distill_website
 output:
   postcards::onofre

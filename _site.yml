@@ -9,10 +9,11 @@ navbar:
   logo:
     image: lbj_logo.png
     href: https://lbj.utexas.edu
+  search: false
   right:
     # - text: "Home"
     #   href: index.html
-    - text: "Dashboard"
+    - text: "Dashboards"
       menu:
         - text: "English"
         - text: "---------"
@@ -66,8 +67,8 @@ navbar:
         #   href: pace.html
         # - text: "Espanol"
         #   href: pace.html
-    - text: "Blog"
-      href: blog.html       
+    # - text: "Blog"
+    #   href: blog.html       
     - icon: fab fa-github
       href: https://github.com/utexas-lbjp-data
     - icon: fab fa-facebook
