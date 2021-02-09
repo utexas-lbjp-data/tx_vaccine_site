@@ -66,6 +66,8 @@ navbar:
         #   href: pace.html
         # - text: "Espanol"
         #   href: pace.html
+    - text: "Blog"
+      href: blog.html       
     - icon: fab fa-github
       href: https://github.com/utexas-lbjp-data
     - icon: fab fa-facebook

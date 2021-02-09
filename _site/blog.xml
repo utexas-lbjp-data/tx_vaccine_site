@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Texas COVID-19 Vaccine Tracker</title>
+    <link>https://festive-mestorf-e42b04.netlify.app</link>
+    <atom:link href="https://festive-mestorf-e42b04.netlify.app/blog.xml" rel="self" type="application/rss+xml"/>
+    <description>Tracking COVID-19 Vaccines in Texas
+</description>
+    <generator>Distill</generator>
+    <lastBuildDate>Mon, 20 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Tracking our way out of COVID-19 in Texas</title>
+      <dc:creator>Matt Worthington</dc:creator>
+      <link>https://festive-mestorf-e42b04.netlify.app/posts/welcome</link>
+      <description>With vaccine rollouts well underway, ending the chaos of coronavirus requires tracking the path charted by officials to the finish line</description>
+      <guid>https://festive-mestorf-e42b04.netlify.app/posts/welcome</guid>
+      <pubDate>Mon, 20 Jan 2020 00:00:00 +0000</pubDate>
+      <media:content url="https://festive-mestorf-e42b04.netlify.app/posts/welcome/erik-mclean-nOQO6Z-Q0Ig-unsplash.jpg" medium="image" type="image/jpeg"/>
+    </item>
+  </channel>
+</rss>
