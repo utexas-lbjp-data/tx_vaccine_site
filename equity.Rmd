@@ -1,7 +1,21 @@
 ---
 title: "Explore Equity"
 description: |
-  Are vaccines being responsibly and fairly administered?
+  Are vaccines being responsibly and fairly administered?  <ul class="list-inline title-nav"> 
+  <li class="list-inline-item-nav"><div class = "go-to-nav" >Go to: </div></li>
+  <li class="list-inline-item-nav">
+    <a href="providers.html"> <button type="button" class="btn btn-outline-light mb-2"> Providers </button> 
+    </a>
+  </li>
+  <li class="list-inline-item-nav">
+    <a href="pace.html"> <button type="button" class="btn btn-outline-light mb-2"> Pace </button> 
+    </a>
+  </li>
+  <li class="list-inline-item-nav">
+    <a href="equity.html"> <button type="button" class="btn btn-outline-light mb-2"> Equity </button> 
+    </a>
+  </li>
+  </ul>
 output: 
   distill::distill_article:
     toc: true
@@ -74,73 +88,6 @@ vaccine_hc <- hc_theme_merge(
                         tickColor = "#9d9d9d", 
                         tickWidth = 2)))
 ```
-
-## Eligible Populations
-
-Right now, the state has highlighted two phases of the Texas Population that are eligible to receive available COVID-19 vaccines: Phase 1A and Phase 1B. To learn more about each of the populations, expand the summaries below.
-
-<details class = "l-body">
-<summary><strong>Eligible Population | </strong>Phase 1A</summary>
-
-\newline
-
-Below is a description of the Phase 1A population, as described by the Texas Department of State Health Services.
-
-### First Tier
-
-* Paid and unpaid workers in hospital settings working directly with patients wh* are positive or at high risk for COVID-19. Such as but not limited to:
-* Physicians, nurses, respiratory therapists and other support staff (custodial staff, etc.)
-* Additional clinical staff providing supporting laboratory, pharmacy, diagnostic and/or rehabilitation services
-* Others having direct contact with patients or infectious materials
-* Long-term care staff working directly with vulnerable residents. Includes:
-* Direct care providers at nursing homes, assisted living facilities, and state supported living centers
-* Physicians, nurses, personal care assistants, custodial, food service staff
-* EMS providers wh* engage in 9-1-1 emergency services like pre-hospital care and
-transport
-* Home health care workers, including hospice care, wh* directly interface with
-vulnerable and high-risk patients
-* Residents of long-term care facilities
-
-### Second Tier
-
-* Staff in outpatient care settings wh* interact with symptomatic patients. Such as but not limited to:
-* Physicians, nurses, and other support staff (custodial staff, etc.)
-* Clinical staff providing diagnostic, laboratory, and/or rehabilitation services * Non 9-1-1 transport for routine care
-* Healthcare workers in corrections and detention facilities
-* Direct care staff in freestanding emergency medical care facilities and urgent care clinics
-* Community pharmacy staff wh* may provide direct services t* clients, including
-vaccination or testing for individuals wh* may have COVID
-* Public health and emergency response staff directly involved in administration of COVID
-testing and vaccinations
-* Last responders wh* provide mortuary or death services t* decedents with COVID-19.
-Includes:
-* Embalmers and funeral home workers wh* have direct contact with decedents * Medical examiners and other medical certifiers wh* have direct contact with
-decedents
-* School nurses wh* provide health care t* students and teachers
-
-</details>
-
-<details class = "l-body">
-<summary><strong>Eligible Population  | </strong>Phase 1B</summary>
-
-\newline
-
-Below is a description of the Phase 1B population, as described by the Texas Department of State Health Services.
-
-* People 65 years of age and older
-* People 16 years of age and older with at least one chronic medical condition that puts
-them at increased risk for severe illness from the virus that causes COVID-19, such as but not limited to:
-* Cancer
-* Chronic kidney disease
-* COPD (chronic obstructive pulmonary disease)
-* Heart conditions, such as heart failure, coronary artery disease or cardiomyopathies
-* Solid organ transplantation
-* Obesity and severe obesity (body mass index of 30 kg/m2 or higher)
-* Pregnancy
-* Sickle cell disease
-* Type 2 diabetes mellitus
-
-</details>
 
 
 # Vaccines + Equity

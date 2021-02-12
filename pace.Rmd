@@ -104,70 +104,8 @@ vaccine_hc <- hc_theme_merge(
   
 ```
 
-## Eligible Populations
 
-Right now, the state has highlighted two phases of the Texas Population that are eligible to receive available COVID-19 vaccines: Phase 1A and Phase 1B. To learn more about each of the populations, expand the summaries below.
-
-<details class = "l-body">
-<summary><strong>Eligible Population | </strong>Phase 1A</summary>
-
-\newline
-
-Below is a description of the Phase 1A population, as described by the Texas Department of State Health Services.
-
-### First Tier
-
-Paid and unpaid workers in hospital settings working directly with patients who are positive or at high risk for COVID-19. Such as but not limited to:
-
-* Physicians, nurses, respiratory therapists and other support staff (custodial staff, etc.)
-* Additional clinical staff providing supporting laboratory, pharmacy, diagnostic and/or rehabilitation services
-* Others having direct contact with patients or infectious materials
-* Long-term care staff working directly with vulnerable residents. Includes:
-  - Direct care providers at nursing homes, assisted living facilities, and state supported living centers
-  - Physicians, nurses, personal care assistants, custodial, food service staff
-* EMS providers who engage in 9-1-1 emergency services like pre-hospital care and transport
-* Home health care workers, including hospice care, who directly interface with vulnerable and high-risk patients
-* Residents of long-term care facilities
-
-### Second Tier
-
-Staff in outpatient care settings who interact with symptomatic patients. Such as but not limited to:
-
-* Physicians, nurses, and other support staff (custodial staff, etc.)
-* Clinical staff providing diagnostic, laboratory, and/or rehabilitation services to Non 9-1-1 transport for routine care
-* Healthcare workers in corrections and detention facilities
-* Direct care staff in freestanding emergency medical care facilities and urgent care clinics
-* Community pharmacy staff who may provide direct services to clients, including
-vaccination or testing for individuals who may have COVID
-* Public health and emergency response staff directly involved in administration of COVID
-testing and vaccinations
-* Last responders who provide mortuary or death services to decedents with COVID-19. Includes:
-    - Embalmers and funeral home workers who have direct contact with decedents to Medical examiners and other medical certifiers who have direct contact with decedents
-* School nurses who provide health care to students and teachers
-
-</details>
-
-<details class = "l-body">
-<summary><strong>Eligible Population  | </strong>Phase 1B</summary>
-
-\newline
-
-Below is a description of the Phase 1B population, as described by the Texas Department of State Health Services.
-
-* People 65 years of age and older
-* People 16 years of age and older with at least one chronic medical condition that puts
-them at increased risk for severe illness from the virus that causes COVID-19, such as but not limited to:
-* Cancer
-* Chronic kidney disease
-* COPD (chronic obstructive pulmonary disease)
-* Heart conditions, such as heart failure, coronary artery disease or cardiomyopathies
-* Solid organ transplantation
-* Obesity and severe obesity (body mass index of 30 kg/m2 or higher)
-* Pregnancy
-* Sickle cell disease
-* Type 2 diabetes mellitus
-
-</details>
+# Pace Overview
 
 ## Texas Summary
 
@@ -256,7 +194,8 @@ vaccine_summ %>%
 
 ```
 
-### National Comparison
+
+## National Comparison
 
 ```{r echo=FALSE, layout = "l-body-outset"}
 
@@ -352,9 +291,10 @@ hchart(
     text = "Source: 'COVID Data Tracker - Vaccines', Center for Disease Control.",
     href = "https://covid.cdc.gov/covid-data-tracker/#vaccinations") %>%
   hc_add_theme(vaccine_hc)
-
   
 ```
+
+# Distribution Trends
 
 The next chart captures where the reported supply of doses has been distributed, by the type of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently received shipments of doses and how much were they shipped?
 
@@ -419,8 +359,6 @@ supply_by_provider_type %>%
   # ggsave(paste0("figures/",today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 ```
 
-## Per Capita Trends
-
 <details class = "l-body">
 <summary><strong>Notes about the table below</strong></summary>
 
@@ -454,7 +392,8 @@ vaccine_cnty_summ <- read_excel(filepath, sheet = "By County", skip=0) %>%
          total_doses_allocated = as.numeric(total_doses_allocated)) %>% 
   mutate(doses_allocated_per_cap = round((total_doses_allocated/population_16)*100000, digits=0),
          fully_vaccinated_per_cap = round((people_fully_vaccinated/population_16)*100000, digits=0)) %>% 
-  select(county_name, population_16, total_doses_allocated, doses_allocated_per_cap, people_fully_vaccinated, fully_vaccinated_per_cap) %>%   arrange(desc(doses_allocated_per_cap))
+  select(county_name, population_16, total_doses_allocated, doses_allocated_per_cap, people_fully_vaccinated, fully_vaccinated_per_cap) %>%   
+  arrange(desc(population_16))
 
 reactable(data =vaccine_cnty_summ,
             searchable = TRUE,
@@ -490,7 +429,8 @@ reactable(data =vaccine_cnty_summ,
                                    align = "center",
                                    style = list(borderRight = "1.5px solid rgba(0, 0, 0, 0.2)")),
             total_doses_allocated = colDef(show = TRUE, format = colFormat(separators = TRUE),
-                                           align = "center", width = 250,
+                                           align = "center", 
+                                           width = 250,
                                            header = with_tooltip("Total Doses Allocated", "Number of Doses Allocated")),
             doses_allocated_per_cap = colDef(show = TRUE,
                                              header = with_tooltip("Doses Allocated (Per Capita)", "Number of Doses Allocated for every 100,000 persons"),
@@ -504,11 +444,13 @@ reactable(data =vaccine_cnty_summ,
                                                        value <- format(value, width = 9, justify = "right")
                                                        bar_chart(value, width = width, fill = "#bf5700")
                                              }),
-            people_fully_vaccinated = colDef(show = TRUE,  format = colFormat(separators = TRUE),
-                                             align = "center", width = 250,
+            people_fully_vaccinated = colDef(show = TRUE,  
+                                             format = colFormat(separators = TRUE),
+                                             align = "center", 
+                                             width = 250,
                                              header = with_tooltip("Full Vaccinations", "Number of Persons")),
             fully_vaccinated_per_cap = colDef(show = TRUE,
-                                              header = with_tooltip("Full Vaccinations (Per Capita)", "Miles per US gallon for every 100,000 persons"),
+                                              header = with_tooltip("Full Vaccinations (Per Capita)", "For every 100,000 persons, how many would be fully vaccinated?"),
                                              style = list(borderRight = "1.5px solid rgba(0, 0, 0, 0.2)", fontFamily = "Fira Code", whiteSpace = "pre"),
                                               align = "left",
                                               cell = function(value) {

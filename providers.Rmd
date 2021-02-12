@@ -1,7 +1,21 @@
 ---
 title: "Explore Providers"
 description: |
-  Which providers are offering the vaccine closest to you? 
+  Which providers are offering the vaccine closest to you?  <ul class="list-inline title-nav"> 
+  <li class="list-inline-item-nav"><div class = "go-to-nav" >Go to: </div></li>
+  <li class="list-inline-item-nav">
+    <a href="providers.html"> <button type="button" class="btn btn-outline-light mb-2"> Providers </button> 
+    </a>
+  </li>
+  <li class="list-inline-item-nav">
+    <a href="pace.html"> <button type="button" class="btn btn-outline-light mb-2"> Pace </button> 
+    </a>
+  </li>
+  <li class="list-inline-item-nav">
+    <a href="equity.html"> <button type="button" class="btn btn-outline-light mb-2"> Equity </button> 
+    </a>
+  </li>
+  </ul>
 output: 
   distill::distill_article:
     toc: true
