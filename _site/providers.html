@@ -107,7 +107,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Explore Providers"]},{"type":"character","attributes":{},"value":["Which providers are offering the vaccine closest to you? \n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","css"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["dashboard_header.css"]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Explore Providers"]},{"type":"character","attributes":{},"value":["Which providers are offering the vaccine closest to you? \n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","css"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["provider_header.css"]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -1819,6 +1819,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   line-height: 1.35em !important;
   }
 
+  .title-nav {
+    display: flex !important; 
+    padding-left: 0; 
+    list-style: none;
+    grid-column: text;
+  }
+
+  .list-inline-item-nav {
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
   /* #### Waiter & Sever Functions #### */
 
   .stat-tile {
@@ -2135,7 +2148,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <!--/radix_placeholder_site_in_header-->
 
-  <link rel="stylesheet" href="dashboard_header.css" type="text/css"/>
+  <link rel="stylesheet" href="provider_header.css" type="text/css"/>
 
 </head>
 
@@ -2238,15 +2251,12 @@ About
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#finding-a-vaccine">Finding A Vaccine</a></li>
 <li><a href="#eligible-populations">Eligible Populations</a></li>
 <li><a href="#vaccine-providers">Vaccine Providers</a></li>
 <li><a href="#photography-credit">Photography Credit</a></li>
 </ul>
 </nav>
 </div>
-<h2 id="finding-a-vaccine">Finding A Vaccine</h2>
-<p>The tool below is a resource designed to help you find a vaccine provider in your county that has recently reported having availability. To learn more about whether or not you are currently eligible, please read the “Eligible Populations” section below.</p>
 <h2 id="eligible-populations">Eligible Populations</h2>
 <p>Right now, the state has highlighted two phases of the Texas Population that are eligible to receive available COVID-19 vaccines: Phase 1A and Phase 1B. To learn more about each of the populations, expand the summaries below.</p>
 <details class="l-body">
@@ -2303,13 +2313,20 @@ About
 </ul>
 </details>
 <h2 id="vaccine-providers">Vaccine Providers</h2>
+<p>The tool below is a resource designed to help you find a vaccine provider in your county that has recently reported having availability. To learn more about whether or not you are currently eligible, please read the “Eligible Populations” section above. Enter a zip code, city, county, or complete address<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to see the latest data on providers in your county.</p>
 <div class="layout-chunk" data-layout="l-screen-inset">
 <iframe src="https://mrworthington.shinyapps.io/tx_vaccine-explorer/?showcase=0" width="624" height="1800px">
 </iframe>
 </div>
 <h2 class="appendix" id="photography-credit">Photography Credit</h2>
-<p><span>Photo by <a href="https://unsplash.com/@schluditsch?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Daniel Schludi</a> on <a href="https://unsplash.com/s/photos/vaccine-covid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+<p><span>Photo by <a href="https://www.tedeytan.com">Ted Eytan</a> on <a href="https://www.flickr.com/photos/taedc/30490299982/in/photolist-NNGFHA-NYZdwa-NwpdCG-NResH2-NYYMEX-NwpnXJ-NYYUYp-NsjKVh-MEQWbW-N29Gmf-ME7Xkd-MEQUEE-MEQSYJ-NbaP55-MEQJaG-MEEvbp-MEQRyE-MEQKJo-NbaMXL-NbaRwj-NbaQ8h-NwoDyA-NRdtkr-NNG3VY-NRdqde-NNFZts-NRenGk-N2a2Zd-NReh84-NVKZxu-N2aGRG-NRe48B-NRejWa-NReiCi-N1SaC2-NNGjL5-N1ScBT-NYZbcF-NRe2Cx-N1Rsdt-N1RgW6-NwoP8A-NRd3fr-N1QYfz-N1Rv9D-NRd8Gi-NYZ3bF">Flickr</a></span></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>A street address should contain a Street Number, Street Name, and a city. Unit and/or apartment numbers are not needed.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

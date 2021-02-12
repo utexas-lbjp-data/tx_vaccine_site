@@ -5,16 +5,13 @@ description: |
 output: 
   distill::distill_article:
     toc: true
-    css: dashboard_header.css
+    css: provider_header.css
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-## Finding A Vaccine
-
-The tool below is a resource designed to help you find a vaccine provider in your county that has recently reported having availability. To learn more about whether or not you are currently eligible, please read the "Eligible Populations" section below.
 
 ```{r eval=FALSE, fig.width=11, include=FALSE, layout="l-page"}
 
@@ -282,10 +279,14 @@ them at increased risk for severe illness from the virus that causes COVID-19, s
 
 ## Vaccine Providers
 
+The tool below is a resource designed to help you find a vaccine provider in your county that has recently reported having availability. To learn more about whether or not you are currently eligible, please read the "Eligible Populations" section above. Enter a zip code, city, county, or complete address[^1] to see the latest data on providers in your county.
+
+[^1]: A street address should contain a Street Number, Street Name, and a city. Unit and/or apartment numbers are not needed.
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-screen-inset"}
 knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-explorer/", height = "1800px")
 ```
 
 ## Photography Credit {.appendix}
 
-<span>Photo by <a href="https://unsplash.com/@schluditsch?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Daniel Schludi</a> on <a href="https://unsplash.com/s/photos/vaccine-covid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+<span>Photo by <a href="https://www.tedeytan.com">Ted Eytan</a> on <a href="https://www.flickr.com/photos/taedc/30490299982/in/photolist-NNGFHA-NYZdwa-NwpdCG-NResH2-NYYMEX-NwpnXJ-NYYUYp-NsjKVh-MEQWbW-N29Gmf-ME7Xkd-MEQUEE-MEQSYJ-NbaP55-MEQJaG-MEEvbp-MEQRyE-MEQKJo-NbaMXL-NbaRwj-NbaQ8h-NwoDyA-NRdtkr-NNG3VY-NRdqde-NNFZts-NRenGk-N2a2Zd-NReh84-NVKZxu-N2aGRG-NRe48B-NRejWa-NReiCi-N1SaC2-NNGjL5-N1ScBT-NYZbcF-NRe2Cx-N1Rsdt-N1RgW6-NwoP8A-NRd3fr-N1QYfz-N1Rv9D-NRd8Gi-NYZ3bF">Flickr</a></span>

@@ -20,7 +20,7 @@ output:
   postcards::onofre
 ---
  
-The reach of COVID-19 on Texas and the world has been devastating. As our state joins a global effort to put coronavrius into our past, we are tracking the Texas vaccine roll-out as it unfolds in real-time.
+The reach of COVID-19 on Texas and the world has been devastating. As our state joins a global effort to put coronavirus into our past, we are tracking the Texas vaccine roll-out as it unfolds in real-time.
 
 ### Explore Texas Vaccine Data
 

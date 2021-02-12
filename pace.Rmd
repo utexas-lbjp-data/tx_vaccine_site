@@ -1,7 +1,21 @@
 ---
 title: "Explore Pace"
 description: |
-  How fast are we distributing COVID-19 Vaccines?
+  How fast are we distributing COVID-19 Vaccines? <ul class="list-inline title-nav"> 
+  <li class="list-inline-item-nav"><div class = "go-to-nav" >Go to: </div></li>
+  <li class="list-inline-item-nav">
+    <a href="providers.html"> <button type="button" class="btn btn-outline-light mb-2"> Providers </button> 
+    </a>
+  </li>
+  <li class="list-inline-item-nav">
+    <a href="pace.html"> <button type="button" class="btn btn-outline-light mb-2"> Pace </button> 
+    </a>
+  </li>
+  <li class="list-inline-item-nav">
+    <a href="equity.html"> <button type="button" class="btn btn-outline-light mb-2"> Equity </button> 
+    </a>
+  </li>
+  </ul>
 output: 
   distill::distill_article:
     toc: true
@@ -157,7 +171,7 @@ them at increased risk for severe illness from the virus that causes COVID-19, s
 
 ## Texas Summary
 
-The chart attempts to capture a holistic snapshot of multiple data points related to state's current efforts to vaccinate the population. At a thirty thousand foot level, this chart is a single box that represents everyone in Texas aged 16 years and older. Within the box, you can see how much of is made up of eligible phases and how much of it is made up of the remaining population aged 16 years and older. And then, two lines mark the following:
+The chart attempts to capture a holistic snapshot of multiple data points related to state's current efforts to vaccinate the population. At a high level, this chart is a single box that represents everyone in Texas aged 16 years and older. Within the box, you can see how much of is made up of eligible phases and how much of it is made up of the remaining population aged 16 years and older. And then, two lines mark the following:
 
 * **Doses Shipped:** How many doses have been shipped compared to the entire 16+ population?
 * **Persons Fully Vaccinated:** How many people have been fully vaccinated compared to the entire 16+ population?
