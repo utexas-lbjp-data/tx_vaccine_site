@@ -246,15 +246,15 @@ vaccine_summ %>%
 
 ```{r echo=FALSE, layout = "l-body-outset"}
 
-cdc_last_update <- "Feb 8, 2021" 
-cdc_last_time <- "12:26PM"
+cdc_last_update <- "Feb 11, 2021" 
+cdc_last_time <- "12:56PM"
 
 
   hcoptslang <- getOption("highcharter.lang")
   hcoptslang$thousandsSep <- ","
   options(highcharter.lang = hcoptslang)
 
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-2.csv",
+cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-3.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
   select(area=state_territory_federal_entity, contains("_per_100k")) %>%
@@ -283,7 +283,7 @@ cdc_vaccine_drilldown <- cdc_vaccine_summary %>%
   group_by(type) %>% 
   mutate(rank = dense_rank(desc(value))) %>% 
   rename(indicator=type) %>% 
-  mutate(indicator = str_replace(indicator,"distributed_per_100k","Distributed"),
+  mutate(indicator = str_replace(indicator,"delivered_per_100k","Distributed"),
          indicator = str_replace(indicator,"administered_per_100k","Administered"),
          indicator = str_replace(indicator,"people_with_1_doses_per_100k","With 1 Dose"),
          indicator = str_replace(indicator,"people_with_2_doses_per_100k","With 2 Doses")) %>% 
