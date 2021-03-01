@@ -8,10 +8,6 @@ description: |
     </a>
   </li>
   <li class="list-inline-item-nav">
-    <a href="pace.html"> <button type="button" class="btn btn-outline-light mb-2"> Pace </button> 
-    </a>
-  </li>
-  <li class="list-inline-item-nav">
     <a href="equity.html"> <button type="button" class="btn btn-outline-light mb-2"> Equity </button> 
     </a>
   </li>
