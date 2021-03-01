@@ -81,6 +81,8 @@ output:
   distill::distill_article:
     css: styles.css
     toc_depth: 2
+    includes:
+      in_header: header.html
 base_url: https://festive-mestorf-e42b04.netlify.app
 collections:
   posts:
