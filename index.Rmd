@@ -111,6 +111,10 @@ background: linear-gradient(120deg, rgba(51, 63, 72, .8) 50%,
 background-size:cover !important;
 }
 
+.pl-5 img{
+margin-top: 3rem !important;
+}
+
 .col-lg-6 {
   -ms-flex: 0 0 50%;
   flex: 0 0 60%;

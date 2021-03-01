@@ -559,7 +559,7 @@ vaccine_sites_sf_hub <- vaccine_sites_sf %>%
 #   st_cast(to="POLYGON") %>%
 #   st_transform(4326) %>%
 #   st_as_sf()
-# 
+# # 
 # driving_isos_30 <- mb_isochrone(
 #   vaccine_sites_sf_hub,
 #   profile = "driving",
@@ -624,14 +624,14 @@ mapbox_map %>%
 
 ```{r inaccessible_pop, echo=FALSE, fig.height=11, fig.width=11, layout="l-body-outset"}
 
-# texas_pop <- get_acs(geography = "tract", 
+# texas_pop <- get_acs(geography = "tract",
 #                       variables = "B01003_001",
 #                       state="TX",
 #                       survey = "acs5",
 #                       geometry = TRUE,
-#                       show_call = TRUE) %>% 
-#   filter(estimate!=0) %>% 
-#   st_transform(4326) %>% 
+#                       show_call = TRUE) %>%
+#   filter(estimate!=0) %>%
+#   st_transform(4326) %>%
 #   st_as_sf()
 
 # texas_pop_blox <- get_acs(geography = "block group",
@@ -724,7 +724,9 @@ inaccessible_vaccine_hub <-read_rds("clean_data/inaccessible_vaccine_hub_16plus.
     #           popup = ~GEOID)
 
 date_pulled <- unique(vaccine_sites_sf$date_pulled)
-time_pulled <-  unique(vaccine_sites_sf$time_pulled)
+# time_pulled <-  unique(vaccine_sites_sf$time_pulled)
+# time_lbl <- format(time_pulled, format = "%I:%M %p")
+
 
   inaccessible_vaccine_hub %>% 
   ggplot() +
@@ -743,11 +745,10 @@ time_pulled <-  unique(vaccine_sites_sf$time_pulled)
         legend.title = element_text(family = "Graphik-Bold", size=18),
         legend.text = element_text(size=16),
         plot.margin = margin(t=15, r=15, b=10, l = 15)) +
-  labs(title = "~5.7m Texans are a 30+min drive from a Vaccine Hub",
-       subtitle = paste0("Shown below are census blocks where the population aged 16 years and older would<br> have to drive 30 minutes or more to one of the state's existing Vaccine Hubs. Areas<br>marked in orange are within a 30 min drive to a Vaccine Hub.</span><br>Hub Locations Accurate as of ", date_pulled, " at ", time_pulled),
+  labs(title = "~5.6m Texans are a 30+min drive from a Vaccine Hub",
+       subtitle = paste0("Shown below are census blocks where the population aged 16 years and older would\nhave to drive 30 minutes or more to one of the state's existing Vaccine Hubs. Areas\nmarked in orange are within a 30 min drive to a Vaccine Hub.\nHub Locations Accurate as of ", date_pulled, "."),
        fill = "Legend",
-       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 16+ Population Estimate)\nChart by: @mrworthington") #+
-      # ggsave(paste0("figures/",today,"_","inaccessible_hub_30min.png"), dpi = 300, width = 11, height = 11)
+       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 16+ Population Estimate)\nChart by: @mrworthington")
 
   
 ```
