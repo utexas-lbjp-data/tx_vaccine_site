@@ -181,7 +181,7 @@ vaccine_summ %>%
         axis.text.y = element_blank(),
         legend.position = "none") +
   labs(title = "Texas Summary of Vaccination Progress",
-       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       subtitle = paste0("Source: Texas Department of State Health Services. Last pulled on ", today_lbl, " at ", time_lbl),
        x = NULL,
        y = NULL,
        color = NULL,
@@ -318,7 +318,7 @@ supply_by_provider_type %>%
         axis.text.x = element_blank(),
         legend.position = "none") +
   labs(title = "Reported Total Supply by Provider Type",
-       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       subtitle = paste0("Source: Texas Department of State Health Services. Last pulled on ", today_lbl, " at ", time_lbl),
        x = NULL,
        y = "Doses (Shipped)",
        color = NULL,
@@ -347,7 +347,7 @@ supply_by_provider_type %>%
         axis.text.x = element_blank(),
         legend.position = "none") +
   labs(title = "Reported Availability by Provider Type",
-       subtitle = paste0("Source: Texas Department of State Health Services. As of ", today_lbl, " at ", time_lbl),
+       subtitle = paste0("Source: Texas Department of State Health Services. Last pulled on ", today_lbl, " at ", time_lbl),
        x = NULL,
        y = "Doses (Available)",
        color = NULL,

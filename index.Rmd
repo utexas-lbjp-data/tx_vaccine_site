@@ -58,6 +58,12 @@ latest_date <- vaccine_summ %>% filter(date==max(as.Date(date))) %>% select(date
 
 date_text <- format(latest_date$date, format="%b %d, %Y")
 
+pop_16_text <- read_excel(filepath, sheet = 2, skip=0) %>% 
+  clean_names() %>% 
+  filter(county_name=="Texas") %>% 
+  select(population_16) %>% 
+  mutate(population_16 = scales::comma(as.numeric(population_16)))
+
 full_vax_text <- read_excel(filepath, sheet = 2, skip=0) %>% 
   clean_names() %>% 
   filter(county_name=="Texas") %>% 
@@ -84,7 +90,7 @@ avg7day_vax_text <- vaccine_summ %>%
 
 The reach of COVID-19 on Texas and the world has been devastating. As our state joins a global effort to put coronavirus into our past, we are tracking the Texas vaccine roll-out as it unfolds in real-time.
 
-As of <u>`r date_text`</u>, Texas has:
+Texas has <u>`r pop_16_text`</u> people above the age of 16 who at some point will be eligible for a vaccine. As of <u>`r date_text`</u>, the state has:
 
 :::{line-height="1.4px"}
 
@@ -135,11 +141,11 @@ height: 3rem !important;
 
 h1 {
   font-weight:900;
-  font-size: 2.75rem !important;
+  font-size: 2.7rem !important;
 }
 
 p {
-  font-size: 1.25rem !important;
+  font-size: 1.15rem !important;
 }
 
 @media only screen and (max-width: 600px) {
