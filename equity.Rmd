@@ -36,7 +36,7 @@ options(tigris_use_cache = TRUE)
 today <- Sys.Date()
 src <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" # URL For Daily COVID Data
 lcl <- basename(src)
-filepath <- paste0(today,"_",lcl,"x")
+filepath <- paste0("raw_data/", today,"_",lcl,"x")
 download.file(url = src, destfile = filepath) # Downloads The Data
 today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
 # today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
@@ -143,7 +143,8 @@ dem_cf_data <- map_df(sheets,
 
 dem_vax_data_summ <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
   clean_names() %>%
-  filter(!str_detect(gender, "Texas")) %>% 
+  filter(!str_detect(gender, "Texas"),
+         !str_detect(race_ethnicity, "Total")) %>% 
   group_by(dem_group=race_ethnicity) %>% 
   summarise(across(where(is.numeric), sum)) %>% 
   ungroup() %>% 
@@ -155,7 +156,8 @@ dem_vax_data_summ <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0
 
 dem_vax_data <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
   clean_names() %>%
-  filter(!str_detect(gender, "Texas")) %>% 
+  filter(!str_detect(gender, "Texas"),
+         !str_detect(race_ethnicity, "Total")) %>% 
   group_by(dem_group=race_ethnicity) %>% 
   summarise(across(where(is.numeric), sum)) %>% 
   ungroup() %>% 
@@ -177,7 +179,8 @@ dem_data_full <- bind_rows(dem_cf_data,
                            dem_vax_data) %>% 
   select(data, measure,dem_group,value,pct) %>% 
   mutate(measure_f = factor(measure, levels=c('Doses Administered','Partially Vaccinated',
-                                              'Fully Vaccinated','Cases', 'Fatalities', 'State Population'))) %>% 
+                                              'Fully Vaccinated','Cases','Fatalities', 
+                                              'State Population'))) %>% 
   # left_join(dem_tx_data, by = "dem_group") %>% 
   # filter(measure!='Doses Administered',
   #        dem_group!="Other") %>% 
@@ -185,7 +188,11 @@ dem_data_full <- bind_rows(dem_cf_data,
          measure_f = paste0("% of ",measure_f),
          pct_lbl = scales::percent(pct, accuracy = 0.1)) %>% 
   filter(!str_detect(measure,'Partially Vaccinated|Fully Vaccinated'),
-         dem_group!="Other") 
+         dem_group!="Other") %>% 
+  mutate(measure_f = factor(measure, levels=c('% of Doses Administered','% of Partially Vaccinated',
+                                              '% of Fully Vaccinated','% of Cases','% of Fatalities', 
+                                              '% of State Population'))) %>% 
+  arrange((measure_f))
 
 equity_chart <- ggplot() +
     geom_col(data=dem_data_full %>% 
@@ -410,7 +417,7 @@ supply_by_provider_type %>%
   # ggsave(paste0("figures/",today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 ```
 
-##  Where Accessible Populations Live in Texas
+<!-- ##  Where Accessible Populations Live in Texas -->
 
 ```{r walking_accessibility, eval=FALSE, include=FALSE}
 
@@ -447,9 +454,9 @@ vaccine_sites_sf_travis <- vaccine_sites_sf %>%
 walking_isos <- read_rds("clean_data/walking_isos_30.rds")
 walking_combined <- read_rds("clean_data/walking_combined_30.rds")
 
-vars_2019 <- load_variables(2019, "acs5") #%>% 
-  filter(str_detect(concept,"POPULATION 16 YEARS AND OVER"),
-         label=="Estimate!!Total:")
+# vars_2019 <- load_variables(2019, "acs5") #%>% 
+#   filter(str_detect(concept,"POPULATION 16 YEARS AND OVER"),
+#          label=="Estimate!!Total:")
 
 # demvars <-  c(White = "B03002_003",
 #               Black = "B03002_004",
@@ -476,18 +483,18 @@ vars_2019 <- load_variables(2019, "acs5") #%>%
 #   st_transform(4326) %>% 
 #   st_as_sf()
 
-inaccessible_walking <- st_difference(travis_pop_blox,st_union(walking_combined)) %>% 
-  st_cast(to="POLYGON") %>% 
-  st_transform(4326) %>% 
-  st_as_sf()  %>% 
+inaccessible_walking <- st_difference(travis_pop_blox,st_union(walking_combined)) %>%
+  st_cast(to="POLYGON") %>%
+  st_transform(4326) %>%
+  st_as_sf()  %>%
   mutate(est_lab = scales::comma(estimate, accuracy=1, suffix = " People"))
-
-inaccessible_walk_summ <- inaccessible_walking %>% 
-  as_tibble() %>% 
-  distinct(GEOID, .keep_all = TRUE) %>% 
-  mutate(state="TX") %>% 
-  group_by(state) %>% 
-  summarise(sum_inaccessible = sum(estimate))
+# 
+# inaccessible_walk_summ <- inaccessible_walking %>% 
+#   as_tibble() %>% 
+#   distinct(GEOID, .keep_all = TRUE) %>% 
+#   mutate(state="TX") %>% 
+#   group_by(state) %>% 
+#   summarise(sum_inaccessible = sum(estimate))
 
 mapbox_map <- leaflet() %>%
   addMapboxTiles(style_id = "light-v9",
@@ -515,7 +522,7 @@ mapbox_map %>%
             title = "Population Est.")
 ```
 
-```{r accessible_pop,  echo=FALSE, layout = "l-page"}
+```{r accessible_pop, include=FALSE, layout="l-page"}
 
 vaccine_sites_sf <- read_csv("https://utexas-lbjp-data.github.io/txcovidvaccinedata/clean_data/vaccine_provider_raw.csv") %>%
     st_as_sf(coords = c("lon", "lat"), crs = 4326, remove = FALSE) %>% 
@@ -584,35 +591,35 @@ driving_combined <- read_rds("clean_data/driving_combined_15.rds")
 driving_combined_20 <- read_rds("clean_data/driving_combined_20.rds")
 driving_combined_30 <- read_rds("clean_data/driving_combined_30.rds")
 
-mapbox_map <- leaflet() %>%
-  addMapboxTiles(style_id = "light-v9",
-                 username = "mapbox")
+# mapbox_map <- leaflet() %>%
+#   addMapboxTiles(style_id = "light-v9",
+#                  username = "mapbox")
 
-mapbox_map %>%
-  addPolygons(data = driving_combined_30,
-              stroke = FALSE,
-              color = "red",
-              fill = TRUE,
-              # fillColor = ~pal(estimate),
-              fillOpacity = 0.5,
-              dashArray = NULL,
-              smoothFactor = 1) %>%
-    addPolygons(data = driving_combined_20,
-              stroke = FALSE,
-              color = "blue",
-              fill = TRUE,
-              # fillColor = ~pal(estimate),
-              fillOpacity = .8,
-              dashArray = NULL,
-              smoothFactor = 1) %>%
-    addPolygons(data = driving_combined,
-              stroke = FALSE,
-              color = "black",
-              fill = TRUE,
-              # fillColor = ~pal(estimate),
-              fillOpacity = .8,
-              dashArray = NULL,
-              smoothFactor = 1)
+# mapbox_map %>%
+#   addPolygons(data = driving_combined_30,
+#               stroke = FALSE,
+#               color = "red",
+#               fill = TRUE,
+#               # fillColor = ~pal(estimate),
+#               fillOpacity = 0.5,
+#               dashArray = NULL,
+#               smoothFactor = 1) %>%
+#     addPolygons(data = driving_combined_20,
+#               stroke = FALSE,
+#               color = "blue",
+#               fill = TRUE,
+#               # fillColor = ~pal(estimate),
+#               fillOpacity = .8,
+#               dashArray = NULL,
+#               smoothFactor = 1) %>%
+#     addPolygons(data = driving_combined,
+#               stroke = FALSE,
+#               color = "black",
+#               fill = TRUE,
+#               # fillColor = ~pal(estimate),
+#               fillOpacity = .8,
+#               dashArray = NULL,
+#               smoothFactor = 1)
 ```
 
 
@@ -752,4 +759,4 @@ date_pulled <- unique(vaccine_sites_sf$date_pulled)
 
 ## Photography Credit {.appendix}
 
-<span>Photo by <a href="https://unsplash.com/@schluditsch?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Daniel Schludi</a> on <a href="https://unsplash.com/s/photos/vaccine-covid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+<span>Photo by <a href="https://unsplash.com/@rymagsino?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ryan Magsino</a> on <a href="https://unsplash.com/s/photos/austin-texas-roads?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>

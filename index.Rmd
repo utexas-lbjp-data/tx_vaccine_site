@@ -1,5 +1,5 @@
 ---
-title: "Texas COVID-19 Vaccine Resource"
+title: "Texas COVID-19 Vaccine Tracker"
 image: "lbj_logo.png"
 color1: "#5A59A3"
 color2: "#C66060"
@@ -58,6 +58,11 @@ latest_date <- vaccine_summ %>% filter(date==max(as.Date(date))) %>% select(date
 
 date_text <- format(latest_date$date, format="%b %d, %Y")
 
+pop_16_num <- read_excel(filepath, sheet = 2, skip=0) %>% 
+  clean_names() %>% 
+  filter(county_name=="Texas") %>% 
+  select(population_16)
+
 pop_16_text <- read_excel(filepath, sheet = 2, skip=0) %>% 
   clean_names() %>% 
   filter(county_name=="Texas") %>% 
@@ -70,21 +75,54 @@ full_vax_text <- read_excel(filepath, sheet = 2, skip=0) %>%
   select(people_fully_vaccinated) %>% 
   mutate(people_fully_vaccinated = scales::comma(as.numeric(people_fully_vaccinated)))
 
+full_vax_pct_text <- read_excel(filepath, sheet = 2, skip=0) %>% 
+  clean_names() %>% 
+  filter(county_name=="Texas") %>%
+  select(people_fully_vaccinated, population_16) %>% 
+  mutate(pct_fully_vax = as.numeric(people_fully_vaccinated)/as.numeric(population_16)) %>% 
+  mutate(pct_fully_vax = scales::percent(round(pct_fully_vax, digits=3))) %>% 
+  select(pct_fully_vax)
+
 partial_vax_text <- read_excel(filepath, sheet = 2, skip=0) %>%
   clean_names() %>% 
   filter(county_name=="Texas") %>%
   select(people_vaccinated_with_at_least_one_dose) %>% 
   mutate(people_vaccinated_with_at_least_one_dose = scales::comma(as.numeric(people_vaccinated_with_at_least_one_dose)))
 
+partial_vax_pct_text <- read_excel(filepath, sheet = 2, skip=0) %>%
+  clean_names() %>% 
+  filter(county_name=="Texas") %>%
+  select(people_vaccinated_with_at_least_one_dose) %>% 
+  mutate(population_16 = pop_16_num) %>% 
+  mutate(at_least_one_pct = as.numeric(people_vaccinated_with_at_least_one_dose)/as.numeric(population_16)) %>% 
+  mutate(at_least_one_pct = scales::percent(round(at_least_one_pct, digits=4))) %>% 
+  select(at_least_one_pct)
+
 yesterday_vax_text <- vaccine_summ %>% 
   filter(date==max(as.Date(date))) %>% 
   select(daily_doses) %>% 
   mutate(daily_doses = scales::comma(as.numeric(daily_doses)))
 
+yesterday_vax_pct_text <- vaccine_summ %>% 
+  filter(date==max(as.Date(date))) %>% 
+  select(daily_doses) %>% 
+  mutate(population_16 = pop_16_num) %>% 
+  mutate(daily_doses_oct = as.numeric(daily_doses)/as.numeric(population_16)) %>% 
+  mutate(daily_doses_oct = scales::percent(round(daily_doses_oct, digits=4), accuracy = .01)) %>% 
+  select(daily_doses_oct)
+
 avg7day_vax_text <- vaccine_summ %>% 
   filter(date==max(as.Date(date))) %>% 
   select(new_doses_7_day_avg) %>% 
   mutate(new_doses_7_day_avg = scales::comma(as.numeric(new_doses_7_day_avg)))
+
+avg7day_vax_pct_text <- vaccine_summ %>% 
+  filter(date==max(as.Date(date))) %>% 
+  select(new_doses_7_day_avg) %>% 
+  mutate(population_16 = pop_16_num) %>% 
+  mutate(avg7_day_pct = as.numeric(new_doses_7_day_avg)/as.numeric(population_16)) %>% 
+  mutate(avg7_day_pct = scales::percent(round(avg7_day_pct, digits=4), accuracy = .01)) %>% 
+  select(avg7_day_pct)
 
 ```
 
@@ -94,10 +132,10 @@ Texas has <u>`r pop_16_text`</u> people above the age of 16 who at some point wi
 
 :::{line-height="1.4px"}
 
-> <i class="fad fa-battery-full fa-fw fa-lg" style="color:#f8971f"></i> | **Fully Vaccinated:** <u>`r full_vax_text`</u> people </br>
-> <i class="fad fa-battery-half fa-fw fa-lg" style="color:#f8971f"></i> | **Partially Vaccinated:** <u>`r partial_vax_text`</u> people </br>
-> <i class="fad fa-calendar fa-fw fa-lg" style="color:#f8971f"></i> | **Administered**: <u>`r yesterday_vax_text`</u> doses in one day </br>
-> <i class="fad fa-tachometer-alt-average fa-fw fa-lg" style="color:#f8971f"></i> | **A 7-Day Average** of <u>`r avg7day_vax_text`</u> administered per day </br>
+> <i class="fad fa-battery-full fa-fw fa-lg" style="color:#f8971f"></i> | **Fully Vaccinated:** <u>`r full_vax_text`</u> people or <u>`r full_vax_pct_text`</u> of the population 16+</br>
+> <i class="fad fa-battery-half fa-fw fa-lg" style="color:#f8971f"></i> | **Vaccinated w/ At Least One Dose:** <u>`r partial_vax_text`</u> people or <u>`r partial_vax_pct_text`</u> of the population 16+</br>
+> <i class="fad fa-calendar fa-fw fa-lg" style="color:#f8971f"></i> | **Administered**: <u>`r yesterday_vax_text`</u> doses in one day on `r date_text` or <u>`r yesterday_vax_pct_text`</u> of the population 16+</br>
+> <i class="fad fa-tachometer-alt-average fa-fw fa-lg" style="color:#f8971f"></i> | **A 7-Day Average** of <u>`r avg7day_vax_text`</u> administered per day  or <u>`r avg7day_vax_pct_text`</u> of the population 16+</br>
 
 :::
 
@@ -145,7 +183,7 @@ h1 {
 }
 
 p {
-  font-size: 1.15rem !important;
+  font-size: 1.05rem !important;
 }
 
 @media only screen and (max-width: 600px) {

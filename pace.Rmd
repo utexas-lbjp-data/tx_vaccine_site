@@ -115,28 +115,37 @@ The chart attempts to capture a holistic snapshot of multiple data points relate
 vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
   filter(county_name=="Texas") %>% 
-  mutate(across(total_doses_allocated:population_16_64_any_medical_condition, as.numeric)) %>%
+  mutate(across(total_doses_allocated:population_education_and_child_care_personnel, as.numeric)) %>% 
   select(county_name, population_16, people_fully_vaccinated, total_doses_allocated, 
-         starts_with("population_phase_"), population_16_64_any_medical_condition) %>% 
+         starts_with("population_phase_"), population_16_64_any_medical_condition, 
+         population_education_and_child_care_personnel) %>% 
   mutate(population_phase_remaining = population_16 - (population_phase_1a_healthcare_workers +
                                                        population_phase_1a_long_term_care_residents +
-                                                       population_16_64_any_medical_condition),
+                                                       population_16_64_any_medical_condition +
+                                                       population_education_and_child_care_personnel),
          remaining_box_start = population_16 - population_phase_remaining) %>%
   rename(`Phase 1A - Healthcare Workers`=population_phase_1a_healthcare_workers, 
          `Phase 1A - Long Term Care`=population_phase_1a_long_term_care_residents, 
          `Phase 1B - 65+ and High Risk`=population_16_64_any_medical_condition,
+         `School & Child Care Personnel`=population_education_and_child_care_personnel,
          `Future Phases`=population_phase_remaining) %>%
-  pivot_longer(cols=contains("Phase"), names_to = "phase_pop_est", values_to = "value") %>%
+  pivot_longer(cols=c(contains("Phase"), "School & Child Care Personnel"), names_to = "phase_pop_est", values_to = "value") %>%
   mutate(order = case_when(
     phase_pop_est == "Phase 1A - Healthcare Workers" ~ 1,
     phase_pop_est == "Phase 1A - Long Term Care" ~ 2,
     phase_pop_est == "Phase 1B - 65+ and High Risk" ~ 3,
-  ),
+    phase_pop_est == "School & Child Care Personnel" ~ 4,
+    phase_pop_est == "Future Phases" ~ 5
+  )) %>% 
+  arrange(order) %>% 
+  mutate(
   prev_1 = lag(value, 1),
   prev_2 = lag(value, 2),
+  prev_3 = lag(value, 3),
   prev_1 = replace_na(prev_1, 0),
-  prev_2 = replace_na(prev_2, 0)) %>% 
-  mutate(lab_pos = (value/2) + (prev_1 + prev_2)) 
+  prev_2 = replace_na(prev_2, 0),
+  prev_3 = replace_na(prev_3, 0)) %>% 
+  mutate(lab_pos = (value/2) + (prev_1 + prev_2 + prev_3)) 
 
 box_start <- unique(vaccine_summ$remaining_box_start)
 box_end <- unique(vaccine_summ$population_16)
@@ -158,7 +167,7 @@ vaccine_summ %>%
   geom_vline(aes(xintercept=total_doses_allocated), linetype = 2, size = .9, color = "#2d2d2d") +
   geom_vline(aes(xintercept=people_fully_vaccinated), linetype = 2, size = .9, color = "#2d2d2d") +
   scale_x_continuous(labels = scales::unit_format(unit = "M", accuracy = 1, scale = 1e-6)) +
-  scale_fill_manual(values = c("#005f86",  "#9cadb7","#bf5700")) +
+  scale_fill_manual(values = c("#333f48","#005f86",  "#9cadb7","#bf5700")) +
   guides(fill=guide_legend(title = "Legend",
                            keyheight = .8)) +
   annotate(
@@ -168,10 +177,10 @@ vaccine_summ %>%
   annotate(geom = "label", x = shipped_xend*1.17, y = 1.53, color = "#2d2d2d", 
            label = glue::glue("Doses Shipped: {shipped_lbl}"), family = "Graphik", hjust = "left") +
   annotate(
-    geom = "curve", color = "#2d2d2d", x = fully_vac_xend*2.25, y = .48, xend = fully_vac_xend*1.2, yend = .54 , 
+    geom = "curve", color = "#2d2d2d", x = fully_vac_xend*2.25, y = .48, xend = fully_vac_xend*1.1, yend = .54 , 
     curvature = 0, arrow = arrow(length = unit(2, "mm"))
   ) +
-  annotate(geom = "label", x = fully_vac_xend*2.5, y = .5, color = "#2d2d2d", 
+  annotate(geom = "label", x = fully_vac_xend*2.3, y = .5, color = "#2d2d2d", 
            label = glue::glue("Persons Fully Vacinated: {fully_vac_lbl}"), family = "Graphik", hjust = "left") +
   theme_minimal(base_family = "Graphik") +
   theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
@@ -185,8 +194,8 @@ vaccine_summ %>%
        x = NULL,
        y = NULL,
        color = NULL,
-       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") #+
-  # ggsave(paste0("figures/",today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") +
+  ggsave(paste0("figures/",today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
 
@@ -195,20 +204,19 @@ vaccine_summ %>%
 
 ```{r echo=FALSE, layout = "l-body-outset"}
 
-cdc_last_update <- "Feb 11, 2021" 
-cdc_last_time <- "12:56PM"
-
+cdc_last_update <- "Mar 7, 2021" 
+cdc_last_time <- "12:25PM"
 
   hcoptslang <- getOption("highcharter.lang")
   hcoptslang$thousandsSep <- ","
   options(highcharter.lang = hcoptslang)
 
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-3.csv",
+cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-5.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
-  select(area=state_territory_federal_entity, contains("_per_100k")) %>%
+  select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
   mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
-  drop_na(delivered_per_100k)
+  drop_na(doses_delivered_per_100k)
 
 cdc_vaccine_column <- cdc_vaccine_summary %>%
   mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
@@ -219,10 +227,13 @@ cdc_vaccine_column <- cdc_vaccine_summary %>%
   mutate(rank = dense_rank(desc(value))) %>% 
   filter(area=="Texas") %>% 
   rename(indicator=type) %>% 
-  mutate(indicator = str_replace(indicator,"delivered_per_100k","Distributed"),
-         indicator = str_replace(indicator,"administered_per_100k","Administered"),
-         indicator = str_replace(indicator,"people_with_1_doses_per_100k","With 1 Dose"),
-         indicator = str_replace(indicator,"people_with_2_doses_per_100k","With 2 Doses"))
+  mutate(indicator = str_replace(indicator,"doses_delivered_per_100k","Distributed"),
+         indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered"),
+         indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose"),
+         indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses")) %>% 
+  filter(indicator != "doses_Administered_by_state_where_administered",
+         indicator != "doses_Administered_by_state_where_administered",
+         !str_detect(indicator, "Dose"))
 
 cdc_vaccine_drilldown <- cdc_vaccine_summary %>%
   mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
@@ -232,16 +243,17 @@ cdc_vaccine_drilldown <- cdc_vaccine_summary %>%
   group_by(type) %>% 
   mutate(rank = dense_rank(desc(value))) %>% 
   rename(indicator=type) %>% 
-  mutate(indicator = str_replace(indicator,"delivered_per_100k","Distributed"),
-         indicator = str_replace(indicator,"administered_per_100k","Administered"),
-         indicator = str_replace(indicator,"people_with_1_doses_per_100k","With 1 Dose"),
-         indicator = str_replace(indicator,"people_with_2_doses_per_100k","With 2 Doses")) %>% 
+  mutate(indicator = str_replace(indicator,"doses_delivered_per_100k","Distributed"),
+         indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered"),
+         indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose"),
+         indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses")) %>% 
   group_nest(indicator) %>% 
   mutate(
     id = indicator,
     type = "column",
     data = map(data, mutate, name = area, y = value),
-    data = map(data, list_parse))
+    data = map(data, list_parse)) %>% 
+  filter(!str_detect(indicator, "Dose"))
 
 x <- c("Value Per 100k: ", "{point.indicator} Rank: ")
 y <- c("{point.value}", "{point.rank}")
@@ -355,29 +367,29 @@ supply_by_provider_type %>%
   # ggsave(paste0("figures/",today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 ```
 
-<details class = "l-body">
-<summary><strong>Notes about the table below</strong></summary>
+<!-- <details class = "l-body"> -->
+<!-- <summary><strong>Notes about the table below</strong></summary> -->
 
-* Data shown below comes from the "Accessible Vaccine Dashboard Data" published by the Texas Department of State Health Services, which can be found at this link: `r src`
-* It was last pulled on `r today_lbl` at `r time_lbl`
+<!-- * Data shown below comes from the "Accessible Vaccine Dashboard Data" published by the Texas Department of State Health Services, which can be found at this link: `r src` -->
+<!-- * It was last pulled on `r today_lbl` at `r time_lbl` -->
 
-</details>
+<!-- </details> -->
 
-<details class = "l-body">
-<summary><strong> Data dictionary for the table below </strong></summary>
+<!-- <details class = "l-body"> -->
+<!-- <summary><strong> Data dictionary for the table below </strong></summary> -->
 
-* **County**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the county for which DSHS has collected data.
-* **Popuplation (16+)"**:  This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons aged 16 years and older in Texas. This number is reported given that vaccines authorized for emergency use have only authorized for use in persons aged 16 years and older. 
-* **Total Doses Allocated**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of total doses allocated/shipped to a given Texas county.
-* **Full Vaccinations**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons who are fully vaccinated in a given Texas county.
-* **Doses Allocated (Per Capita)**: This is a custom calculation that is derived by taking the number of total doses allocated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.  
-* **Full Vaccinations (Per Capita)**: This is a custom calculation that is derived by taking the number of persons who are fully vaccinated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.  
+<!-- * **County**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the county for which DSHS has collected data. -->
+<!-- * **Popuplation (16+)"**:  This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons aged 16 years and older in Texas. This number is reported given that vaccines authorized for emergency use have only authorized for use in persons aged 16 years and older.  -->
+<!-- * **Total Doses Allocated**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of total doses allocated/shipped to a given Texas county. -->
+<!-- * **Full Vaccinations**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons who are fully vaccinated in a given Texas county. -->
+<!-- * **Doses Allocated (Per Capita)**: This is a custom calculation that is derived by taking the number of total doses allocated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.   -->
+<!-- * **Full Vaccinations (Per Capita)**: This is a custom calculation that is derived by taking the number of persons who are fully vaccinated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.   -->
 
-</details>
+<!-- </details> -->
 
-## Vaccine Data Table 
+<!-- ## Vaccine Data Table  -->
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, layout="l-screen-inset"}
+```{r message=FALSE, warning=FALSE, include=FALSE, layout="l-screen-inset"}
 
 vaccine_cnty_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
@@ -429,7 +441,7 @@ reactable(data =vaccine_cnty_summ,
                                            width = 250,
                                            header = with_tooltip("Total Doses Allocated", "Number of Doses Allocated")),
             doses_allocated_per_cap = colDef(show = TRUE,
-                                             header = with_tooltip("Doses Allocated (Per Capita)", "Number of Doses Allocated for every 100,000 persons"),
+                                             header = with_tooltip("Doses Allocated (Per Capita)", "For every 100,000 persons, how many doses have been allocated to this county?"),
                                              style = list(borderRight = "1.5px solid rgba(0, 0, 0, 0.2)", fontFamily = "Fira Code", whiteSpace = "pre"),
                                              align = "left",
                                              cell = function(value) {
@@ -461,10 +473,27 @@ reactable(data =vaccine_cnty_summ,
 
 # Vaccine Pace Tracker
 
+The last tool to track the pace of distribution is an interactive comparison of the state and counties across Texas. The tool allows users to track the statewide pace of vaccine progress and the county-level pace of vaccine progress. Because the state is only focused on the population aged 16 and above, we only measure progress against this population. 
+
+<details class = "l-body">
+<summary><strong>Question  | </strong>Why do they only measure the population aged 16 and above?</summary>
+
+<br>
+According to [the Texas Department of State Health Services](https://dshs.texas.gov/coronavirus/immunize/vaccine-faqs.aspx#safety), "At this time, experts do not know how safe the COVID-19 vaccine is for children. People 16 years old and older are currently eligible to get the vaccine if they are in a priority population."
+
+</details>
+
+The two charts represent the entire populations of the state and selected county. In the boxes below, there are three indicators. 
+
+1. **Dose Distribution**: This box shows how many doses have been administered out of the doses that have actually been allocated to that entity (either the state or the selected county).
+1. **Daily Average**: This is an ongoing calculation of daily averages that starts on Dec 15. The only thing it considers is how many doses are going into arms each day. 
+1. **When 70% is Vaccinated**: Based on that daily average and knowing most of the approved vaccines require two doses, this box tries to guesstimate when 70% of the population aged 16 and older will be vaccinated. This is not a herd immunity projection, rather a look ahead as to when most of the population aged 16 and older will likely be vaccinated. 
+
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-page"}
 knitr::include_app("https://mrworthington.shinyapps.io/tx_vaccine-pace/", height = "1800px")
 ```
 
 ## Photography Credit {.appendix}
 
-<span>Photo by <a href="https://unsplash.com/@schluditsch?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Daniel Schludi</a> on <a href="https://unsplash.com/s/photos/vaccine-covid?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+<span>Photo by <a href="https://unsplash.com/@cdc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">CDC</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>

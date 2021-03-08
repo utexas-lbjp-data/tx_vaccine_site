@@ -4,7 +4,7 @@ description: |
   Tracking COVID-19 Vaccines in Texas
 output_dir: "_site"
 repository_url: https://github.com/utexas-lbjp-data/tx_vaccine_site
-exclude: ["README.md"]
+exclude: ["README.md", "New Vaccine Data.Rmd", "Access.Rmd"]
 navbar:
   logo:
     image: lbj_logo.png
