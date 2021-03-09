@@ -84,12 +84,15 @@ output:
     includes:
       in_header: header.html
 base_url: https://festive-mestorf-e42b04.netlify.app
+google_analytics: "G-PQ8QKYGXQ3"
 collections:
   posts:
     categories: true
     categories_metadata: true
     authors_metadata: false
     share: [twitter, linkedin, facebook]
+twitter:
+  site: "@TheLBJSchool"
 cookie_consent:
   style: simple
   type: express

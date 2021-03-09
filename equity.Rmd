@@ -248,7 +248,8 @@ re_groups <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>%
 
 df <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
       clean_names() %>%
-      filter(!str_detect(gender, "Unknown|Texas")) %>% 
+      filter(!str_detect(gender, "Unknown|Texas"),
+         !str_detect(race_ethnicity, "Total")) %>% 
       mutate(value = ifelse(gender == "Male", -doses_administered, doses_administered),
              age_group = str_remove(age_group, " years")) %>% 
   arrange(race_ethnicity,age_group)
@@ -297,7 +298,8 @@ df %>%
 # vaccine_summ <- 
   read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
   clean_names() %>%
-  filter(!str_detect(gender, "Unknown|Texas")) %>% 
+  filter(!str_detect(gender, "Unknown|Texas"),
+         !str_detect(race_ethnicity, "Total")) %>% 
   mutate(value = ifelse(gender == "Male", -doses_administered, doses_administered)) %>% 
   ggplot(aes(x = age_group, y = value, fill = gender)) +
   geom_bar(stat = "identity", width = 1) +
@@ -325,7 +327,8 @@ df %>%
   
   read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
   clean_names() %>%
-  filter(str_detect(gender, "Unknown")) %>% 
+  filter(str_detect(gender, "Unknown"),
+         !str_detect(race_ethnicity, "Total")) %>% 
   ggplot(aes(x = age_group, y = doses_administered, fill = age_group)) +
   geom_bar(stat = "identity", width = 1) +
   facet_wrap(~race_ethnicity, nrow=1) +
