@@ -21,6 +21,24 @@ output:
 ---
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
+library(metathis)
+
+meta() %>%
+  meta_social(
+    title = "The Texas COVID-19 Vaccine Tracker",
+    description = "Tracking the rollout of COVID-19 Vaccines in Texas",
+    url = "https://texasvaccinetracker.com",
+    image = "https://raw.githubusercontent.com/utexas-lbjp-data/tx_vaccine_site/main/cover_image.png",
+    image_alt = "Distribution of Doses by Race, Age, and Gender.",
+    og_type = "website",
+    og_author = "The LBJ School",
+    twitter_card_type = "summary",
+    twitter_creator = "@TheLBJSchool"
+  )
+```
+
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
 
 knitr::opts_chunk$set()
 library(gt)

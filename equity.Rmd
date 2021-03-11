@@ -90,7 +90,7 @@ vaccine_hc <- hc_theme_merge(
 
 ## Statewide Demographic Summaries
 
-Towards the end of January, the Texas Department of State Health Services (DSHS) began publishing breakdowns of vaccinations by across different demographics, specifically age, gender, and race/ethnicity. While there's a lot of unknowns in the data--particularly across entries for "Race/Ethnicity"+"Gender"--and also because we don't have the population estimates for phases 1A and 1B broken down by race/age/gender, the data presented by DSHS struggles to paint an incomplete picture of the profile of vaccinated individuals. That said, the charts below attempt to breakdown that data with as much clarity as possible across all known and unknown classifcations. 
+Towards the end of January, the Texas Department of State Health Services (DSHS) began publishing breakdowns of vaccinations by across different demographics, specifically age, gender, and race/ethnicity. While there's a lot of unknowns in the data--particularly across entries for "Race/Ethnicity"+"Gender"--and also because we don't have the population estimates for phases 1A and 1B broken down by race/age/gender, the data presented by DSHS struggles to paint an incomplete picture of the profile of vaccinated individuals. That said, the charts below attempt to breakdown that data with as much clarity as possible across all known and unknown classifications. 
 
 ```{r covid_case_fatality_dem_chart, echo=FALSE, fig.height=4.75, fig.width=12.5, layout = "l-page"}
 
@@ -525,7 +525,11 @@ mapbox_map %>%
             title = "Population Est.")
 ```
 
-```{r accessible_pop, include=FALSE, layout="l-page"}
+## Where Inaccessible Populations Live in Texas
+
+### From Vaccine Hubs
+
+```{r inaccessible_hub_df, include=FALSE, layout="l-page"}
 
 vaccine_sites_sf <- read_csv("https://utexas-lbjp-data.github.io/txcovidvaccinedata/clean_data/vaccine_provider_raw.csv") %>%
     st_as_sf(coords = c("lon", "lat"), crs = 4326, remove = FALSE) %>% 
@@ -538,34 +542,6 @@ vaccine_sites_sf <- read_csv("https://utexas-lbjp-data.github.io/txcovidvaccined
 vaccine_sites_sf_hub <- vaccine_sites_sf %>% 
   filter(`Organization Type`=="Vaccine Hub")
 
-# driving_isos <- mb_isochrone(
-#   vaccine_sites_sf_hub,
-#   profile = "driving",
-#   time = 15,
-#   id = "Provider Name"
-# ) %>%
-#   st_transform(4326) %>%
-#   st_as_sf()
-# 
-# driving_combined <- st_union(driving_isos) %>%
-#   st_cast(to="POLYGON") %>%
-#   st_transform(4326) %>%
-#   st_as_sf()
-# 
-# driving_isos_20 <- mb_isochrone(
-#   vaccine_sites_sf_hub,
-#   profile = "driving",
-#   time = 20,
-#   id = "Provider Name"
-# ) %>%
-#   st_transform(4326) %>%
-#   st_as_sf()
-# 
-# driving_combined_20 <- st_union(driving_isos_20) %>%
-#   st_cast(to="POLYGON") %>%
-#   st_transform(4326) %>%
-#   st_as_sf()
-# # 
 # driving_isos_30 <- mb_isochrone(
 #   vaccine_sites_sf_hub,
 #   profile = "driving",
@@ -579,25 +555,17 @@ vaccine_sites_sf_hub <- vaccine_sites_sf %>%
 #   st_cast(to="POLYGON") %>%
 #   st_transform(4326) %>%
 #   st_as_sf()
-# 
-# write_rds(driving_isos, "clean_data/driving_isos_15.rds")
-# write_rds(driving_isos_20, "clean_data/driving_isos_20.rds")
-# write_rds(driving_isos_30, "clean_data/driving_isos_30.rds")
-# write_rds(driving_combined, "clean_data/driving_combined_15.rds")
-# write_rds(driving_combined_20, "clean_data/driving_combined_20.rds")
-# write_rds(driving_combined_30, "clean_data/driving_combined_30.rds")
 
-driving_isos <- read_rds("clean_data/driving_isos_15.rds")
-driving_isos_20 <- read_rds("clean_data/driving_isos_20.rds")
-driving_isos_30 <- read_rds("clean_data/driving_isos_30.rds")
-driving_combined <- read_rds("clean_data/driving_combined_15.rds")
-driving_combined_20 <- read_rds("clean_data/driving_combined_20.rds")
-driving_combined_30 <- read_rds("clean_data/driving_combined_30.rds")
+# write_rds(driving_isos_30, "clean_data/driving_isos_30_hub.rds")
+# write_rds(driving_combined_30, "clean_data/driving_combined_30_hub.rds")
+
+driving_isos_30 <- read_rds("clean_data/driving_isos_30_hub.rds")
+driving_combined_30 <- read_rds("clean_data/driving_combined_30_hub.rds")
 
 # mapbox_map <- leaflet() %>%
 #   addMapboxTiles(style_id = "light-v9",
 #                  username = "mapbox")
-
+# 
 # mapbox_map %>%
 #   addPolygons(data = driving_combined_30,
 #               stroke = FALSE,
@@ -606,59 +574,10 @@ driving_combined_30 <- read_rds("clean_data/driving_combined_30.rds")
 #               # fillColor = ~pal(estimate),
 #               fillOpacity = 0.5,
 #               dashArray = NULL,
-#               smoothFactor = 1) %>%
-#     addPolygons(data = driving_combined_20,
-#               stroke = FALSE,
-#               color = "blue",
-#               fill = TRUE,
-#               # fillColor = ~pal(estimate),
-#               fillOpacity = .8,
-#               dashArray = NULL,
-#               smoothFactor = 1) %>%
-#     addPolygons(data = driving_combined,
-#               stroke = FALSE,
-#               color = "black",
-#               fill = TRUE,
-#               # fillColor = ~pal(estimate),
-#               fillOpacity = .8,
-#               dashArray = NULL,
 #               smoothFactor = 1)
 ```
 
-
-## Where Inaccessible Populations Live in Texas
-
-```{r inaccessible_pop, echo=FALSE, fig.height=11, fig.width=11, layout="l-body-outset"}
-
-# texas_pop <- get_acs(geography = "tract",
-#                       variables = "B01003_001",
-#                       state="TX",
-#                       survey = "acs5",
-#                       geometry = TRUE,
-#                       show_call = TRUE) %>%
-#   filter(estimate!=0) %>%
-#   st_transform(4326) %>%
-#   st_as_sf()
-
-# texas_pop_blox <- get_acs(geography = "block group",
-#                       variables = "B01003_001",
-#                       state="TX",
-#                       survey = "acs5",
-#                       geometry = TRUE,
-#                       show_call = TRUE) %>%
-#   filter(estimate!=0) %>%
-#   st_transform(4326) %>%
-#   st_as_sf()
-# 
-# texas_pop_block_grps <- get_acs(geography = "block group",
-#                       variables = "B01003_001",
-#                       state="TX",
-#                       survey = "acs5",
-#                       geometry = TRUE,
-#                       show_call = TRUE) %>%
-#   # filter(estimate==0) %>%
-#   st_transform(4326) %>%
-#   st_as_sf()
+```{r inaccessible_hub_map, echo=FALSE, fig.height=11, fig.width=11, layout="l-body-outset"}
 
 # texas_pop_block_grps_16plus <- get_acs(geography = "block group",
 #                       variables = "B23027_001",
@@ -670,13 +589,10 @@ driving_combined_30 <- read_rds("clean_data/driving_combined_30.rds")
 #   st_transform(4326) %>%
 #   st_as_sf()
 
-# write_rds(texas_pop_block_grps, "clean_data/texas_pop_acs_block_groups.rds")
 # write_rds(texas_pop_block_grps_16plus, "clean_data/texas_pop_block_grps_16plus.rds")
 
-# texas_pop_block_grps <-read_rds("clean_data/texas_pop_acs_block_groups.rds")
 texas_pop_block_grps <-read_rds("clean_data/texas_pop_block_grps_16plus.rds")
 
-# 
 texas_pop_blox <- texas_pop_block_grps %>%
   filter(estimate!=0)
 
@@ -685,54 +601,22 @@ texas_pop_blox <- texas_pop_block_grps %>%
 #   st_transform(4326) %>%
 #   st_as_sf()  %>%
 #   mutate(est_lab = scales::comma(estimate, accuracy=1, suffix = " People"))
-
-# write_rds(inaccessible_vaccine_hub, "clean_data/inaccessible_vaccine_hub.rds")
+# 
 # write_rds(inaccessible_vaccine_hub, paste0("clean_data/", today, "_inaccessible_vaccine_hub_16plus.rds"))
 # write_rds(inaccessible_vaccine_hub, "clean_data/inaccessible_vaccine_hub_16plus.rds")
 
 inaccessible_vaccine_hub <-read_rds("clean_data/inaccessible_vaccine_hub_16plus.rds")
 
-# inaccessible_hub_summ <- inaccessible_vaccine_hub %>%
-#   as_tibble() %>%
-#   distinct(GEOID, .keep_all = TRUE) %>%
-#   mutate(state="TX") %>%
-#   group_by(state) %>%
-#   summarise(sum_inaccessible = sum(estimate))
+inaccessible_hub_summ <- inaccessible_vaccine_hub %>%
+  as_tibble() %>%
+  distinct(GEOID, .keep_all = TRUE) %>%
+  mutate(state="TX") %>%
+  group_by(state) %>%
+  summarise(sum_inaccessible = sum(estimate))
 
-# write_rds(inaccessible_hub_summ, paste0("clean_data/", today, "_inaccessible_vaccine_hub_summ.rds"))
-
-# mapbox_map %>%
-#   addPolygons(data = driving_combined_30,
-#               stroke = FALSE,
-#               color = "#03F",
-#               fill = TRUE,
-#               # fillColor = ~pal(estimate),
-#               fillOpacity = 0.7,
-#               dashArray = NULL,
-#               smoothFactor = 1) %>%
-#  addPolygons(data = inaccessible_vaccine_hub,
-#               stroke = FALSE,
-#               color = "#03F",
-#               fill = TRUE,
-#               # fillColor = ~pal(estimate),
-#               fillOpacity = 0.7,
-#               dashArray = NULL,
-#               smoothFactor = 1,
-#               popup = ~GEOID)# %>% 
-    # addPolygons(data = texas_pop_block_grps,
-    #           stroke = TRUE,
-    #           color = "black",
-    #           fill = FALSE,
-    #           # fillColor = ~pal(estimate),
-    #           fillOpacity = 0.7,
-    #           dashArray = NULL,
-    #           smoothFactor = 1,
-    #           popup = ~GEOID)
+write_rds(inaccessible_hub_summ, paste0("clean_data/", today, "_inaccessible_vaccine_hub_summ.rds"))
 
 date_pulled <- unique(vaccine_sites_sf$date_pulled)
-# time_pulled <-  unique(vaccine_sites_sf$time_pulled)
-# time_lbl <- format(time_pulled, format = "%I:%M %p")
-
 
   inaccessible_vaccine_hub %>% 
   ggplot() +
@@ -756,6 +640,110 @@ date_pulled <- unique(vaccine_sites_sf$date_pulled)
        fill = "Legend",
        caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 16+ Population Estimate)\nChart by: @mrworthington")
 
+  
+```
+
+### From Pharmacies
+
+```{r inaccessible_pharm_df, include=FALSE, layout="l-page"}
+
+vaccine_sites_sf <- read_csv("https://utexas-lbjp-data.github.io/txcovidvaccinedata/clean_data/vaccine_provider_raw.csv") %>%
+    st_as_sf(coords = c("lon", "lat"), crs = 4326, remove = FALSE) %>% 
+    select(-Address) %>% 
+    mutate(Address = paste0(Street, ", ", City, ", TX ", Zip)) %>% 
+    select(-Street, -City, -Zip) %>% 
+    mutate(Time = format(as.POSIXct(`Time Updated`), format = "%I:%M %p")) %>% 
+    select(1:2, `Total Available`, `Last Updated`,Time, Phone, Address, everything())
+
+vaccine_sites_sf_pharm <- vaccine_sites_sf %>% 
+  filter(`Organization Type`=="Pharmacy")
+
+# driving_isos_30 <- mb_isochrone(
+#   vaccine_sites_sf_pharm,
+#   profile = "driving",
+#   time = 30,
+#   id = "Provider Name"
+# ) %>%
+#   st_transform(4326) %>%
+#   st_as_sf()
+# 
+# driving_combined_30 <- st_union(driving_isos_30) %>%
+#   st_cast(to="POLYGON") %>%
+#   st_transform(4326) %>%
+#   st_as_sf()
+# 
+# write_rds(driving_isos_30, "clean_data/driving_isos_30_pharm.rds")
+# write_rds(driving_combined_30, "clean_data/driving_combined_30_pharm.rds")
+
+driving_isos_30 <- read_rds("clean_data/driving_isos_30_pharm.rds")
+driving_combined_30 <- read_rds("clean_data/driving_combined_30_pharm.rds")
+```
+
+```{r inaccessible_pharm_map, echo=FALSE, fig.height=11, fig.width=11, layout="l-body-outset"}
+
+# texas_pop_block_grps_16plus <- get_acs(geography = "block group",
+#                       variables = "B23027_001",
+#                       state="TX",
+#                       survey = "acs5",
+#                       geometry = TRUE,
+#                       show_call = TRUE) %>%
+#   # filter(estimate==0) %>%
+#   st_transform(4326) %>%
+#   st_as_sf()
+
+# write_rds(texas_pop_block_grps_16plus, "clean_data/texas_pop_block_grps_16plus.rds")
+
+texas_pop_block_grps <-read_rds("clean_data/texas_pop_block_grps_16plus.rds")
+
+texas_pop_blox <- texas_pop_block_grps %>%
+  filter(estimate!=0)
+
+# inaccessible_vaccine_pharm <- st_difference(texas_pop_blox,st_union(driving_combined_30)) %>%
+#   st_cast(to="POLYGON") %>%
+#   st_transform(4326) %>%
+#   st_as_sf()  %>%
+#   mutate(est_lab = scales::comma(estimate, accuracy=1, suffix = " People"))
+# 
+# write_rds(inaccessible_vaccine_pharm, paste0("clean_data/", today, "_inaccessible_pharm_16plus.rds"))
+# write_rds(inaccessible_vaccine_pharm, "clean_data/inaccessible_pharm_16plus.rds")
+
+inaccessible_vaccine_pharm <-read_rds("clean_data/inaccessible_pharm_16plus.rds")
+
+inaccessible_hub_summ <- inaccessible_vaccine_pharm %>%
+  as_tibble() %>%
+  distinct(GEOID, .keep_all = TRUE) %>%
+  mutate(state="TX") %>%
+  group_by(state) %>%
+  summarise(sum_inaccessible = sum(estimate))
+
+write_rds(inaccessible_hub_summ, paste0("clean_data/", today, "_inaccessible_pharm_summ.rds"))
+
+date_pulled <- unique(vaccine_sites_sf$date_pulled)
+
+  inaccessible_vaccine_pharm %>% 
+  ggplot() +
+  geom_sf(data = inaccessible_vaccine_pharm, aes(fill = "Inaccessible Population (+30min Drive)"), color = NA) +
+  geom_sf(data = tidycensus::county_laea %>% filter(str_detect(GEOID, "^48")), fill=NA, color = "#d6d2c4") +
+  geom_sf(data = driving_combined_30, aes(fill = "Accessible Population"), color = NA) +
+  scale_fill_manual(values = c("Inaccessible Population (+30min Drive)"="#9cadb7","Accessible Population"="#bf5700")) +
+  # guides(guide = guide_legend(override.aes = list(linetype = "blank", shape = NA))) +
+  theme_minimal(base_family = "Graphik") +
+  coord_sf(datum = NA, crs = 3082) +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =24),
+        plot.subtitle = element_text(color = "#333f48", margin = margin(b=15), size = 16),
+        plot.caption = element_text(color = "#333f48", size =12),
+        # legend.key = element_rect(fill = "white", colour = NA),
+        legend.position = c(.25,.15),
+        legend.title = element_text(family = "Graphik-Bold", size=18),
+        legend.text = element_text(size=16),
+        plot.margin = margin(t=15, r=15, b=15, l = 15)) +
+  labs(title = "~2 million Texans are a 30+min drive from a pharmacy",
+       subtitle = paste0("Shown below are census blocks where the population aged 16 years and older would\nhave to drive 30 minutes or more to one of the state's existing pharmacies providing\nCOVID-19 vaccines.Areas marked in orange are within a 30 min drive to a pharmacy.\nPharmacy Locations Accurate as of ", date_pulled, "."),
+       fill = "Legend",
+       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 16+ Population Estimate)") 
+  
+  # +
+  # ggsave(paste0("figures/",today,"_","inaccessible_pharmacies_map.png"), dpi = 300, width = 13.5, height = 11.5)
   
 ```
 
