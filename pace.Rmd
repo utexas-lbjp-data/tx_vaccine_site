@@ -29,6 +29,7 @@ library(janitor)
 library(reactable)
 library(htmltools)
 library(tippy)
+library(lbjdata)
 
 today <- Sys.Date()
 today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
@@ -110,7 +111,7 @@ The chart attempts to capture a holistic snapshot of multiple data points relate
 * **Doses Shipped:** How many doses have been shipped compared to the entire 16+ population?
 * **Persons Fully Vaccinated:** How many people have been fully vaccinated compared to the entire 16+ population?
 
-```{r echo=FALSE, fig.width=11, layout="l-page"}
+```{r state summary, echo=FALSE, fig.width=11, layout="l-page"}
 
 vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
@@ -202,7 +203,7 @@ vaccine_summ %>%
 
 ## National Comparison
 
-```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+```{r ggplot2 national comparison, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 
 cdc_last_update <- "Mar 7, 2021" 
 cdc_last_time <- "12:25PM"
@@ -295,7 +296,7 @@ cdc_vaccine_summary_ggplot2 %>%
 ```
 
 
-```{r echo=FALSE, layout = "l-body-outset"}
+```{r highcharter nat comparison, echo=FALSE, layout="l-page"}
 
 cdc_last_update <- "Mar 7, 2021" 
 cdc_last_time <- "12:25PM"
@@ -310,25 +311,25 @@ cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_sta
   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
   drop_na(doses_delivered_per_100k)
 
-library(gghighlight)
-
-cdc_vaccine_summary_ggplot2 <- cdc_vaccine_summary %>% 
-  mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
-  pivot_longer(cols=2:5,
-               names_to = "indicator",
-               values_to = "value") %>% 
-  group_by(indicator) %>% 
-  mutate(rank = dense_rank(desc(value))) %>% 
-  mutate(indicator = str_replace(indicator,"doses_delivered_per_100k","Distributed"),
-         indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered"),
-         indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose"),
-         indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses")) %>% 
-  filter(str_detect(indicator, "Distributed|Administered"))
-
-cdc_vaccine_summary_ggplot2 %>% 
-  ggplot(aes(x=area, y=reorder(value, rank))) +
-  geom_col() +
-  facet_wrap(~indicator)
+# library(gghighlight)
+# 
+# cdc_vaccine_summary_ggplot2 <- cdc_vaccine_summary %>% 
+#   mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
+#   pivot_longer(cols=2:5,
+#                names_to = "indicator",
+#                values_to = "value") %>% 
+#   group_by(indicator) %>% 
+#   mutate(rank = dense_rank(desc(value))) %>% 
+#   mutate(indicator = str_replace(indicator,"doses_delivered_per_100k","Distributed"),
+#          indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered"),
+#          indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose"),
+#          indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses")) %>% 
+#   filter(str_detect(indicator, "Distributed|Administered"))
+# 
+# cdc_vaccine_summary_ggplot2 %>% 
+#   ggplot(aes(x=area, y=reorder(value, rank))) +
+#   geom_col() +
+#   facet_wrap(~indicator)
 
 cdc_vaccine_column <- cdc_vaccine_summary %>%
   mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
