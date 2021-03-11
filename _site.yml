@@ -1,5 +1,6 @@
 name: "Texas COVID-19 Vaccine Tracker"
 title: "Texas COVID-19 Vaccine Tracker"
+favicon: favicon-32x32.png
 description: |
   Tracking COVID-19 Vaccines in Texas
 output_dir: "_site"
