@@ -241,7 +241,7 @@ tx_counties_bbox <- tx_counties %>%
 
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 
 tx_cnty_list <- tx_counties %>% 
   filter(county!="Texas") %>% 
@@ -265,10 +265,13 @@ roads_int <- tigris::primary_secondary_roads(state = "TX") %>%
 
 
 ```{r}
-library(ggspatial)
+# library(ggspatial)
+
 vaccine_summ_zcta_cntys <-  vaccine_summ_zcta_cnty %>% 
   filter(county=="Travis") %>% 
   mutate(vax_administered_per_cap = round((as.numeric(vaccine_doses_administered)/pop_16_plus)*1000, digits = 4)) 
+
+cnty_lbl <- unique(vaccine_summ_zcta_cntys$county)
 
   vaccine_summ_zcta_cntys %>% 
   ggplot() +
@@ -294,11 +297,11 @@ vaccine_summ_zcta_cntys <-  vaccine_summ_zcta_cnty %>%
                                barheight = .9, direction="horizontal", title.hjust = .5), colour = FALSE,
          color = guide_legend(title = "Highway")) +
   labs(title = "Vaccine Doses Administered<br><span style = 'color:#bf5700; font-size:18pt'>Per 1,000 Persons</span'color:#bf5700'><span style = 'font-size:18pt'> | </span><span style = 'font-size:18pt; color:#9cadb7'>by Zip Code</span>",
-       subtitle = "XXXX County",
+       subtitle = paste0(cnty_lbl, " County as of ", today_lbl),
        x = NULL,
        y = NULL,
        caption = "**File:** 'COVID-19 Vaccine Administration Data by ZIP Code'<br>**Source:** Texas Department of State Health Services<br>**Chart By:** @mrworthington") +
-  ggsave("figures/doses_administered_per_cap_zcta.png", device="png", dpi=300, height = 10, width = 15)
+  ggsave(paste0("figures/",cnty_lbl,"_doses_administered_per_cap_zcta.png"), device="png", dpi=300, height = 10, width = 15)
 ```
 
 ```{r}

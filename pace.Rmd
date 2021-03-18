@@ -115,7 +115,7 @@ The chart attempts to capture a holistic snapshot of multiple data points relate
 
 vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
-  filter(county_name=="Texas") %>% 
+  filter(county_name=="Texas") %>%
   mutate(across(total_doses_allocated:population_education_and_child_care_personnel, as.numeric)) %>% 
   select(county_name, population_16, people_fully_vaccinated, total_doses_allocated, 
          starts_with("population_phase_"), population_16_64_any_medical_condition, 
@@ -205,10 +205,10 @@ vaccine_summ %>%
 
 ```{r ggplot2 national comparison, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
 
-cdc_last_update <- "Mar 7, 2021" 
-cdc_last_time <- "12:25PM"
+cdc_last_update <- "Mar 18, 2021" 
+cdc_last_time <- "3:11PM"
 
-cdc_vaccine_summary_ggplot2 <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-5.csv",
+cdc_vaccine_summary_ggplot2 <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-6.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
@@ -298,14 +298,14 @@ cdc_vaccine_summary_ggplot2 %>%
 
 ```{r highcharter nat comparison, echo=FALSE, layout="l-page"}
 
-cdc_last_update <- "Mar 7, 2021" 
-cdc_last_time <- "12:25PM"
+cdc_last_update <- "Mar 18, 2021" 
+cdc_last_time <- "3:11PM"
 
   hcoptslang <- getOption("highcharter.lang")
   hcoptslang$thousandsSep <- ","
   options(highcharter.lang = hcoptslang)
 
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-5.csv",
+cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-6.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%

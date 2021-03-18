@@ -347,9 +347,9 @@ pov_scatter <- ggplot(vaccine_summ_zcta,
        caption = "Source: Zip Code Vaccine Administration Data courtesy of Texas Department of State Health Services\nSource: Population Aged 16+ and Poverty Estimates courtesy of the American Community Survey (2019 5-Yr Estimates) Produced by the US Census\nChart By: @mrworthington") +
   ggsave("figures/poverty_per_capita_doses_administered.png", device="png", dpi=300, width = 12, height = 8)
 
-plotly::ggplotly(pov_scatter)
+# plotly::ggplotly(pov_scatter)
 
-med_inc <- get_acs(geography = "zcta", summary_var = "B19013_001",  state = "TX") 
+# med_inc <- get_acs(geography = "zcta", summary_var = "B19013_001",  state = "TX") 
 
 ```
 
