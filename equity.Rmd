@@ -92,7 +92,7 @@ vaccine_hc <- hc_theme_merge(
 
 Towards the end of January, the Texas Department of State Health Services (DSHS) began publishing breakdowns of vaccinations by across different demographics, specifically age, gender, and race/ethnicity. While there's a lot of unknowns in the data--particularly across entries for "Race/Ethnicity"+"Gender"--and also because we don't have the population estimates for phases 1A and 1B broken down by race/age/gender, the data presented by DSHS struggles to paint an incomplete picture of the profile of vaccinated individuals. That said, the charts below attempt to breakdown that data with as much clarity as possible across all known and unknown classifications. 
 
-```{r covid_case_fatality_dem_chart, echo=FALSE, fig.height=4.75, fig.width=12.5, layout = "l-page"}
+```{r covid_case_fatality_dem_chart, echo=FALSE, fig.height=4.75, fig.width=12.25, layout = "l-page"}
 
 ## PULL ACS CENSUS DEMOGRAPHIC DATA ##
 
@@ -168,7 +168,7 @@ dem_vax_data <- read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>%
   mutate(pct=round(value/sum, digits=4)) %>% 
   select(-sum) %>% 
   mutate(measure = str_replace(measure,"doses_administered","Doses Administered"),
-         measure = str_replace(measure,"people_vaccinated_with_at_least_one_dose","Partially Vaccinated"),
+         measure = str_replace(measure,"people_vaccinated","Partially Vaccinated"),
          measure = str_replace(measure,"people_fully_vaccinated","Fully Vaccinated"),
          data="Vaccines")
 
@@ -231,7 +231,7 @@ equity_chart <- ggplot() +
 
 equity_chart
     
-ggsave(paste0("figures/", today,"_","tx_covid_equity_analysis.png"),equity_chart,  dpi = 300, width = 12.5, height = 4.75)
+ggsave(paste0("figures/", today,"_","tx_covid_equity_analysis.png"),equity_chart,  dpi = 300, width = 12, height = 4.75)
   
 ```
 
