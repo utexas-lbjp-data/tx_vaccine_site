@@ -269,11 +269,22 @@ read_excel(filepath, sheet = "By County", skip=0) %>%
 
 \newline
 
-Below is a description of the Phase 1C population, as described by [the Texas Department of State Health Services](https://www.dshs.state.tx.us/coronavirus/immunize/vaccine/EVAP-Phase1C.pdf).
+Below is a description of the Phase 1B population, as described by [the Texas Department of State Health Services](https://dshs.texas.gov/coronavirus/immunize/vaccine/EVAP-Phase1B.pdf).
 
 <!-- ## Phase 1B {.unlisted .unnumbered} -->
 
-* People 50 to 64 years of age
+* People 65 years of age and older
+* People 16 years of age and older with at least one chronic medical condition that puts
+them at increased risk for severe illness from the virus that causes COVID-19, such as but not limited to:
+  * Cancer
+  * Chronic kidney disease
+  * COPD (chronic obstructive pulmonary disease)
+  * Heart conditions, such as heart failure, coronary artery disease or cardiomyopathies
+  * Solid organ transplantation
+  * Obesity and severe obesity (body mass index of 30 kg/m2 or higher)
+  * Pregnancy
+  * Sickle cell disease
+  * Type 2 diabetes mellitus
 
 </details>
 
@@ -282,15 +293,9 @@ Below is a description of the Phase 1C population, as described by [the Texas De
 
 \newline
 
-Below is a description of the School & Childcare personnel outlined in a federal directive, as described by [the Texas Department of State Health Services](https://dshs.texas.gov/immunize/covid19/HHSDirectiveforCertainEducationalandChildCareWorkers.pdf).
+Below is a description of the Phase 1C population, as described by [the Texas Department of State Health Services](https://dshs.texas.gov/coronavirus/immunize/vaccine/EVAP-Phase1C.pdf).
 
-<!-- ## School and Childcare Personnel {.unlisted .unnumbered} -->
-
-With the [federal directive](https://dshs.texas.gov/immunize/covid19/HHSDirectiveforCertainEducationalandChildCareWorkers.pdf), the following education and child care personnel are now eligible to be vaccinated in Texas:
-
-* Those who work in pre-primary, primary, and secondary schools;
-* Head Start and Early Head Start programs (including teachers, staff, and bus drivers); and
-* Those who work as or for licensed child care providers, including center-based and family care providers.
+* People 50 to 64 years of age
 
 </details>
 
