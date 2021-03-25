@@ -278,6 +278,7 @@ tm_shape(vaccine_summ_zcta, bbox = travis_county_sf, unit = "miles") +
 
 ```
 
+## Poverty and Zips Analysis
 
 ```{r}
 

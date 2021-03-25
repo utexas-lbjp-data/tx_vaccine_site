@@ -265,7 +265,7 @@ roads_int <- tigris::primary_secondary_roads(state = "TX") %>%
 
 
 ```{r}
-# library(ggspatial)
+library(ggspatial)
 
 vaccine_summ_zcta_cntys <-  vaccine_summ_zcta_cnty %>% 
   filter(county=="Travis") %>% 
@@ -314,7 +314,7 @@ plots <- lapply(tx_cnty_list, function(x) {
   
   vaccine_summ_cnty <- vaccine_summ_zcta_cnty %>% 
     filter(county==x) %>% 
-    mutate(vax_administered_per_cap = round((as.numeric(vaccine_doses_administered)/pop_16_plus)*1000, digits = 4))
+    mutate(vax_administered_per_cap = round((as.numeric(vaccine_doses_administered)/ pop_16_plus)*1000, digits = 4))
   
 # box_start <- unique(vaccine_summ_zcta_cnty$remaining_box_start)
 

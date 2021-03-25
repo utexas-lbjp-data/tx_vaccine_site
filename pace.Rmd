@@ -98,6 +98,16 @@ vaccine_hc <- hc_theme_merge(
                         minorGridLineColor = 'rgba(0,0,0,0.15)', 
                         tickColor = "#9d9d9d", 
                         tickWidth = 2)))
+
+library(gghighlight)
+
+states <- tigris::states(cb=TRUE) %>% 
+  as_tibble() %>% 
+  clean_names() %>% 
+  select(statefp, name) %>% 
+  arrange(statefp) %>% 
+  slice(1:51) %>% 
+  mutate(name = str_replace(name, "New York", "New York State"))
   
 ```
 
@@ -203,217 +213,73 @@ vaccine_summ %>%
 
 ## National Comparison
 
-```{r ggplot2 national comparison, eval=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+```{r ggplot2 national comparison, echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=4.5, layout="l-page"}
 
-cdc_last_update <- "Mar 18, 2021" 
-cdc_last_time <- "3:11PM"
+cdc_last_update <- "Mar 25, 2021" 
+cdc_last_time <- "1:47PM"
 
-cdc_vaccine_summary_ggplot2 <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-6.csv",
+cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-8.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
   drop_na(doses_delivered_per_100k)
-
-library(gghighlight)
-
-states <- tigris::states(cb=TRUE) %>% 
-  as_tibble() %>% 
-  clean_names() %>% 
-  select(statefp, name) %>% 
-  arrange(statefp) %>% 
-  slice(1:51) %>% 
-  mutate(name = str_replace(name, "New York", "New York State"))
 
 cdc_vaccine_summary_ggplot2 <- cdc_vaccine_summary %>% 
   mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
   filter(area %in% states$name) %>% 
-  pivot_longer(cols=2:5,
+  pivot_longer(cols=2:ncol(.),
                names_to = "indicator",
                values_to = "value") %>% 
   group_by(indicator) %>% 
   mutate(rank = dense_rank(desc(value))) %>% 
-  mutate(indicator = str_replace(indicator,"doses_delivered_per_100k","Delivered Per 100k"),
-         indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered Per 100k"),
-         indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose"),
-         indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses")) %>% 
+  mutate(indicator = str_replace(indicator,"doses_administered_per_100k_of_65_pop_by_state_where_administered","Administered Per 100k (Age 65+ Where Administered)"),
+         indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered Per 100k (Where Administered)"),
+         indicator = str_replace(indicator,"doses_delivered_per_100k_of_65_pop","Delivered Per 100k (Age 65+)"),
+         indicator = str_replace(indicator,"doses_delivered_per_100k","Delivered Per 100k"),
+         indicator = str_replace(indicator,"percent_of_total_pop_with_at_least_one_dose_by_state_of_residence","At Least 1 Dose (% of Residents)"),         
+         indicator = str_replace(indicator,"percent_of_total_pop_fully_vaccinated_by_state_of_residence","Fully Vaccinated (% of Residents)"),
+         indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose (% of Residents)"),
+         indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses (% of Residents)"),
+         indicator = str_replace(indicator,"percent_of_65_pop_with_at_least_one_dose_by_state_of_residence","At Least 1 Dose (% of Residents Age 65+)"),
+         indicator = str_replace(indicator,"percent_of_65_pop_fully_vaccinated_by_state_of_residence","Fully Vaccinated (% of Residents Age 65+)")) %>%
   filter(str_detect(indicator, "Delivered|Administered")) %>% 
   ungroup()
 
 cdc_vaccine_summary_ggplot2 %>% 
-  filter(indicator == "Delivered Per 100k") %>%
+  filter(indicator == "Administered Per 100k (Where Administered)") %>%
   ggplot(aes(x=reorder(area, desc(value)), y=value, fill = value)) +
   geom_bar(stat = "identity") +
   geom_point(aes(x=reorder(area, desc(value)), y=value), shape = 21, fill = "#bf5700", color = "black", size = 10, stroke = .1) +
   geom_text(angle=90, color="#ffffff", size = 3.1, family = "LibreFranklin-SemiBold",
-            aes(y= 1000, x=area, label = area), hjust = 0) + 
+            aes(y= 1000, x=area, label = area), hjust = 0) +
   gghighlight(area == "Texas") +
-  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Delivered Per 100k", area != "Texas"), 
+  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Administered Per 100k (Where Administered)", area != "Texas"), 
             angle=90, color="#2d2d2d", size = 3.1, family = "LibreFranklin-SemiBold", aes(y= 1000, x=area, label = area), hjust = 0) +
   geom_point(aes(x=reorder(area, desc(value)), y=value), shape = 21, fill = "#bf5700", color = "black", size = 10, stroke = .1) +
-  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Delivered Per 100k", area == "Texas"), 
+  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Administered Per 100k (Where Administered)", area == "Texas"), 
             angle=90, color="#ffffff", size = 3.5, family = "LibreFranklin-Bold", aes(y= value, x=area, label = rank)) +  
-  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Delivered Per 100k", area != "Texas"), 
+  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Administered Per 100k (Where Administered)", area != "Texas"), 
             angle=90, color="#2d2d2d", size = 3.5, family = "LibreFranklin-Bold", aes(y= value, x=area, label = rank)) +  
-  theme_lbj() +
-  theme(axis.text.x = element_blank(),
+  theme_minimal(base_family = "Graphik") +
+  theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
+        plot.subtitle = element_text(family = "Graphik-Regular", color = "#333f48", margin = margin(b=15)),
+        panel.grid.major.y = element_blank(),
+        plot.margin = margin(t=15, r=15, b=10, l = 15),
+        axis.text.x = element_blank(),
         axis.line.x = element_blank(),
-        axis.ticks.x = element_blank()) +
+        axis.ticks.x = element_blank(),
+        legend.position = "none") +
+  # theme() +
   scale_y_continuous(label = scales::comma) +
-  labs(title = "How Texas Vaccine Deliveries Stacks Up Against All US States", 
-       subtitle = paste0("Date is from the CDC. Data reflects reporting as of ",cdc_last_update," at ", cdc_last_time),
+  labs(title = "How Texas Vaccine Administration Stacks Up Against US States + DC", 
+       subtitle = paste0("Shown are rankings of vaccine administration, based on the number of doses administered for every 100,000 people\nin a given state. Data is from the CDC. Data reflects reporting as of ",cdc_last_update," at ", cdc_last_time),
        y = "Doses Delivered Per 100k Persons",
-       x = "States, Territories, and other US Entities",
+       x = "States and DC",
        caption = "Source: 'COVID Data Tracker - Vaccines', Center for Disease Control.") +
-  ggsave("figures/tx_us_comparison_vaccine_deliveries.png", device = "png", dpi = 300, width =13, height = 7)
-
-cdc_vaccine_summary_ggplot2 %>% 
-  filter(indicator == "Administered Per 100k") %>%
-  ggplot(aes(x=reorder(area, desc(value)), y=value, fill = value)) +
-  geom_bar(stat = "identity") +
-  geom_point(aes(x=reorder(area, desc(value)), y=value), shape = 21, fill = "#bf5700", color = "black", size = 10, stroke = .1) +
-  geom_text(angle=90, color="#ffffff", size = 3.1, family = "LibreFranklin-SemiBold",
-            aes(y= 1000, x=area, label = area), hjust = 0) + 
-  gghighlight(area == "Texas") +
-  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Administered Per 100k", area != "Texas"), 
-            angle=90, color="#2d2d2d", size = 3.1, family = "LibreFranklin-SemiBold", aes(y= 1000, x=area, label = area), hjust = 0) +
-  geom_point(aes(x=reorder(area, desc(value)), y=value), shape = 21, fill = "#bf5700", color = "black", size = 10, stroke = .1) +
-  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Administered Per 100k", area == "Texas"), 
-            angle=90, color="#ffffff", size = 3.5, family = "LibreFranklin-Bold", aes(y= value, x=area, label = rank)) +  
-  geom_text(data = cdc_vaccine_summary_ggplot2 %>% filter(indicator == "Administered Per 100k", area != "Texas"), 
-            angle=90, color="#2d2d2d", size = 3.5, family = "LibreFranklin-Bold", aes(y= value, x=area, label = rank)) +  
-  theme_lbj() +
-  theme(axis.text.x = element_blank(),
-        axis.line.x = element_blank(),
-        axis.ticks.x = element_blank()) +
-  scale_y_continuous(label = scales::comma) +
-  labs(title = "How Texas Vaccine Administration Stacks Up Against All US States", 
-       subtitle = paste0("Date is from the CDC. Data reflects reporting as of ",cdc_last_update," at ", cdc_last_time),
-       y = "Doses Delivered Per 100k Persons",
-       x = "States, Territories, and other US Entities",
-       caption = "Source: 'COVID Data Tracker - Vaccines', Center for Disease Control.") +
-  ggsave("figures/tx_us_comparison_vaccine_administration.png", device = "png", dpi = 300, width =13, height = 7)
+ggsave(paste0("figures/",today,"_","tx_us_comparison_vaccine_administration.png"), device = "png", dpi = 300, width =11, height = 5)
 
 ```
 
-
-```{r highcharter nat comparison, echo=FALSE, layout="l-page"}
-
-cdc_last_update <- "Mar 18, 2021" 
-cdc_last_time <- "3:11PM"
-
-  hcoptslang <- getOption("highcharter.lang")
-  hcoptslang$thousandsSep <- ","
-  options(highcharter.lang = hcoptslang)
-
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-6.csv",
-                                skip = 2, na = "N/A") %>% 
-  clean_names() %>% 
-  select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
-  drop_na(doses_delivered_per_100k)
-
-# library(gghighlight)
-# 
-# cdc_vaccine_summary_ggplot2 <- cdc_vaccine_summary %>% 
-#   mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
-#   pivot_longer(cols=2:5,
-#                names_to = "indicator",
-#                values_to = "value") %>% 
-#   group_by(indicator) %>% 
-#   mutate(rank = dense_rank(desc(value))) %>% 
-#   mutate(indicator = str_replace(indicator,"doses_delivered_per_100k","Distributed"),
-#          indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered"),
-#          indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose"),
-#          indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses")) %>% 
-#   filter(str_detect(indicator, "Distributed|Administered"))
-# 
-# cdc_vaccine_summary_ggplot2 %>% 
-#   ggplot(aes(x=area, y=reorder(value, rank))) +
-#   geom_col() +
-#   facet_wrap(~indicator)
-
-cdc_vaccine_column <- cdc_vaccine_summary %>%
-  mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
-  pivot_longer(cols=2:5,
-               names_to = "type",
-               values_to = "value") %>% 
-  group_by(type) %>% 
-  mutate(rank = dense_rank(desc(value))) %>% 
-  filter(area=="Texas") %>% 
-  rename(indicator=type) %>% 
-  mutate(indicator = str_replace(indicator,"doses_delivered_per_100k","Distributed"),
-         indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered"),
-         indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose"),
-         indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses")) %>% 
-  filter(indicator != "doses_Administered_by_state_where_administered",
-         indicator != "doses_Administered_by_state_where_administered",
-         !str_detect(indicator, "Dose"))
-
-cdc_vaccine_drilldown <- cdc_vaccine_summary %>%
-  mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
-  pivot_longer(cols=2:5,
-               names_to = "type",
-               values_to = "value") %>% 
-  group_by(type) %>% 
-  mutate(rank = dense_rank(desc(value))) %>% 
-  rename(indicator=type) %>% 
-  mutate(indicator = str_replace(indicator,"doses_delivered_per_100k","Distributed"),
-         indicator = str_replace(indicator,"doses_administered_per_100k_by_state_where_administered","Administered"),
-         indicator = str_replace(indicator,"percent_of_total_pop_with_1_doses_by_state_of_residence","With 1 Dose"),
-         indicator = str_replace(indicator,"percent_of_total_pop_with_2_doses_by_state_of_residence","With 2 Doses")) %>% 
-  group_nest(indicator) %>% 
-  mutate(
-    id = indicator,
-    type = "column",
-    data = map(data, mutate, name = area, y = value),
-    data = map(data, list_parse)) %>% 
-  filter(!str_detect(indicator, "Dose"))
-
-x <- c("Value Per 100k: ", "{point.indicator} Rank: ")
-y <- c("{point.value}", "{point.rank}")
-
-tt <- tooltip_table(x, y, title = "{point.area}")
-
-hchart(
-  cdc_vaccine_column,
-  "column",
-  hcaes(x = indicator, y = value, name = indicator, drilldown = indicator),
-  name = "Vaccine Indicators",
-  colorByPoint = TRUE
-) %>% 
-  hc_drilldown(
-    allowPointDrilldown = TRUE,
-    series = list_parse(cdc_vaccine_drilldown)
-  ) %>% 
-  hc_title(text="How Texas Stacks Up Against All States, Territories, & US Entities.") %>%
-  hc_subtitle(text=paste0("Date is from the CDC. Data reflects reporting as of ",cdc_last_update," at ", cdc_last_time)) %>% 
-  hc_tooltip(
-    pointFormat = tt, # "{point.name} {point.pop}"
-    useHTML = TRUE,
-    valueDecimals = 0
-  ) %>% 
-  hc_plotOptions(
-    series = list(
-      boderWidth = 0,
-      dataLabels = list(enabled = TRUE,
-                        format = "{point.rank}"),
-      dataSorting = list(enabled = TRUE)
-    )
-  ) %>% 
-  hc_yAxis(
-    title = list(text = "Value (Per 100k)")
-  ) %>% 
-  hc_xAxis(
-    title = list(text="Vaccine Indicators")
-  ) %>% 
-  hc_colors(colors = list('#005f86','#00a9b7','#9cadb7','#d6d2c4')) %>% 
-  # hc_caption(text = "This is the caption") %>% 
-  hc_credits(
-    enabled = TRUE,
-    text = "Source: 'COVID Data Tracker - Vaccines', Center for Disease Control.",
-    href = "https://covid.cdc.gov/covid-data-tracker/#vaccinations") %>%
-  hc_add_theme(vaccine_hc)
-  
-```
 
 # Distribution Trends
 
