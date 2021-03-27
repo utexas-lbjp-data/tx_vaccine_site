@@ -1,5 +1,0 @@
----
-title: "Tracking COVID-19 Vaccines in Texas"
-# site: distill::distill_website
-listing: posts
----
