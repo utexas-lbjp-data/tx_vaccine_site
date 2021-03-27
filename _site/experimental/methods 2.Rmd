@@ -1,0 +1,56 @@
+---
+title: "Explore Methods & Data"
+description: |
+  Are vaccines being responsibly and fairly administered?  <ul class="list-inline title-nav"> 
+  <li class="list-inline-item-nav"><div class = "go-to-nav" >Go to: </div></li>
+  <li class="list-inline-item-nav">
+    <a href="providers.html"> <button type="button" class="btn btn-outline-light mb-2"> Providers </button> 
+    </a>
+  </li>
+  <li class="list-inline-item-nav">
+    <a href="pace.html"> <button type="button" class="btn btn-outline-light mb-2"> Pace </button> 
+    </a>
+  </li>
+  </ul>
+output: 
+  distill::distill_article:
+    toc: true
+    toc_depth: 3
+    css: equity_header.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# General Notes on our Methods
+
+We used two variables, $x_\text{popX}$ following equation: 
+
+$$1_\text{popX}+2=3$$
+
+```{r cars}
+summary(cars)
+```
+
+# Chart Methods
+
+## Providers
+
+## Pace
+
+### Texas Summary of Vaccination Progress
+
+Using the state's COVID-19 Vaccine, By County Dataset, we were able to compare populations of eligible persons from different phases and overlay them on the population who at some point will be eligible for a vaccine. 
+
+
+## Equity
+
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

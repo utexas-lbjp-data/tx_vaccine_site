@@ -1,0 +1,7 @@
+[context.production]
+    command = ""
+    publish = "_site"
+
+[context.production.environment]
+    RUBY_VERSION = "2.2.9"
+    HUGO_VERSION = "0.36"
