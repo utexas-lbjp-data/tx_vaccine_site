@@ -555,7 +555,7 @@ vaccine_sites_sf_hub <- vaccine_sites_sf %>%
 #   st_cast(to="POLYGON") %>%
 #   st_transform(4326) %>%
 #   st_as_sf()
-
+# 
 # write_rds(driving_isos_30, "clean_data/driving_isos_30_hub.rds")
 # write_rds(driving_combined_30, "clean_data/driving_combined_30_hub.rds")
 
@@ -602,6 +602,8 @@ texas_pop_blox <- texas_pop_block_grps %>%
 #   st_as_sf()  %>%
 #   mutate(est_lab = scales::comma(estimate, accuracy=1, suffix = " People"))
 # 
+# beepr::beep(1)
+
 # write_rds(inaccessible_vaccine_hub, paste0("clean_data/", today, "_inaccessible_vaccine_hub_16plus.rds"))
 # write_rds(inaccessible_vaccine_hub, "clean_data/inaccessible_vaccine_hub_16plus.rds")
 
@@ -614,7 +616,7 @@ inaccessible_hub_summ <- inaccessible_vaccine_hub %>%
   group_by(state) %>%
   summarise(sum_inaccessible = sum(estimate))
 
-write_rds(inaccessible_hub_summ, paste0("clean_data/", today, "_inaccessible_vaccine_hub_summ.rds"))
+# write_rds(inaccessible_hub_summ, paste0("clean_data/", today, "_inaccessible_vaccine_hub_summ.rds"))
 
 date_pulled <- unique(vaccine_sites_sf$date_pulled)
 
@@ -638,8 +640,7 @@ date_pulled <- unique(vaccine_sites_sf$date_pulled)
   labs(title = "~5.6m Texans are a 30+min drive from a Vaccine Hub",
        subtitle = paste0("Shown below are census blocks where the population aged 16 years and older would\nhave to drive 30 minutes or more to one of the state's existing Vaccine Hubs. Areas\nmarked in orange are within a 30 min drive to a Vaccine Hub.\nHub Locations Accurate as of ", date_pulled, "."),
        fill = "Legend",
-       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 16+ Population Estimate)\nChart by: @mrworthington")
-
+       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 16+ Population Estimate)\nChart by: @mrworthington") 
   
 ```
 
@@ -709,14 +710,14 @@ texas_pop_blox <- texas_pop_block_grps %>%
 
 inaccessible_vaccine_pharm <-read_rds("clean_data/inaccessible_pharm_16plus.rds")
 
-inaccessible_hub_summ <- inaccessible_vaccine_pharm %>%
-  as_tibble() %>%
-  distinct(GEOID, .keep_all = TRUE) %>%
-  mutate(state="TX") %>%
-  group_by(state) %>%
-  summarise(sum_inaccessible = sum(estimate))
+# inaccessible_hub_summ <- inaccessible_vaccine_pharm %>%
+#   as_tibble() %>%
+#   distinct(GEOID, .keep_all = TRUE) %>%
+#   mutate(state="TX") %>%
+#   group_by(state) %>%
+#   summarise(sum_inaccessible = sum(estimate))
 
-write_rds(inaccessible_hub_summ, paste0("clean_data/", today, "_inaccessible_pharm_summ.rds"))
+# write_rds(inaccessible_hub_summ, paste0("clean_data/", today, "_inaccessible_pharm_summ.rds"))
 
 date_pulled <- unique(vaccine_sites_sf$date_pulled)
 
