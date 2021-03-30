@@ -62,17 +62,18 @@ lcl <- basename(src)
 filepath <- paste0("raw_data/", today,"_",lcl,"x")
 download.file(url = src, destfile = filepath) # Downloads The Data
 
-vaccine_summ <- read_excel(filepath, sheet = 4, skip=0) %>% 
+vaccine_summ <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", 
+        "date", "numeric")) %>% 
   clean_names() %>% 
   group_by(date=vaccination_date) %>% 
-  summarise(daily_doses = sum(doses_administered)) %>% 
+  summarise(daily_doses = sum(doses_administered)) %>%
   mutate(date=as.Date(date)) %>% 
   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0,
                                    align = "right")) %>%
   mutate(date = as.Date(date, format("%b %d %Y"))) %>% 
   ungroup()
 
-latest_date <- vaccine_summ %>% filter(date==max(as.Date(date))) %>% select(date)
+latest_date <- vaccine_summ %>% drop_na(date) %>% filter(date==max(as.Date(date))) %>% select(date)
 
 date_text <- format(latest_date$date, format="%b %d, %Y")
 
@@ -117,11 +118,13 @@ partial_vax_pct_text <- read_excel(filepath, sheet = 2, skip=0) %>%
   select(at_least_one_pct)
 
 yesterday_vax_text <- vaccine_summ %>% 
+  drop_na(date) %>% 
   filter(date==max(as.Date(date))) %>% 
   select(daily_doses) %>% 
   mutate(daily_doses = scales::comma(as.numeric(daily_doses)))
 
 yesterday_vax_pct_text <- vaccine_summ %>% 
+  drop_na(date) %>% 
   filter(date==max(as.Date(date))) %>% 
   select(daily_doses) %>% 
   mutate(population_16 = pop_16_num) %>% 
@@ -130,11 +133,13 @@ yesterday_vax_pct_text <- vaccine_summ %>%
   select(daily_doses_oct)
 
 avg7day_vax_text <- vaccine_summ %>% 
+  drop_na(date) %>% 
   filter(date==max(as.Date(date))) %>% 
   select(new_doses_7_day_avg) %>% 
   mutate(new_doses_7_day_avg = scales::comma(as.numeric(new_doses_7_day_avg)))
 
 avg7day_vax_pct_text <- vaccine_summ %>% 
+  drop_na(date) %>% 
   filter(date==max(as.Date(date))) %>% 
   select(new_doses_7_day_avg) %>% 
   mutate(population_16 = pop_16_num) %>% 
@@ -146,7 +151,7 @@ avg7day_vax_pct_text <- vaccine_summ %>%
 
 The reach of COVID-19 on Texas and the world has been devastating. As our state joins a global effort to put coronavirus into our past, we are tracking the Texas vaccine roll-out as it unfolds in real-time.
 
-Texas has <u>`r pop_16_text`</u> people above the age of 16 who at some point will be eligible for a vaccine. As of <u>`r date_text`</u>, the state has:
+Texas has <u>`r pop_16_text`</u> people above the age of 16 who are currently eligible for the vaccine. As of <u>`r date_text`</u>, the state has:
 
 :::{line-height="1.4px"}
 

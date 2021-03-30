@@ -160,38 +160,38 @@ vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>%
 
 box_start <- unique(vaccine_summ$remaining_box_start)
 box_end <- unique(vaccine_summ$population_16)
-fully_vac_lbl <- scales::comma(unique(vaccine_summ$people_fully_vaccinated))
-shipped_lbl <- scales::comma(unique(vaccine_summ$total_doses_allocated))
+fully_vac_lbl <- scales::comma(unique(vaccine_summ$people_fully_vaccinated), scale = .000001, accuracy = 0.01, suffix = "m")
+shipped_lbl <- scales::comma(unique(vaccine_summ$total_doses_allocated), scale = .000001, accuracy = 0.01, suffix = "m")
 fully_vac_xend <- unique(vaccine_summ$people_fully_vaccinated)
 shipped_xend <- unique(vaccine_summ$total_doses_allocated)
 
 vaccine_summ %>%
   ggplot() +
   geom_col(data = . %>%  slice(1), aes(y=county_name, x=population_16), fill = "#333f48", alpha = .05) +
-  geom_col(data = vaccine_summ %>% filter(phase_pop_est != "Future Phases"), aes(y=county_name, x=value, fill = reorder(phase_pop_est,desc(order))), alpha=.7) +
-  annotate(geom = "rect", alpha = 0, color = "#333f48", linetype = 2, 
-           xmin = box_start, xmax = box_end, ymin = .55, ymax = 1.45) +
+  geom_col(data = vaccine_summ, aes(y=county_name, x=value, fill = reorder(phase_pop_est,desc(order))), alpha=.8) +
+  # annotate(geom = "rect", alpha = 0, color = "#333f48", linetype = 2, 
+  #          xmin = box_start, xmax = box_end, ymin = .55, ymax = 1.45) +
   geom_text(data = . %>% filter(phase_pop_est != "Future Phases"), angle=90, color="white", size = 3, family = "Graphik-Semibold",
             aes(y=county_name, x=lab_pos, label = reorder(phase_pop_est,desc(order)))) +
   geom_text(data = vaccine_summ %>% filter(phase_pop_est == "Future Phases"), color="#2d2d2d", size = 6,  hjust = 0.35,
-            family = "Graphik-Semibold", aes(y=county_name, x=lab_pos), label = "Remaining Pop. (16+) in Future Phases") +
+            family = "Graphik-Semibold", aes(y=county_name, x=lab_pos), label = "Phase 1C + Pop. (16+)") +
   geom_vline(aes(xintercept=total_doses_allocated), linetype = 2, size = .9, color = "#2d2d2d") +
   geom_vline(aes(xintercept=people_fully_vaccinated), linetype = 2, size = .9, color = "#2d2d2d") +
   scale_x_continuous(labels = scales::unit_format(unit = "M", accuracy = 1, scale = 1e-6)) +
-  scale_fill_manual(values = c("#333f48","#005f86",  "#9cadb7","#bf5700")) +
+  scale_fill_manual(values = c("#d6d2c4","#333f48","#005f86",  "#9cadb7","#bf5700")) +
   guides(fill=guide_legend(title = "Legend",
                            keyheight = .8)) +
   annotate(
-    geom = "curve", color = "#2d2d2d", x = shipped_xend*1.15, y = 1.55, xend = shipped_xend*1.02, yend = 1.5,
-    curvature = .1, arrow = arrow(length = unit(2, "mm"))
+    geom = "curve", color = "#2d2d2d", x = shipped_xend*.85, y = 1.55, xend = shipped_xend*.99, yend = 1.5,
+    curvature = -.1, arrow = arrow(length = unit(2, "mm"))
   ) +
-  annotate(geom = "label", x = shipped_xend*1.17, y = 1.53, color = "#2d2d2d", 
+  annotate(geom = "label", x = shipped_xend*.65, y = 1.53, color = "#2d2d2d", 
            label = glue::glue("Doses Shipped: {shipped_lbl}"), family = "Graphik", hjust = "left") +
   annotate(
-    geom = "curve", color = "#2d2d2d", x = fully_vac_xend*2.25, y = .48, xend = fully_vac_xend*1.1, yend = .54 , 
-    curvature = 0, arrow = arrow(length = unit(2, "mm"))
+    geom = "curve", color = "#2d2d2d", x = fully_vac_xend*1.55, y = .48, xend = fully_vac_xend*1.05, yend = .54 , 
+    curvature = -0.1, arrow = arrow(length = unit(2, "mm"))
   ) +
-  annotate(geom = "label", x = fully_vac_xend*2.3, y = .5, color = "#2d2d2d", 
+  annotate(geom = "label", x = fully_vac_xend*1.54, y = .45, color = "#2d2d2d", 
            label = glue::glue("Persons Fully Vacinated: {fully_vac_lbl}"), family = "Graphik", hjust = "left") +
   theme_minimal(base_family = "Graphik") +
   theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
@@ -209,6 +209,14 @@ vaccine_summ %>%
   ggsave(paste0("figures/",today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
+<!-- ## Daily Dose Administration -->
+
+<!-- ```{r} -->
+
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = "By County", skip=0) %>% -->
+
+<!-- ``` -->
+
 
 
 ## National Comparison

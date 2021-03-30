@@ -181,7 +181,18 @@ supply_by_provider_type %>%
 
 ## Eligible Populations
 
-Right now, the state has highlighted two phases of the Texas Population that are eligible to receive available COVID-19 vaccines: Phase 1A and Phase 1B. To learn more about each of the populations, expand the summaries below.
+As of Monday, March 29, 2021, everyone age 16 and older is now eligible to receive a COVID-19 vaccine in Texas. To learn more about each of the populations, expand the summaries below.
+
+<details class = "l-body">
+<summary><strong>Eligible Population | </strong>Ages 16 and older</summary>
+
+As of Monday, March 29, 2021, everyone age 16 and older is now eligible to receive a COVID-19 vaccine in Texas. This comes from the [Texas Department of State Health Services (DSHS)](https://www.dshs.texas.gov/news/releases/2021/20210323.aspx). 
+
+DSHS has directed vaccine providers to prioritize people 80 years old or older when scheduling appointments and accommodate anyone in that age group who presents for vaccination, whether or not they have an appointment, by immediately moving them to the front of the line. That will ensure vaccination of anyone 80 or older with as small a burden on themselves as possible.
+
+</details>
+
+### Past Phases
 
 <details class = "l-body">
 <summary><strong>Eligible Population | </strong>Phase 1A</summary>
