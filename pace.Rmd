@@ -30,6 +30,7 @@ library(reactable)
 library(htmltools)
 library(tippy)
 library(lbjdata)
+library(zoo)
 
 today <- Sys.Date()
 today_lbl <- format(Sys.Date(), format = "%b %d, %Y")
@@ -211,11 +212,68 @@ vaccine_summ %>%
 ```
 <!-- ## Daily Dose Administration -->
 
-<!-- ```{r} -->
+```{r daily-dose-chart, eval=FALSE, include=FALSE, layout="l-page"}
 
-<!-- vaccine_summ_daily <- read_excel(filepath, sheet = "By County", skip=0) %>% -->
+vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", 
+        "date", "numeric")) %>% 
+  clean_names() %>%
+  group_by(date=vaccination_date) %>% 
+  summarise(daily_doses = sum(doses_administered)) %>% 
+  mutate(date=as.Date(date)) %>% 
+  mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0,
+                                   align = "right")) %>%
+  mutate(date = as.Date(date, format("%b %d %Y"))) %>% 
+  ungroup() %>% 
+  drop_na()
 
-<!-- ``` -->
+vaccine_summ_daily %>% 
+      hchart("column", hcaes(x = date, y = daily_doses), 
+             animation=FALSE,
+             color = "#333f48") %>% 
+      hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg),
+                    tooltip = list(pointFormat = "<br>7-Day Avg.: {point.new_doses_7day_avg:,.0f}"),
+                    color = "#bf5700", name="7-Day Avg.") %>%
+      hc_plotOptions(area = list(fillOpacity=.3)) %>% 
+      hc_title(
+        text ="Texas COVID-19 Daily New Cases",
+        useHTML = TRUE) %>% 
+hc_subtitle(
+        text ="LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>",
+        useHTML = TRUE) %>% 
+      hc_yAxis(title = list(text ="New Cases Per Day"),
+               min = min(vaccine_summ_daily$daily_doses),
+               max = max(vaccine_summ_daily$daily_doses)) %>% 
+      # hc_xAxis(title=NULL,
+      #          plotLines=plotLines) %>% 
+      hc_tooltip(table = TRUE, sort = TRUE,
+                 pointFormat = "<b>{point.name}</b><br>
+                   New Cases: {point.y:,.0f}") %>% 
+      hc_legend(enabled=FALSE) %>% 
+      hc_credits(
+        enabled = TRUE,
+        text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data",
+        href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>%
+      hc_add_theme(lbjdata::hc_theme_lbj()) 
+      # hc_exporting(enabled=TRUE, scale=2, sourceWidth= 1200, sourceHeight = 600, 
+      #              allowHTML = TRUE,
+      #              buttons = list(contextButton = list(menuItems = myMenuItems, 
+      #                                                  symbol = 'menuball', 
+      #                                                  symbolStrokeWidth = 1,
+      #                                                  symbolFill = 'rgba(255,209, 0, 0.9)',
+      #                                                  symbolStroke ='#ffffff',
+      #                                                  theme = list(fill='#3A4A9F'))),
+      #              chartOptions = list(title =  list(style = list(fontWeight = '800', fontSize = '22px', textTransform = "uppercase")),
+      #                                  subtitle =  list(style = list(fontSize = '14px')),
+      #                                  chart = list(events = list(load = JS('function() {
+      #                                    this.renderer.image("https://texas-2036.github.io/reference-files/logo_short_w.png",
+      #                                                        1135, 
+      #                                                        5,
+      #                                                        50,
+      #                                                        41.7 
+      #                                    ).add();
+      #                                  }')))))
+
+```
 
 
 
@@ -293,7 +351,9 @@ ggsave(paste0("figures/",today,"_","tx_us_comparison_vaccine_administration.png"
 
 The next chart captures where the reported supply of doses has been distributed, by the type of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently received shipments of doses and how much were they shipped?
 
-```{r echo=FALSE, fig.width=10, layout="l-page"}
+**Note as of Mar 31**: The chart showing how much DSHS has shipped to each provider type across Texas has been temporarily removed due to the fact that DSHS appears to have stopped publishing a column showing how much was shipped to each provider in their daily updates of the ["Texas Vaccine Provider Data"](https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv).
+
+```{r eval=FALSE, fig.width=10, include=FALSE, layout="l-page"}
 
 supply_by_provider_type <- read_csv(filepath_providers, skip=0) %>%
   janitor::clean_names() %>% 
@@ -329,6 +389,11 @@ supply_by_provider_type %>%
 Similar to the last one, this chart focuses on reported availability. In other words, how much of the shipped doses are provider types reporting to be still available at the time the chart was generated? 
 
 ```{r echo=FALSE, fig.width=10, layout="l-page"}
+
+supply_by_provider_type <- read_csv(filepath_providers, skip=0) %>%
+  janitor::clean_names() %>% 
+  group_by(type) %>% 
+  summarise(tot_avail = sum(vaccines_available)) 
 
 supply_by_provider_type %>% 
   drop_na() %>% 
