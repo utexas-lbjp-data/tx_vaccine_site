@@ -249,7 +249,7 @@ myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downl
 highchart(type = "stock") %>% 
       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses, group = age_group),
                     tooltip = list(pointFormat = "{point.age_group}: {point.daily_doses:,.0f}")) %>%
-      hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg),
+      hc_add_series(vaccine_summ_daily_tot, type = "area", hcaes(x = date, y = new_doses_7_day_avg),
                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"),
                     color = "#bf5700", name="7-Day Avg.") %>% 
       hc_plotOptions(area = list(fillOpacity=.1),
@@ -258,7 +258,7 @@ highchart(type = "stock") %>%
         text ="Daily Administered Doses - Texas",
         useHTML = TRUE) %>%
 hc_subtitle(
-        text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses.<br>LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>",
+        text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily administered doses.<br>LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>",
         useHTML = TRUE) %>% 
       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px", 
                                                   color="#333f48",fontWeight="500")),
@@ -268,7 +268,7 @@ hc_subtitle(
       # hc_xAxis(title=NULL,
       #          plotLines=plotLines) %>% 
       hc_tooltip(table = TRUE, sort = TRUE,
-                 pointFormat = "<b>{point.name}</b><br>
+                 pointFormat = "{point.name}
                    New Doses: {point.y:,.0f}") %>%
       hc_colors(colors = list('#1170aa', '#c85200','#ffbc79','#57606c','#5fa2ce')) %>% 
       hc_legend(enabled=TRUE) %>% 
