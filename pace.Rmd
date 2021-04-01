@@ -192,7 +192,7 @@ vaccine_summ %>%
     geom = "curve", color = "#2d2d2d", x = fully_vac_xend*1.55, y = .48, xend = fully_vac_xend*1.05, yend = .54 , 
     curvature = -0.1, arrow = arrow(length = unit(2, "mm"))
   ) +
-  annotate(geom = "label", x = fully_vac_xend*1.54, y = .45, color = "#2d2d2d", 
+  annotate(geom = "label", x = fully_vac_xend*1.54, y = .48, color = "#2d2d2d", 
            label = glue::glue("Persons Fully Vacinated: {fully_vac_lbl}"), family = "Graphik", hjust = "left") +
   theme_minimal(base_family = "Graphik") +
   theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),
@@ -206,18 +206,19 @@ vaccine_summ %>%
        x = NULL,
        y = NULL,
        color = NULL,
-       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") +
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") +
   ggsave(paste0("figures/",today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
-<!-- ## Daily Dose Administration -->
 
-```{r daily-dose-chart, eval=FALSE, include=FALSE, layout="l-page"}
+```{r daily-dose-chart-all, echo=FALSE, fig.height=18, layout="l-page"}
 
-vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", 
-        "date", "numeric")) %>% 
-  clean_names() %>%
-  group_by(date=vaccination_date) %>% 
+library(quantmod)
+
+vaccine_summ_daily_tot <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>% 
+  clean_names() %>% 
+  filter(age_group!="Grand Total") %>% 
+  group_by(date=vaccination_date) %>%
   summarise(daily_doses = sum(doses_administered)) %>% 
   mutate(date=as.Date(date)) %>% 
   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0,
@@ -226,65 +227,72 @@ vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("tex
   ungroup() %>% 
   drop_na()
 
-vaccine_summ_daily %>% 
-      hchart("column", hcaes(x = date, y = daily_doses), 
-             animation=FALSE,
-             color = "#333f48") %>% 
+vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>% 
+  clean_names() %>% 
+  filter(age_group!="Grand Total") %>% 
+  group_by(age_group,date=vaccination_date) %>%
+  arrange(age_group) %>%
+  summarise(daily_doses = sum(doses_administered)) %>% 
+  mutate(date=as.Date(date)) %>% 
+  mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0,
+                                   align = "right")) %>%
+  mutate(date = as.Date(date, format("%b %d %Y"))) %>% 
+  ungroup() %>% 
+  drop_na()
+
+  hcoptslang <- getOption("highcharter.lang")
+  hcoptslang$thousandsSep <- ","
+  options(highcharter.lang = hcoptslang)
+  
+myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG")
+
+highchart(type = "stock") %>% 
+      hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses, group = age_group),
+                    tooltip = list(pointFormat = "{point.age_group}: {point.daily_doses:,.0f}")) %>%
       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg),
-                    tooltip = list(pointFormat = "<br>7-Day Avg.: {point.new_doses_7day_avg:,.0f}"),
-                    color = "#bf5700", name="7-Day Avg.") %>%
-      hc_plotOptions(area = list(fillOpacity=.3)) %>% 
+                    tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"),
+                    color = "#bf5700", name="7-Day Avg.") %>% 
+      hc_plotOptions(area = list(fillOpacity=.1),
+                     series = list(stacking = "normal")) %>% 
       hc_title(
-        text ="Texas COVID-19 Daily New Cases",
-        useHTML = TRUE) %>% 
+        text ="Daily Administered Doses - Texas",
+        useHTML = TRUE) %>%
 hc_subtitle(
-        text ="LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>",
+        text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses.<br>LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>",
         useHTML = TRUE) %>% 
-      hc_yAxis(title = list(text ="New Cases Per Day"),
-               min = min(vaccine_summ_daily$daily_doses),
-               max = max(vaccine_summ_daily$daily_doses)) %>% 
+      hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px", 
+                                                  color="#333f48",fontWeight="500")),
+               min = min(vaccine_summ_daily_tot$daily_doses),
+               max = max(vaccine_summ_daily_tot$daily_doses),
+               labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>% 
       # hc_xAxis(title=NULL,
       #          plotLines=plotLines) %>% 
       hc_tooltip(table = TRUE, sort = TRUE,
                  pointFormat = "<b>{point.name}</b><br>
-                   New Cases: {point.y:,.0f}") %>% 
-      hc_legend(enabled=FALSE) %>% 
+                   New Doses: {point.y:,.0f}") %>%
+      hc_colors(colors = list('#1170aa', '#c85200','#ffbc79','#57606c','#5fa2ce')) %>% 
+      hc_legend(enabled=TRUE) %>% 
       hc_credits(
         enabled = TRUE,
         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data",
         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>%
-      hc_add_theme(lbjdata::hc_theme_lbj()) 
-      # hc_exporting(enabled=TRUE, scale=2, sourceWidth= 1200, sourceHeight = 600, 
-      #              allowHTML = TRUE,
-      #              buttons = list(contextButton = list(menuItems = myMenuItems, 
-      #                                                  symbol = 'menuball', 
-      #                                                  symbolStrokeWidth = 1,
-      #                                                  symbolFill = 'rgba(255,209, 0, 0.9)',
-      #                                                  symbolStroke ='#ffffff',
-      #                                                  theme = list(fill='#3A4A9F'))),
-      #              chartOptions = list(title =  list(style = list(fontWeight = '800', fontSize = '22px', textTransform = "uppercase")),
-      #                                  subtitle =  list(style = list(fontSize = '14px')),
-      #                                  chart = list(events = list(load = JS('function() {
-      #                                    this.renderer.image("https://texas-2036.github.io/reference-files/logo_short_w.png",
-      #                                                        1135, 
-      #                                                        5,
-      #                                                        50,
-      #                                                        41.7 
-      #                                    ).add();
-      #                                  }')))))
+      hc_add_theme(lbjdata::hc_theme_lbj()) %>% 
+      hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE, 
+                       verticalAlign = "top",
+                       selected = 3, inputBoxBorderColor= 'white') %>% 
+      hc_exporting(enabled=TRUE, scale=2, sourceHeight = 900,allowHTML = TRUE)
 
 ```
-
 
 
 ## National Comparison
 
 ```{r ggplot2 national comparison, echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=4.5, layout="l-page"}
 
-cdc_last_update <- "Mar 25, 2021" 
-cdc_last_time <- "1:47PM"
+cdc_last_update <- "Mar 31, 2021" 
+cdc_last_time <- "12:39PM"
 
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-8.csv",
+cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-9.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
@@ -346,6 +354,251 @@ ggsave(paste0("figures/",today,"_","tx_us_comparison_vaccine_administration.png"
 
 ```
 
+<!-- # Daily Doses Administered -->
+
+<!-- The following charts show data for the daily administration of vaccines across the general population of Texas as well as the different age groups reported by the Texas Department of State Health Services through their Texas Accessible Vaccine Dashboard Data. -->
+
+<!-- ## All Age Groups {.unnumbered} -->
+
+<!-- ## Ages 16-49 years {.unnumbered} -->
+
+<!-- ```{r daily-dose-chart-16, echo=FALSE, layout="l-page"} -->
+
+<!-- library(quantmod) -->
+
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
+<!--   clean_names() %>%  -->
+<!--   filter(age_group=="16-49 years") %>%  -->
+<!--   group_by(date=vaccination_date) %>% -->
+<!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
+<!--   mutate(date=as.Date(date)) %>%  -->
+<!--   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0, -->
+<!--                                    align = "right")) %>% -->
+<!--   mutate(date = as.Date(date, format("%b %d %Y"))) %>%  -->
+<!--   ungroup() %>%  -->
+<!--   drop_na() -->
+
+<!--   hcoptslang <- getOption("highcharter.lang") -->
+<!--   hcoptslang$thousandsSep <- "," -->
+<!--   options(highcharter.lang = hcoptslang) -->
+
+<!-- myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG") -->
+
+<!-- highchart(type = "stock") %>%  -->
+<!--       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses), -->
+<!--                     tooltip = list(pointFormat = "Daily Doses Administered: {point.daily_doses:,.0f}"), -->
+<!--                     color = "#333f48", name="Daily Doses Administered") %>% -->
+<!--       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg), -->
+<!--                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"), -->
+<!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
+<!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
+<!--       hc_title( -->
+<!--         text ="Daily Administered Doses - 16 to 49 Years", -->
+<!--         useHTML = TRUE) %>% -->
+<!-- hc_subtitle( -->
+<!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
+<!--         useHTML = TRUE) %>%  -->
+<!--       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px",  -->
+<!--                                                   color="#333f48",fontWeight="500")), -->
+<!--                min = min(vaccine_summ_daily$daily_doses), -->
+<!--                max = max(vaccine_summ_daily$daily_doses), -->
+<!--                labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>%  -->
+<!--       # hc_xAxis(title=NULL, -->
+<!--       #          plotLines=plotLines) %>%  -->
+<!--       # hc_tooltip(table = TRUE, sort = TRUE, -->
+<!--       #            pointFormat = "<b>{point.name}</b><br> -->
+<!--       #              New Doses: {point.y:,.0f}") %>%  -->
+<!--       hc_legend(enabled=FALSE) %>%  -->
+<!--       hc_credits( -->
+<!--         enabled = TRUE, -->
+<!--         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data", -->
+<!--         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>% -->
+<!--       hc_add_theme(lbjdata::hc_theme_lbj()) %>%  -->
+<!--       hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE,  -->
+<!--                        verticalAlign = "top", -->
+<!--                        selected = 3, inputBoxBorderColor= 'white') -->
+
+<!-- ``` -->
+
+<!-- ## Ages 50-64 years {.unlisted} -->
+
+<!-- ```{r daily-dose-chart-50, echo=FALSE, layout="l-page"} -->
+
+<!-- library(quantmod) -->
+
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
+<!--   clean_names() %>%  -->
+<!--   filter(age_group=="50-64 years") %>%  -->
+<!--   group_by(date=vaccination_date) %>% -->
+<!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
+<!--   mutate(date=as.Date(date)) %>%  -->
+<!--   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0, -->
+<!--                                    align = "right")) %>% -->
+<!--   mutate(date = as.Date(date, format("%b %d %Y"))) %>%  -->
+<!--   ungroup() %>%  -->
+<!--   drop_na() -->
+
+<!--   hcoptslang <- getOption("highcharter.lang") -->
+<!--   hcoptslang$thousandsSep <- "," -->
+<!--   options(highcharter.lang = hcoptslang) -->
+
+<!-- myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG") -->
+
+<!-- highchart(type = "stock") %>%  -->
+<!--       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses), -->
+<!--                     tooltip = list(pointFormat = "Daily Doses Administered: {point.daily_doses:,.0f}"), -->
+<!--                     color = "#333f48", name="Daily Doses Administered") %>% -->
+<!--       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg), -->
+<!--                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"), -->
+<!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
+<!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
+<!--       hc_title( -->
+<!--         text ="Daily Administered Doses - 50 to 64 years", -->
+<!--         useHTML = TRUE) %>% -->
+<!-- hc_subtitle( -->
+<!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
+<!--         useHTML = TRUE) %>%  -->
+<!--       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px",  -->
+<!--                                                   color="#333f48",fontWeight="500")), -->
+<!--                min = min(vaccine_summ_daily$daily_doses), -->
+<!--                max = max(vaccine_summ_daily$daily_doses), -->
+<!--                labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>%  -->
+<!--       # hc_xAxis(title=NULL, -->
+<!--       #          plotLines=plotLines) %>%  -->
+<!--       # hc_tooltip(table = TRUE, sort = TRUE, -->
+<!--       #            pointFormat = "<b>{point.name}</b><br> -->
+<!--       #              New Doses: {point.y:,.0f}") %>%  -->
+<!--       hc_legend(enabled=FALSE) %>%  -->
+<!--       hc_credits( -->
+<!--         enabled = TRUE, -->
+<!--         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data", -->
+<!--         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>% -->
+<!--       hc_add_theme(lbjdata::hc_theme_lbj()) %>%  -->
+<!--       hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE,  -->
+<!--                        verticalAlign = "top", -->
+<!--                        selected = 3, inputBoxBorderColor= 'white') -->
+
+<!-- ``` -->
+
+<!-- ## Ages 65-79 years {.unlisted} -->
+
+<!-- ```{r daily-dose-chart-65, echo=FALSE, layout="l-page"} -->
+
+<!-- library(quantmod) -->
+
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
+<!--   clean_names() %>%  -->
+<!--   filter(age_group=="65-79 years") %>%  -->
+<!--   group_by(date=vaccination_date) %>% -->
+<!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
+<!--   mutate(date=as.Date(date)) %>%  -->
+<!--   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0, -->
+<!--                                    align = "right")) %>% -->
+<!--   mutate(date = as.Date(date, format("%b %d %Y"))) %>%  -->
+<!--   ungroup() %>%  -->
+<!--   drop_na() -->
+
+<!--   hcoptslang <- getOption("highcharter.lang") -->
+<!--   hcoptslang$thousandsSep <- "," -->
+<!--   options(highcharter.lang = hcoptslang) -->
+
+<!-- myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG") -->
+
+<!-- highchart(type = "stock") %>%  -->
+<!--       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses), -->
+<!--                     tooltip = list(pointFormat = "Daily Doses Administered: {point.daily_doses:,.0f}"), -->
+<!--                     color = "#333f48", name="Daily Doses Administered") %>% -->
+<!--       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg), -->
+<!--                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"), -->
+<!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
+<!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
+<!--       hc_title( -->
+<!--         text ="Daily Administered Doses - 65 to 79", -->
+<!--         useHTML = TRUE) %>% -->
+<!-- hc_subtitle( -->
+<!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
+<!--         useHTML = TRUE) %>%  -->
+<!--       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px",  -->
+<!--                                                   color="#333f48",fontWeight="500")), -->
+<!--                min = min(vaccine_summ_daily$daily_doses), -->
+<!--                max = max(vaccine_summ_daily$daily_doses), -->
+<!--                labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>%  -->
+<!--       # hc_xAxis(title=NULL, -->
+<!--       #          plotLines=plotLines) %>%  -->
+<!--       # hc_tooltip(table = TRUE, sort = TRUE, -->
+<!--       #            pointFormat = "<b>{point.name}</b><br> -->
+<!--       #              New Doses: {point.y:,.0f}") %>%  -->
+<!--       hc_legend(enabled=FALSE) %>%  -->
+<!--       hc_credits( -->
+<!--         enabled = TRUE, -->
+<!--         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data", -->
+<!--         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>% -->
+<!--       hc_add_theme(lbjdata::hc_theme_lbj()) %>%  -->
+<!--       hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE,  -->
+<!--                        verticalAlign = "top", -->
+<!--                        selected = 3, inputBoxBorderColor= 'white') -->
+
+<!-- ``` -->
+
+<!-- ## Ages 80 years or older {.unlisted} -->
+
+<!-- ```{r daily-dose-chart-80, echo=FALSE, layout="l-page"} -->
+
+<!-- library(quantmod) -->
+
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
+<!--   clean_names() %>%  -->
+<!--   filter(age_group=="80+ years") %>%  -->
+<!--   group_by(date=vaccination_date) %>% -->
+<!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
+<!--   mutate(date=as.Date(date)) %>%  -->
+<!--   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0, -->
+<!--                                    align = "right")) %>% -->
+<!--   mutate(date = as.Date(date, format("%b %d %Y"))) %>%  -->
+<!--   ungroup() %>%  -->
+<!--   drop_na() -->
+
+<!--   hcoptslang <- getOption("highcharter.lang") -->
+<!--   hcoptslang$thousandsSep <- "," -->
+<!--   options(highcharter.lang = hcoptslang) -->
+
+<!-- myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG") -->
+
+<!-- highchart(type = "stock") %>%  -->
+<!--       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses), -->
+<!--                     tooltip = list(pointFormat = "Daily Doses Administered: {point.daily_doses:,.0f}"), -->
+<!--                     color = "#333f48", name="Daily Doses Administered") %>% -->
+<!--       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg), -->
+<!--                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"), -->
+<!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
+<!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
+<!--       hc_title( -->
+<!--         text ="Daily Administered Doses - 80 years or older", -->
+<!--         useHTML = TRUE) %>% -->
+<!-- hc_subtitle( -->
+<!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
+<!--         useHTML = TRUE) %>%  -->
+<!--       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px",  -->
+<!--                                                   color="#333f48",fontWeight="500")), -->
+<!--                min = min(vaccine_summ_daily$daily_doses), -->
+<!--                max = max(vaccine_summ_daily$daily_doses), -->
+<!--                labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>%  -->
+<!--       # hc_xAxis(title=NULL, -->
+<!--       #          plotLines=plotLines) %>%  -->
+<!--       # hc_tooltip(table = TRUE, sort = TRUE, -->
+<!--       #            pointFormat = "<b>{point.name}</b><br> -->
+<!--       #              New Doses: {point.y:,.0f}") %>%  -->
+<!--       hc_legend(enabled=FALSE) %>%  -->
+<!--       hc_credits( -->
+<!--         enabled = TRUE, -->
+<!--         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data", -->
+<!--         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>% -->
+<!--       hc_add_theme(lbjdata::hc_theme_lbj()) %>%  -->
+<!--       hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE,  -->
+<!--                        verticalAlign = "top", -->
+<!--                        selected = 3, inputBoxBorderColor= 'white') -->
+
+<!-- ``` -->
 
 # Distribution Trends
 
@@ -381,7 +634,7 @@ supply_by_provider_type %>%
        x = NULL,
        y = "Doses (Shipped)",
        color = NULL,
-       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv") #+
   # ggsave(paste0("figures/",today,"_","supply_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
@@ -415,7 +668,7 @@ supply_by_provider_type %>%
        x = NULL,
        y = "Doses (Available)",
        color = NULL,
-       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv") #+
   # ggsave(paste0("figures/",today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 ```
 
@@ -441,7 +694,7 @@ supply_by_provider_type %>%
 
 <!-- ## Vaccine Data Table  -->
 
-```{r message=FALSE, warning=FALSE, include=FALSE, layout="l-screen-inset"}
+```{r eval=FALSE, message=FALSE, warning=FALSE, include=FALSE, layout="l-screen-inset"}
 
 vaccine_cnty_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
