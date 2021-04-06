@@ -124,8 +124,10 @@ today <- Sys.Date()
 src_cf_data <- "https://dshs.texas.gov/coronavirus/TexasCOVID19Demographics.xlsx.asp" # URL For Daily CF Data
 src_cf_file <- "https://dshs.texas.gov/coronavirus/TexasCOVID19Demographics.xlsx" # URL For Daily CF Data
 lcl_cf_data <- basename(src_cf_file)
-filepath_cf_data <- paste0("raw_data/",today,"_",lcl_cf_data)
-download.file(url = src_cf_data, destfile = filepath_cf_data) # Downloads The Data
+# filepath_cf_data <- paste0("raw_data/",today,"_",lcl_cf_data)
+# download.file(url = src_cf_data, destfile = filepath_cf_data) # Downloads The Data
+
+filepath_cf_data <- "raw_data/2021-04-05_TexasCOVID19Demographics.xlsx"
 
 sheets <- excel_sheets(filepath_cf_data) %>% set_names()
 

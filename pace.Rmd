@@ -206,7 +206,7 @@ vaccine_summ %>%
        x = NULL,
        y = NULL,
        color = NULL,
-       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") +
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") +
   ggsave(paste0("figures/",today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
@@ -249,7 +249,7 @@ myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downl
 highchart(type = "stock") %>% 
       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses, group = age_group),
                     tooltip = list(pointFormat = "{point.age_group}: {point.daily_doses:,.0f}")) %>%
-      hc_add_series(vaccine_summ_daily_tot, type = "area", hcaes(x = date, y = new_doses_7_day_avg),
+      hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg),
                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"),
                     color = "#bf5700", name="7-Day Avg.") %>% 
       hc_plotOptions(area = list(fillOpacity=.1),
@@ -258,7 +258,7 @@ highchart(type = "stock") %>%
         text ="Daily Administered Doses - Texas",
         useHTML = TRUE) %>%
 hc_subtitle(
-        text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily administered doses.<br>LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>",
+        text =paste0("Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. Data last pulled on ",today_lbl," at ", time_lbl,".<br>LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>"),
         useHTML = TRUE) %>% 
       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px", 
                                                   color="#333f48",fontWeight="500")),
@@ -268,7 +268,7 @@ hc_subtitle(
       # hc_xAxis(title=NULL,
       #          plotLines=plotLines) %>% 
       hc_tooltip(table = TRUE, sort = TRUE,
-                 pointFormat = "{point.name}
+                 pointFormat = "<b>{point.name}</b><br>
                    New Doses: {point.y:,.0f}") %>%
       hc_colors(colors = list('#1170aa', '#c85200','#ffbc79','#57606c','#5fa2ce')) %>% 
       hc_legend(enabled=TRUE) %>% 
@@ -289,10 +289,10 @@ hc_subtitle(
 
 ```{r ggplot2 national comparison, echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=4.5, layout="l-page"}
 
-cdc_last_update <- "Mar 31, 2021" 
-cdc_last_time <- "12:39PM"
+cdc_last_update <- "Apr 5, 2021" 
+cdc_last_time <- "1:31PM"
 
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-9.csv",
+cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-10.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
@@ -634,7 +634,7 @@ supply_by_provider_type %>%
        x = NULL,
        y = "Doses (Shipped)",
        color = NULL,
-       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv") #+
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
   # ggsave(paste0("figures/",today,"_","supply_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
@@ -668,7 +668,7 @@ supply_by_provider_type %>%
        x = NULL,
        y = "Doses (Available)",
        color = NULL,
-       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv") #+
+       caption = "Data File: 'Texas Vaccine Provider Data'\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nChart by: @mrworthington") #+
   # ggsave(paste0("figures/",today,"_","availability_by_provider_type.png"), dpi = 300, width = 11, height = 4.5)
 ```
 
@@ -791,8 +791,8 @@ According to [the Texas Department of State Health Services](https://dshs.texas.
 The two charts represent the entire populations of the state and selected county. In the boxes below, there are three indicators. 
 
 1. **Dose Distribution**: This box shows how many doses have been administered out of the doses that have actually been allocated to that entity (either the state or the selected county).
-1. **Daily Average**: This is an ongoing calculation of daily averages that starts on Dec 15. The only thing it considers is how many doses are going into arms each day. It's important to note doses in arms is not the same thing as new persons. Some folks are turning for second doses, so this metric only captures the daily average of doses administered.
-1. **When Texas will begin reaching Herd Immunity territory**: Based on that daily average, this box considers the remaining doses needed across partially vaccinated Texans and yet-to-be-vaccinated Texans. For those who haven't received a dose, this box considers how much we can expect to cover of remaining Texans with the current portfolio of 2-dose vaccines and 1-dose vaccines. Assuming all of that, this box then counts the number of days remaining between today and the minimum threshold of what epidemiologists have identified as "herd immunity" for COVID-19. [There's debate about the exact percentage](https://www.nytimes.com/interactive/2021/02/20/us/us-herd-immunity-covid.html), but vaccinating 70% of the *entire* Texas population would be a significant milestone for Texas. This date represents when we would start approaching those levels. 
+1. **Daily Average**: This is an ongoing calculation of daily averages that starts on Dec 15. The only thing it considers is how many doses are going into arms each day. 
+1. **When 70% is Vaccinated**: Based on that daily average and knowing most of the approved vaccines require two doses, this box tries to guesstimate when 70% of the population aged 16 and older will be vaccinated. This is not a herd immunity projection, rather a look ahead as to when most of the population aged 16 and older will likely be vaccinated. 
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-page"}

@@ -268,7 +268,7 @@ roads_int <- tigris::primary_secondary_roads(state = "TX") %>%
 library(ggspatial)
 
 vaccine_summ_zcta_cntys <-  vaccine_summ_zcta_cnty %>% 
-  filter(county=="El Paso") %>% 
+  filter(county=="Travis") %>% 
   mutate(vax_administered_per_cap = round((as.numeric(vaccine_doses_administered)/pop_16_plus)*1000, digits = 4)) 
 
 cnty_lbl <- unique(vaccine_summ_zcta_cntys$county)
