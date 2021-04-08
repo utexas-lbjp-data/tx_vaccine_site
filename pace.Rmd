@@ -249,7 +249,7 @@ myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downl
 highchart(type = "stock") %>% 
       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses, group = age_group),
                     tooltip = list(pointFormat = "{point.age_group}: {point.daily_doses:,.0f}")) %>%
-      hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg),
+      hc_add_series(vaccine_summ_daily_tot, type = "area", hcaes(x = date, y = new_doses_7_day_avg),
                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"),
                     color = "#bf5700", name="7-Day Avg.") %>% 
       hc_plotOptions(area = list(fillOpacity=.1),
