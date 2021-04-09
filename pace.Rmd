@@ -268,7 +268,7 @@ hc_subtitle(
       # hc_xAxis(title=NULL,
       #          plotLines=plotLines) %>% 
       hc_tooltip(table = TRUE, sort = TRUE,
-                 pointFormat = "<b>{point.name}</b><br>
+                 pointFormat = "<b>{point.name}</b>
                    New Doses: {point.y:,.0f}") %>%
       hc_colors(colors = list('#1170aa', '#c85200','#ffbc79','#57606c','#5fa2ce')) %>% 
       hc_legend(enabled=TRUE) %>% 
