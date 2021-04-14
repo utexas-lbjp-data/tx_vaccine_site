@@ -1,0 +1,2624 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Texas COVID-19 Vaccine Tracker: Explore Pace</title>
+
+  <meta property="description" itemprop="description" content="How fast are we distributing COVID-19 Vaccines? &lt;ul class=&quot;list-inline title-nav&quot;&gt; &#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&lt;div class = &quot;go-to-nav&quot; &gt;Go to: &lt;/div&gt;&lt;/li&gt;&#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&#10;  &lt;a href=&quot;providers.html&quot;&gt; &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-light mb-2&quot;&gt; Providers &lt;/button&gt; &#10;  &lt;/a&gt;&#10;&lt;/li&gt;&#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&#10;  &lt;a href=&quot;equity.html&quot;&gt; &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-light mb-2&quot;&gt; Equity &lt;/button&gt; &#10;  &lt;/a&gt;&#10;&lt;/li&gt;&#10;&lt;/ul&gt;"/>
+
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Texas COVID-19 Vaccine Tracker: Explore Pace"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="How fast are we distributing COVID-19 Vaccines? &lt;ul class=&quot;list-inline title-nav&quot;&gt; &#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&lt;div class = &quot;go-to-nav&quot; &gt;Go to: &lt;/div&gt;&lt;/li&gt;&#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&#10;  &lt;a href=&quot;providers.html&quot;&gt; &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-light mb-2&quot;&gt; Providers &lt;/button&gt; &#10;  &lt;/a&gt;&#10;&lt;/li&gt;&#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&#10;  &lt;a href=&quot;equity.html&quot;&gt; &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-light mb-2&quot;&gt; Equity &lt;/button&gt; &#10;  &lt;/a&gt;&#10;&lt;/li&gt;&#10;&lt;/ul&gt;"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="Texas COVID-19 Vaccine Tracker"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Texas COVID-19 Vaccine Tracker: Explore Pace"/>
+  <meta property="twitter:description" content="How fast are we distributing COVID-19 Vaccines? &lt;ul class=&quot;list-inline title-nav&quot;&gt; &#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&lt;div class = &quot;go-to-nav&quot; &gt;Go to: &lt;/div&gt;&lt;/li&gt;&#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&#10;  &lt;a href=&quot;providers.html&quot;&gt; &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-light mb-2&quot;&gt; Providers &lt;/button&gt; &#10;  &lt;/a&gt;&#10;&lt;/li&gt;&#10;&lt;li class=&quot;list-inline-item-nav&quot;&gt;&#10;  &lt;a href=&quot;equity.html&quot;&gt; &lt;button type=&quot;button&quot; class=&quot;btn btn-outline-light mb-2&quot;&gt; Equity &lt;/button&gt; &#10;  &lt;/a&gt;&#10;&lt;/li&gt;&#10;&lt;/ul&gt;"/>
+  <meta property="twitter:site" content="@TheLBJSchool"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Explore Pace"]},{"type":"character","attributes":{},"value":["How fast are we distributing COVID-19 Vaccines? <ul class=\"list-inline title-nav\"> \n<li class=\"list-inline-item-nav\"><div class = \"go-to-nav\" >Go to: <\/div><\/li>\n<li class=\"list-inline-item-nav\">\n  <a href=\"providers.html\"> <button type=\"button\" class=\"btn btn-outline-light mb-2\"> Providers <\/button> \n  <\/a>\n<\/li>\n<li class=\"list-inline-item-nav\">\n  <a href=\"equity.html\"> <button type=\"button\" class=\"btn btn-outline-light mb-2\"> Equity <\/button> \n  <\/a>\n<\/li>\n<\/ul>\n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","css"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["pace_header.css"]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  <meta name="distill:offset" content=""/>
+
+  <script type="application/javascript">
+
+    window.headroom_prevent_pin = false;
+
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        tolerance: 5,
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+
+      // responsive menu
+      $('.distill-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+  <style type="text/css">
+
+  /* Theme (user-documented overrideables for nav appearance) */
+
+  .distill-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0F2E3D;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+
+  .distill-site-header {
+
+  }
+
+  .distill-site-footer {
+
+  }
+
+
+  /* Site Header */
+
+  .distill-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .distill-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+
+
+  .distill-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+
+  .distill-site-header a,
+  .distill-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+
+  .distill-site-header .title {
+    font-size: 18px;
+    min-width: 150px;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+
+  .distill-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    .distill-site-header .logo img {
+      display: inline-block;
+    }
+    .distill-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .distill-site-header .title {
+      padding-left: 12px;
+    }
+  }
+
+
+  .distill-site-header .nav-toggle {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-dropdown-active {
+    display: block;
+  }
+
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .distill-site-header .title {
+      margin-left: 0;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 0;
+    }
+    .distill-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header.responsive {position: relative; min-height: 500px; }
+    .distill-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* Site Footer */
+
+  .distill-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Headroom */
+
+  d-title {
+    padding-top: 6rem;
+  }
+
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+
+  .headroom--unpinned {
+    top: -100px;
+  }
+
+  .headroom--pinned {
+    top: 0;
+  }
+
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  </style>
+
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+  <script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+  <script src="site_libs/jquery-3.5.0/jquery.min.js"></script>
+  <script src="site_libs/proj4js-2.3.15/proj4.js"></script>
+  <link href="site_libs/highcharts-8.1.2/css/motion.css" rel="stylesheet" />
+  <script src="site_libs/highcharts-8.1.2/highcharts.js"></script>
+  <script src="site_libs/highcharts-8.1.2/highcharts-3d.js"></script>
+  <script src="site_libs/highcharts-8.1.2/highcharts-more.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/stock.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/map.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/annotations.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/data.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/drilldown.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/item-series.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/offline-exporting.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/overlapping-datalabels.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/exporting.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/export-data.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/funnel.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/heatmap.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/treemap.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/sankey.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/dependency-wheel.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/organization.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/solid-gauge.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/streamgraph.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/sunburst.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/vector.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/wordcloud.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/xrange.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/tilemap.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/venn.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/gantt.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/timeline.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/parallel-coordinates.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/bullet.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/coloraxis.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/dumbbell.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/lollipop.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/series-label.js"></script>
+  <script src="site_libs/highcharts-8.1.2/plugins/motion.js"></script>
+  <script src="site_libs/highcharts-8.1.2/custom/reset.js"></script>
+  <script src="site_libs/highcharts-8.1.2/modules/boost.js"></script>
+  <script src="site_libs/highchart-binding-0.8.2/highchart.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <script src="https://kit.fontawesome.com/fa1ce86f40.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://www.cookieconsent.com/releases/3.1.0/cookie-consent.js"></script>
+  <script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+  cookieconsent.run({
+  'notice_banner_type':'simple',
+  'consent_type': 'express',
+  'palette': 'light',
+  'language': 'en',
+  'website_name': 'Texas COVID-19 Vaccine Tracker',
+  'cookies_policy_url': 'url',
+  'change_preferences_selector':'#CookiePreferences'
+  });});</script>
+  <script type="text/plain" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=G-PQ8QKYGXQ3"></script>
+  <script type="text/plain" cookie-consent="tracking">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-PQ8QKYGXQ3');
+  </script>
+  <style type="text/css">
+  @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:ital,wght@0,300;0,400;0,600;1,400&display=swap');
+
+
+  .rid_a91adcde_415243 {
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  }
+
+  .syndicate #body {
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  }
+
+  .cdc {
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  }
+
+  d-article li {
+  margin-bottom: 0em;
+  margin-left: 0;
+  padding-left: 0;
+  line-height: 1.5em !important;
+  }
+
+  .title-nav {
+    display: flex !important; 
+    padding-left: 0; 
+    list-style: none;
+    grid-column: text;
+  }
+
+  .list-inline-item-nav {
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+
+  /* #### Waiter & Sever Functions #### */
+
+  .stat-tile {
+    width: 100% !important;
+    background-color: #2d2d2d !important;
+    color: #fff !important;
+    margin: 0 2px !important;
+    text-align: center !important;
+    padding: 6% 0;
+  }
+
+  .tile-header{
+    text-align:center;
+    font-size:.5em;
+    text-transform:uppercase;
+    font-weight:500
+  }
+
+  .stat-grid {
+    padding: 2px;
+  }
+
+  d-article hr {
+  grid-column: screen;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  }
+
+  d-byline .byline {
+  grid-template-columns: 1fr 1fr;
+  grid-column: text;
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .distill-site-header .logo {
+  padding: 10px;
+  }
+
+  d-article > d-code, d-article section > d-code {
+  display: block;
+  overflow-x: scroll !important;
+  background: #f8f8f8 !important;
+  border: 1px solid #ccc !important;
+  border-radius: 1px !important;
+  text-shadow: 0 0px white !important;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+
+  }
+
+  .highcharts-background{
+    width: 100% !important;
+  }
+
+  .highcharts-plot-background{
+    width: 100% !important;
+  }
+
+
+  .highcharts-container{
+    width: 100% !important;
+  }
+
+  .highcharts-root{
+    width: 100% !important;
+  }
+
+  .posts-list .posts-list-caption {
+  grid-column: screen;
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;font-weight: 400;
+  color: #7d7d7d;
+  letter-spacing: 0px;
+  }
+
+  d-article h4 {
+  font-weight: 700;
+  text-transform: revert;
+  font-size: 15px;
+  line-height: 1.4em;
+  }
+
+  d-article a {
+  color: #4d4d4d;
+  }
+
+  .distill-site-nav {
+    color: #ffffff;
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;  font-size: 15px;
+    font-weight: 600;
+    background: #333f48;
+  /*  border-bottom: 0px solid #bf5700;
+    -webkit-box-shadow: 1px 1px 18px #4d4d4d;
+    -moz-box-shadow: 1px 1px 18px #4d4d4d;
+    box-shadow: 1px 1px 18px #4d4d4d; */
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+  display: block;
+  padding: 5px 24px;
+  padding-bottom: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #bf5700;
+  white-space: nowrap;
+  font-weight: 300;
+  }
+
+  .posts-list .post-preview .thumbnail {
+  float: right;
+  width: 30%;
+  max-height: 20vh;
+  margin-bottom: 0;
+  }
+
+  .nav-right .nav-dropdown-content {
+  color: #333f48;
+  }
+
+  .distill-site-header .nav-left {
+    margin-left: 0px;
+    
+  }
+
+  .distill-site-header .nav-right {
+  /* margin-right: 20px; */
+  text-transform: initial;
+  font-size: 14px;
+  letter-spacing: 1px;
+  }
+
+  .distill-site-nav a:hover {
+  color: #2d2d2d !important;
+  background: #9cadb7;
+  }
+
+  d-title {
+  padding-top: 10rem;
+  background: #4d4d4d;
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 800;
+  color: #fff;
+  }
+
+  d-title h1 {
+  font-weight: 800;
+  }
+
+  details {
+    background-color: hsla(206, 95%, 20%, 0.2);
+    cursor: pointer;
+    color: #2d2d2d;
+    margin-bottom:1vh;
+    padding: 1em;
+    border: none;
+    text-align: left;
+    outline: none;
+  }
+
+  .active, details:hover {
+    transition: max-height 0.2s ease-out;
+    /* background-color: #acc2c2; */
+  }
+
+  details {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    border-radius: 4px;
+  }
+
+  details.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  summary::-webkit-details-marker {
+    display: none
+  }
+
+  summary::after {
+    float: right;
+    font-family: "Font Awesome 5 Free";
+    content: "\f0fe";
+  }
+
+  details[open] summary::after {
+    float: right;
+    font-family: "Font Awesome 5 Free";
+    content: "\f146";
+  }
+
+  details h4 {
+  margin: 0;
+  color: #2d2d2d !important;
+  line-height: inherit;
+  }
+
+  code {
+  color: #2A7DE1;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+  }
+
+  d-article {
+    color: #6B6D6F;
+  }
+
+  d-article iframe {
+  border: 0px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 2.0em;
+  width: 100%;
+  }
+
+  d-article h1 {
+      font-weight: 800;
+      color: #2d2d2d;
+      font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: 0px !important;
+  }
+
+  ::selection {
+  color: #2d2d2d;
+  text-shadow: none;
+  background: rgba(156,173,183, 0.4) !important;
+  }
+
+  .posts-list .metadata .publishedDate {
+  font-family: 'Libre Franklin',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: .9px;
+  color: #9d9d9d;
+  }
+
+  .posts-list .post-preview h2 {
+  color: #2d2d2d;
+  }
+
+  .posts-list .post-preview h2 {
+  font-size: 30px !important;
+  font-weight: 700 !important;
+  letter-spacing:0px !important;
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  }
+
+  d-article h1 {
+  font-weight: 800;
+  color: #333f48;
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  letter-spacing: 3px;
+  }
+
+  d-article h2 {
+  font-size: 24px;
+  font-family: 'Libre Franklin',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 600;
+  color: #005f86;
+  border-bottom: 1.3px solid rgba(140, 143, 147, 0.5);
+  }
+
+  .nav-dropdown .nav-dropbtn {
+  border: none;
+  outline: none;
+  text-transform: initial;
+  color: rgba(255, 255, 255, 1);
+  padding: 16px 10px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  margin-top: 1px;
+  z-index: 2;
+  }
+
+  .highcharts-container text {
+  font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif  !important;
+  }
+
+  body {
+      font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      overflow-y: auto
+  }
+
+  .posts-list .description h2, .posts-list .description p {
+      font-family: 'Libre Franklin', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  .distill-site-header {
+  }
+
+  .distill-site-footer {
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+  </style>
+  <!--/radix_placeholder_site_in_header-->
+
+  <link rel="stylesheet" href="pace_header.css" type="text/css"/>
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Explore Pace","description":"How fast are we distributing COVID-19 Vaccines? <ul class=\"list-inline title-nav\"> \n<li class=\"list-inline-item-nav\"><div class = \"go-to-nav\" >Go to: <\/div><\/li>\n<li class=\"list-inline-item-nav\">\n  <a href=\"providers.html\"> <button type=\"button\" class=\"btn btn-outline-light mb-2\"> Providers <\/button> \n  <\/a>\n<\/li>\n<li class=\"list-inline-item-nav\">\n  <a href=\"equity.html\"> <button type=\"button\" class=\"btn btn-outline-light mb-2\"> Equity <\/button> \n  <\/a>\n<\/li>\n<\/ul>","authors":[]}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a class="logo" href="https://lbj.utexas.edu">
+<img src="lbj_logo.png" alt="Logo"/>
+</a>
+<a href="index.html" class="title">Texas COVID-19 Vaccine Tracker</a>
+</div>
+<div class="nav-right">
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Dashboards
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<span class="nav-dropdown-header">English</span>
+<hr/>
+<a href="providers.html">Explore Providers</a>
+<a href="pace.html">Explore Pace</a>
+<a href="equity.html">Explore Equity</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+Vaccine Resources
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<span class="nav-dropdown-header">English</span>
+<hr/>
+<a href="moderna.html">Moderna</a>
+<a href="pfizer.html">Pfizer</a>
+<span class="nav-dropdown-header">Espanol</span>
+<hr/>
+<a href="moderna_es.html">Moderna</a>
+<a href="pfizer_es.html">Pfizer</a>
+</div>
+</div>
+<div class="nav-dropdown">
+<button class="nav-dropbtn">
+About
+ 
+<span class="down-arrow">&#x25BE;</span>
+</button>
+<div class="nav-dropdown-content">
+<a href="methods.html">Methods &amp; Data</a>
+</div>
+</div>
+<a href="https://github.com/utexas-lbjp-data">
+<i class="fab fa-github" aria-hidden="true"></i>
+</a>
+<a href="https://www.facebook.com/TheLBJSchool/">
+<i class="fab fa-facebook" aria-hidden="true"></i>
+</a>
+<a href="https://twitter.com/TheLBJSchool">
+<i class="fab fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="https://www.instagram.com/thelbjschool/">
+<i class="fab fa-instagram" aria-hidden="true"></i>
+</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Explore Pace</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p>How fast are we distributing COVID-19 Vaccines?
+<ul class="list-inline title-nav">
+<li class="list-inline-item-nav">
+<div class="go-to-nav">
+Go to:
+</div>
+</li>
+<li class="list-inline-item-nav">
+<a href="providers.html"> <button type="button" class="btn btn-outline-light mb-2"> Providers </button> </a>
+</li>
+<li class="list-inline-item-nav">
+<a href="equity.html"> <button type="button" class="btn btn-outline-light mb-2"> Equity </button> </a>
+</li>
+</ul></p>
+</div>
+
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#pace-overview">Pace Overview</a>
+<ul>
+<li><a href="#texas-summary">Texas Summary</a></li>
+<li><a href="#national-comparison">National Comparison</a></li>
+</ul></li>
+<li><a href="#distribution-trends">Distribution Trends</a></li>
+<li><a href="#vaccine-pace-tracker">Vaccine Pace Tracker</a>
+<ul>
+<li><a href="#photography-credit">Photography Credit</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<h1 id="pace-overview">Pace Overview</h1>
+<h2 id="texas-summary">Texas Summary</h2>
+<p>The chart attempts to capture a holistic snapshot of multiple data points related to state’s current efforts to vaccinate the population. At a high level, this chart is a single box that represents everyone in Texas aged 16 years and older. Within the box, you can see how much of is made up of eligible phases and how much of it is made up of the remaining population aged 16 years and older. And then, two lines mark the following:</p>
+<ul>
+<li><strong>Doses Shipped:</strong> How many doses have been shipped compared to the entire 16+ population?</li>
+<li><strong>Persons Fully Vaccinated:</strong> How many people have been fully vaccinated compared to the entire 16+ population?</li>
+</ul>
+<div class="layout-chunk" data-layout="l-page">
+<p><img src="pace_files/figure-html5/state%20summary-1.png" width="1056" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-page">
+<div id="htmlwidget-e2d24a1585f2333af9c4" style="width:100%;height:500px;" class="highchart html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e2d24a1585f2333af9c4">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":"Daily Administered Doses - Texas","useHTML":true},"yAxis":{"title":{"text":"New Doses Administered Per Day","style":{"color":"#333f48","fontSize":"12px","color.1":"#333f48","fontWeight":"500"}},"min":451,"max":349304,"labels":{"style":{"fontFamily":"\"Libre Franklin\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","color":"#2d2d2d"}}},"credits":{"enabled":true,"text":"Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data","href":"https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls"},"exporting":{"enabled":true,"scale":2,"sourceHeight":900,"allowHTML":true},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"stacking":"normal"},"treemap":{"layoutAlgorithm":"squarified"},"area":{"fillOpacity":0.1}},"series":[{"name":"16-49 years","data":[{"age_group":"16-49 years","date":"2020-12-14","daily_doses":276,"new_doses_7_day_avg":0,"x":1607904000000,"y":276},{"age_group":"16-49 years","date":"2020-12-15","daily_doses":3900,"new_doses_7_day_avg":0,"x":1607990400000,"y":3900},{"age_group":"16-49 years","date":"2020-12-16","daily_doses":12816,"new_doses_7_day_avg":0,"x":1608076800000,"y":12816},{"age_group":"16-49 years","date":"2020-12-17","daily_doses":16049,"new_doses_7_day_avg":0,"x":1608163200000,"y":16049},{"age_group":"16-49 years","date":"2020-12-18","daily_doses":24982,"new_doses_7_day_avg":0,"x":1608249600000,"y":24982},{"age_group":"16-49 years","date":"2020-12-19","daily_doses":12452,"new_doses_7_day_avg":0,"x":1608336000000,"y":12452},{"age_group":"16-49 years","date":"2020-12-20","daily_doses":6813,"new_doses_7_day_avg":11041.1428571429,"x":1608422400000,"y":6813},{"age_group":"16-49 years","date":"2020-12-21","daily_doses":18523,"new_doses_7_day_avg":13647.8571428571,"x":1608508800000,"y":18523},{"age_group":"16-49 years","date":"2020-12-22","daily_doses":17331,"new_doses_7_day_avg":15566.5714285714,"x":1608595200000,"y":17331},{"age_group":"16-49 years","date":"2020-12-23","daily_doses":24855,"new_doses_7_day_avg":17286.4285714286,"x":1608681600000,"y":24855},{"age_group":"16-49 years","date":"2020-12-24","daily_doses":10363,"new_doses_7_day_avg":16474.1428571429,"x":1608768000000,"y":10363},{"age_group":"16-49 years","date":"2020-12-25","daily_doses":1457,"new_doses_7_day_avg":13113.4285714286,"x":1608854400000,"y":1457},{"age_group":"16-49 years","date":"2020-12-26","daily_doses":6744,"new_doses_7_day_avg":12298,"x":1608940800000,"y":6744},{"age_group":"16-49 years","date":"2020-12-27","daily_doses":5332,"new_doses_7_day_avg":12086.4285714286,"x":1609027200000,"y":5332},{"age_group":"16-49 years","date":"2020-12-28","daily_doses":25862,"new_doses_7_day_avg":13134.8571428571,"x":1609113600000,"y":25862},{"age_group":"16-49 years","date":"2020-12-29","daily_doses":32485,"new_doses_7_day_avg":15299.7142857143,"x":1609200000000,"y":32485},{"age_group":"16-49 years","date":"2020-12-30","daily_doses":38449,"new_doses_7_day_avg":17241.7142857143,"x":1609286400000,"y":38449},{"age_group":"16-49 years","date":"2020-12-31","daily_doses":22094,"new_doses_7_day_avg":18917.5714285714,"x":1609372800000,"y":22094},{"age_group":"16-49 years","date":"2021-01-01","daily_doses":2468,"new_doses_7_day_avg":19062,"x":1609459200000,"y":2468},{"age_group":"16-49 years","date":"2021-01-02","daily_doses":10788,"new_doses_7_day_avg":19639.7142857143,"x":1609545600000,"y":10788},{"age_group":"16-49 years","date":"2021-01-03","daily_doses":6613,"new_doses_7_day_avg":19822.7142857143,"x":1609632000000,"y":6613},{"age_group":"16-49 years","date":"2021-01-04","daily_doses":25243,"new_doses_7_day_avg":19734.2857142857,"x":1609718400000,"y":25243},{"age_group":"16-49 years","date":"2021-01-05","daily_doses":28987,"new_doses_7_day_avg":19234.5714285714,"x":1609804800000,"y":28987},{"age_group":"16-49 years","date":"2021-01-06","daily_doses":38177,"new_doses_7_day_avg":19195.7142857143,"x":1609891200000,"y":38177},{"age_group":"16-49 years","date":"2021-01-07","daily_doses":42476,"new_doses_7_day_avg":22107.4285714286,"x":1609977600000,"y":42476},{"age_group":"16-49 years","date":"2021-01-08","daily_doses":45716,"new_doses_7_day_avg":28285.7142857143,"x":1610064000000,"y":45716},{"age_group":"16-49 years","date":"2021-01-09","daily_doses":19280,"new_doses_7_day_avg":29498.8571428571,"x":1610150400000,"y":19280},{"age_group":"16-49 years","date":"2021-01-10","daily_doses":8572,"new_doses_7_day_avg":29778.7142857143,"x":1610236800000,"y":8572},{"age_group":"16-49 years","date":"2021-01-11","daily_doses":29011,"new_doses_7_day_avg":30317,"x":1610323200000,"y":29011},{"age_group":"16-49 years","date":"2021-01-12","daily_doses":30823,"new_doses_7_day_avg":30579.2857142857,"x":1610409600000,"y":30823},{"age_group":"16-49 years","date":"2021-01-13","daily_doses":30110,"new_doses_7_day_avg":29426.8571428571,"x":1610496000000,"y":30110},{"age_group":"16-49 years","date":"2021-01-14","daily_doses":22854,"new_doses_7_day_avg":26623.7142857143,"x":1610582400000,"y":22854},{"age_group":"16-49 years","date":"2021-01-15","daily_doses":24195,"new_doses_7_day_avg":23549.2857142857,"x":1610668800000,"y":24195},{"age_group":"16-49 years","date":"2021-01-16","daily_doses":13222,"new_doses_7_day_avg":22683.8571428571,"x":1610755200000,"y":13222},{"age_group":"16-49 years","date":"2021-01-17","daily_doses":2761,"new_doses_7_day_avg":21853.7142857143,"x":1610841600000,"y":2761},{"age_group":"16-49 years","date":"2021-01-18","daily_doses":12570,"new_doses_7_day_avg":19505,"x":1610928000000,"y":12570},{"age_group":"16-49 years","date":"2021-01-19","daily_doses":22900,"new_doses_7_day_avg":18373.1428571429,"x":1611014400000,"y":22900},{"age_group":"16-49 years","date":"2021-01-20","daily_doses":31438,"new_doses_7_day_avg":18562.8571428571,"x":1611100800000,"y":31438},{"age_group":"16-49 years","date":"2021-01-21","daily_doses":28234,"new_doses_7_day_avg":19331.4285714286,"x":1611187200000,"y":28234},{"age_group":"16-49 years","date":"2021-01-22","daily_doses":35013,"new_doses_7_day_avg":20876.8571428571,"x":1611273600000,"y":35013},{"age_group":"16-49 years","date":"2021-01-23","daily_doses":18945,"new_doses_7_day_avg":21694.4285714286,"x":1611360000000,"y":18945},{"age_group":"16-49 years","date":"2021-01-24","daily_doses":7867,"new_doses_7_day_avg":22423.8571428571,"x":1611446400000,"y":7867},{"age_group":"16-49 years","date":"2021-01-25","daily_doses":35733,"new_doses_7_day_avg":25732.8571428571,"x":1611532800000,"y":35733},{"age_group":"16-49 years","date":"2021-01-26","daily_doses":42823,"new_doses_7_day_avg":28579,"x":1611619200000,"y":42823},{"age_group":"16-49 years","date":"2021-01-27","daily_doses":45210,"new_doses_7_day_avg":30546.4285714286,"x":1611705600000,"y":45210},{"age_group":"16-49 years","date":"2021-01-28","daily_doses":40409,"new_doses_7_day_avg":32285.7142857143,"x":1611792000000,"y":40409},{"age_group":"16-49 years","date":"2021-01-29","daily_doses":38878,"new_doses_7_day_avg":32837.8571428571,"x":1611878400000,"y":38878},{"age_group":"16-49 years","date":"2021-01-30","daily_doses":19782,"new_doses_7_day_avg":32957.4285714286,"x":1611964800000,"y":19782},{"age_group":"16-49 years","date":"2021-01-31","daily_doses":7842,"new_doses_7_day_avg":32953.8571428571,"x":1612051200000,"y":7842},{"age_group":"16-49 years","date":"2021-02-01","daily_doses":32511,"new_doses_7_day_avg":32493.5714285714,"x":1612137600000,"y":32511},{"age_group":"16-49 years","date":"2021-02-02","daily_doses":34237,"new_doses_7_day_avg":31267,"x":1612224000000,"y":34237},{"age_group":"16-49 years","date":"2021-02-03","daily_doses":44892,"new_doses_7_day_avg":31221.5714285714,"x":1612310400000,"y":44892},{"age_group":"16-49 years","date":"2021-02-04","daily_doses":44362,"new_doses_7_day_avg":31786.2857142857,"x":1612396800000,"y":44362},{"age_group":"16-49 years","date":"2021-02-05","daily_doses":50140,"new_doses_7_day_avg":33395.1428571429,"x":1612483200000,"y":50140},{"age_group":"16-49 years","date":"2021-02-06","daily_doses":28328,"new_doses_7_day_avg":34616,"x":1612569600000,"y":28328},{"age_group":"16-49 years","date":"2021-02-07","daily_doses":5577,"new_doses_7_day_avg":34292.4285714286,"x":1612656000000,"y":5577},{"age_group":"16-49 years","date":"2021-02-08","daily_doses":24900,"new_doses_7_day_avg":33205.1428571429,"x":1612742400000,"y":24900},{"age_group":"16-49 years","date":"2021-02-09","daily_doses":36620,"new_doses_7_day_avg":33545.5714285714,"x":1612828800000,"y":36620},{"age_group":"16-49 years","date":"2021-02-10","daily_doses":44216,"new_doses_7_day_avg":33449,"x":1612915200000,"y":44216},{"age_group":"16-49 years","date":"2021-02-11","daily_doses":35467,"new_doses_7_day_avg":32178.2857142857,"x":1613001600000,"y":35467},{"age_group":"16-49 years","date":"2021-02-12","daily_doses":43106,"new_doses_7_day_avg":31173.4285714286,"x":1613088000000,"y":43106},{"age_group":"16-49 years","date":"2021-02-13","daily_doses":24968,"new_doses_7_day_avg":30693.4285714286,"x":1613174400000,"y":24968},{"age_group":"16-49 years","date":"2021-02-14","daily_doses":5168,"new_doses_7_day_avg":30635,"x":1613260800000,"y":5168},{"age_group":"16-49 years","date":"2021-02-15","daily_doses":6216,"new_doses_7_day_avg":27965.8571428571,"x":1613347200000,"y":6216},{"age_group":"16-49 years","date":"2021-02-16","daily_doses":7603,"new_doses_7_day_avg":23820.5714285714,"x":1613433600000,"y":7603},{"age_group":"16-49 years","date":"2021-02-17","daily_doses":5767,"new_doses_7_day_avg":18327.8571428571,"x":1613520000000,"y":5767},{"age_group":"16-49 years","date":"2021-02-18","daily_doses":9533,"new_doses_7_day_avg":14623,"x":1613606400000,"y":9533},{"age_group":"16-49 years","date":"2021-02-19","daily_doses":15501,"new_doses_7_day_avg":10679.4285714286,"x":1613692800000,"y":15501},{"age_group":"16-49 years","date":"2021-02-20","daily_doses":19264,"new_doses_7_day_avg":9864.57142857143,"x":1613779200000,"y":19264},{"age_group":"16-49 years","date":"2021-02-21","daily_doses":11159,"new_doses_7_day_avg":10720.4285714286,"x":1613865600000,"y":11159},{"age_group":"16-49 years","date":"2021-02-22","daily_doses":26607,"new_doses_7_day_avg":13633.4285714286,"x":1613952000000,"y":26607},{"age_group":"16-49 years","date":"2021-02-23","daily_doses":28264,"new_doses_7_day_avg":16585,"x":1614038400000,"y":28264},{"age_group":"16-49 years","date":"2021-02-24","daily_doses":49493,"new_doses_7_day_avg":22831.5714285714,"x":1614124800000,"y":49493},{"age_group":"16-49 years","date":"2021-02-25","daily_doses":66590,"new_doses_7_day_avg":30982.5714285714,"x":1614211200000,"y":66590},{"age_group":"16-49 years","date":"2021-02-26","daily_doses":74514,"new_doses_7_day_avg":39413,"x":1614297600000,"y":74514},{"age_group":"16-49 years","date":"2021-02-27","daily_doses":49732,"new_doses_7_day_avg":43765.5714285714,"x":1614384000000,"y":49732},{"age_group":"16-49 years","date":"2021-02-28","daily_doses":20547,"new_doses_7_day_avg":45106.7142857143,"x":1614470400000,"y":20547},{"age_group":"16-49 years","date":"2021-03-01","daily_doses":43399,"new_doses_7_day_avg":47505.5714285714,"x":1614556800000,"y":43399},{"age_group":"16-49 years","date":"2021-03-02","daily_doses":64435,"new_doses_7_day_avg":52672.8571428571,"x":1614643200000,"y":64435},{"age_group":"16-49 years","date":"2021-03-03","daily_doses":73401,"new_doses_7_day_avg":56088.2857142857,"x":1614729600000,"y":73401},{"age_group":"16-49 years","date":"2021-03-04","daily_doses":82552,"new_doses_7_day_avg":58368.5714285714,"x":1614816000000,"y":82552},{"age_group":"16-49 years","date":"2021-03-05","daily_doses":93097,"new_doses_7_day_avg":61023.2857142857,"x":1614902400000,"y":93097},{"age_group":"16-49 years","date":"2021-03-06","daily_doses":63210,"new_doses_7_day_avg":62948.7142857143,"x":1614988800000,"y":63210},{"age_group":"16-49 years","date":"2021-03-07","daily_doses":28714,"new_doses_7_day_avg":64115.4285714286,"x":1615075200000,"y":28714},{"age_group":"16-49 years","date":"2021-03-08","daily_doses":59769,"new_doses_7_day_avg":66454,"x":1615161600000,"y":59769},{"age_group":"16-49 years","date":"2021-03-09","daily_doses":77380,"new_doses_7_day_avg":68303.2857142857,"x":1615248000000,"y":77380},{"age_group":"16-49 years","date":"2021-03-10","daily_doses":92913,"new_doses_7_day_avg":71090.7142857143,"x":1615334400000,"y":92913},{"age_group":"16-49 years","date":"2021-03-11","daily_doses":109892,"new_doses_7_day_avg":74996.4285714286,"x":1615420800000,"y":109892},{"age_group":"16-49 years","date":"2021-03-12","daily_doses":104559,"new_doses_7_day_avg":76633.8571428571,"x":1615507200000,"y":104559},{"age_group":"16-49 years","date":"2021-03-13","daily_doses":63920,"new_doses_7_day_avg":76735.2857142857,"x":1615593600000,"y":63920},{"age_group":"16-49 years","date":"2021-03-14","daily_doses":30501,"new_doses_7_day_avg":76990.5714285714,"x":1615680000000,"y":30501},{"age_group":"16-49 years","date":"2021-03-15","daily_doses":62939,"new_doses_7_day_avg":77443.4285714286,"x":1615766400000,"y":62939},{"age_group":"16-49 years","date":"2021-03-16","daily_doses":76487,"new_doses_7_day_avg":77315.8571428571,"x":1615852800000,"y":76487},{"age_group":"16-49 years","date":"2021-03-17","daily_doses":73620,"new_doses_7_day_avg":74559.7142857143,"x":1615939200000,"y":73620},{"age_group":"16-49 years","date":"2021-03-18","daily_doses":87451,"new_doses_7_day_avg":71353.8571428571,"x":1616025600000,"y":87451},{"age_group":"16-49 years","date":"2021-03-19","daily_doses":93577,"new_doses_7_day_avg":69785,"x":1616112000000,"y":93577},{"age_group":"16-49 years","date":"2021-03-20","daily_doses":58702,"new_doses_7_day_avg":69039.5714285714,"x":1616198400000,"y":58702},{"age_group":"16-49 years","date":"2021-03-21","daily_doses":27498,"new_doses_7_day_avg":68610.5714285714,"x":1616284800000,"y":27498},{"age_group":"16-49 years","date":"2021-03-22","daily_doses":66233,"new_doses_7_day_avg":69081.1428571429,"x":1616371200000,"y":66233},{"age_group":"16-49 years","date":"2021-03-23","daily_doses":98402,"new_doses_7_day_avg":72211.8571428571,"x":1616457600000,"y":98402},{"age_group":"16-49 years","date":"2021-03-24","daily_doses":111062,"new_doses_7_day_avg":77560.7142857143,"x":1616544000000,"y":111062},{"age_group":"16-49 years","date":"2021-03-25","daily_doses":126290,"new_doses_7_day_avg":83109.1428571429,"x":1616630400000,"y":126290},{"age_group":"16-49 years","date":"2021-03-26","daily_doses":134502,"new_doses_7_day_avg":88955.5714285714,"x":1616716800000,"y":134502},{"age_group":"16-49 years","date":"2021-03-27","daily_doses":81665,"new_doses_7_day_avg":92236,"x":1616803200000,"y":81665},{"age_group":"16-49 years","date":"2021-03-28","daily_doses":49920,"new_doses_7_day_avg":95439.1428571429,"x":1616889600000,"y":49920},{"age_group":"16-49 years","date":"2021-03-29","daily_doses":108217,"new_doses_7_day_avg":101436.857142857,"x":1616976000000,"y":108217},{"age_group":"16-49 years","date":"2021-03-30","daily_doses":139437,"new_doses_7_day_avg":107299,"x":1617062400000,"y":139437},{"age_group":"16-49 years","date":"2021-03-31","daily_doses":175881,"new_doses_7_day_avg":116558.857142857,"x":1617148800000,"y":175881},{"age_group":"16-49 years","date":"2021-04-01","daily_doses":184607,"new_doses_7_day_avg":124889.857142857,"x":1617235200000,"y":184607},{"age_group":"16-49 years","date":"2021-04-02","daily_doses":148624,"new_doses_7_day_avg":126907.285714286,"x":1617321600000,"y":148624},{"age_group":"16-49 years","date":"2021-04-03","daily_doses":94269,"new_doses_7_day_avg":128707.857142857,"x":1617408000000,"y":94269},{"age_group":"16-49 years","date":"2021-04-04","daily_doses":28867,"new_doses_7_day_avg":125700.285714286,"x":1617494400000,"y":28867},{"age_group":"16-49 years","date":"2021-04-05","daily_doses":122661,"new_doses_7_day_avg":127763.714285714,"x":1617580800000,"y":122661},{"age_group":"16-49 years","date":"2021-04-06","daily_doses":144756,"new_doses_7_day_avg":128523.571428571,"x":1617667200000,"y":144756},{"age_group":"16-49 years","date":"2021-04-07","daily_doses":175360,"new_doses_7_day_avg":128449.142857143,"x":1617753600000,"y":175360},{"age_group":"16-49 years","date":"2021-04-08","daily_doses":165000,"new_doses_7_day_avg":125648.142857143,"x":1617840000000,"y":165000},{"age_group":"16-49 years","date":"2021-04-09","daily_doses":141441,"new_doses_7_day_avg":124622,"x":1617926400000,"y":141441},{"age_group":"16-49 years","date":"2021-04-10","daily_doses":30995,"new_doses_7_day_avg":115582.857142857,"x":1618012800000,"y":30995}],"type":"column","tooltip":{"pointFormat":"{point.age_group}: {point.daily_doses:,.0f}"}},{"name":"50-64 years","data":[{"age_group":"50-64 years","date":"2020-12-14","daily_doses":144,"new_doses_7_day_avg":0,"x":1607904000000,"y":144},{"age_group":"50-64 years","date":"2020-12-15","daily_doses":1508,"new_doses_7_day_avg":0,"x":1607990400000,"y":1508},{"age_group":"50-64 years","date":"2020-12-16","daily_doses":4990,"new_doses_7_day_avg":0,"x":1608076800000,"y":4990},{"age_group":"50-64 years","date":"2020-12-17","daily_doses":6685,"new_doses_7_day_avg":0,"x":1608163200000,"y":6685},{"age_group":"50-64 years","date":"2020-12-18","daily_doses":10937,"new_doses_7_day_avg":0,"x":1608249600000,"y":10937},{"age_group":"50-64 years","date":"2020-12-19","daily_doses":4726,"new_doses_7_day_avg":0,"x":1608336000000,"y":4726},{"age_group":"50-64 years","date":"2020-12-20","daily_doses":2549,"new_doses_7_day_avg":4505.57142857143,"x":1608422400000,"y":2549},{"age_group":"50-64 years","date":"2020-12-21","daily_doses":7946,"new_doses_7_day_avg":5620.14285714286,"x":1608508800000,"y":7946},{"age_group":"50-64 years","date":"2020-12-22","daily_doses":7467,"new_doses_7_day_avg":6471.42857142857,"x":1608595200000,"y":7467},{"age_group":"50-64 years","date":"2020-12-23","daily_doses":10924,"new_doses_7_day_avg":7319.14285714286,"x":1608681600000,"y":10924},{"age_group":"50-64 years","date":"2020-12-24","daily_doses":4687,"new_doses_7_day_avg":7033.71428571429,"x":1608768000000,"y":4687},{"age_group":"50-64 years","date":"2020-12-25","daily_doses":671,"new_doses_7_day_avg":5567.14285714286,"x":1608854400000,"y":671},{"age_group":"50-64 years","date":"2020-12-26","daily_doses":3206,"new_doses_7_day_avg":5350,"x":1608940800000,"y":3206},{"age_group":"50-64 years","date":"2020-12-27","daily_doses":2253,"new_doses_7_day_avg":5307.71428571429,"x":1609027200000,"y":2253},{"age_group":"50-64 years","date":"2020-12-28","daily_doses":13093,"new_doses_7_day_avg":6043,"x":1609113600000,"y":13093},{"age_group":"50-64 years","date":"2020-12-29","daily_doses":17215,"new_doses_7_day_avg":7435.57142857143,"x":1609200000000,"y":17215},{"age_group":"50-64 years","date":"2020-12-30","daily_doses":21199,"new_doses_7_day_avg":8903.42857142857,"x":1609286400000,"y":21199},{"age_group":"50-64 years","date":"2020-12-31","daily_doses":12915,"new_doses_7_day_avg":10078.8571428571,"x":1609372800000,"y":12915},{"age_group":"50-64 years","date":"2021-01-01","daily_doses":1304,"new_doses_7_day_avg":10169.2857142857,"x":1609459200000,"y":1304},{"age_group":"50-64 years","date":"2021-01-02","daily_doses":6145,"new_doses_7_day_avg":10589.1428571429,"x":1609545600000,"y":6145},{"age_group":"50-64 years","date":"2021-01-03","daily_doses":3678,"new_doses_7_day_avg":10792.7142857143,"x":1609632000000,"y":3678},{"age_group":"50-64 years","date":"2021-01-04","daily_doses":15888,"new_doses_7_day_avg":11192,"x":1609718400000,"y":15888},{"age_group":"50-64 years","date":"2021-01-05","daily_doses":17387,"new_doses_7_day_avg":11216.5714285714,"x":1609804800000,"y":17387},{"age_group":"50-64 years","date":"2021-01-06","daily_doses":21578,"new_doses_7_day_avg":11270.7142857143,"x":1609891200000,"y":21578},{"age_group":"50-64 years","date":"2021-01-07","daily_doses":24031,"new_doses_7_day_avg":12858.7142857143,"x":1609977600000,"y":24031},{"age_group":"50-64 years","date":"2021-01-08","daily_doses":25759,"new_doses_7_day_avg":16352.2857142857,"x":1610064000000,"y":25759},{"age_group":"50-64 years","date":"2021-01-09","daily_doses":11243,"new_doses_7_day_avg":17080.5714285714,"x":1610150400000,"y":11243},{"age_group":"50-64 years","date":"2021-01-10","daily_doses":4521,"new_doses_7_day_avg":17201,"x":1610236800000,"y":4521},{"age_group":"50-64 years","date":"2021-01-11","daily_doses":18525,"new_doses_7_day_avg":17577.7142857143,"x":1610323200000,"y":18525},{"age_group":"50-64 years","date":"2021-01-12","daily_doses":20916,"new_doses_7_day_avg":18081.8571428571,"x":1610409600000,"y":20916},{"age_group":"50-64 years","date":"2021-01-13","daily_doses":21270,"new_doses_7_day_avg":18037.8571428571,"x":1610496000000,"y":21270},{"age_group":"50-64 years","date":"2021-01-14","daily_doses":18269,"new_doses_7_day_avg":17214.7142857143,"x":1610582400000,"y":18269},{"age_group":"50-64 years","date":"2021-01-15","daily_doses":17953,"new_doses_7_day_avg":16099.5714285714,"x":1610668800000,"y":17953},{"age_group":"50-64 years","date":"2021-01-16","daily_doses":11320,"new_doses_7_day_avg":16110.5714285714,"x":1610755200000,"y":11320},{"age_group":"50-64 years","date":"2021-01-17","daily_doses":1759,"new_doses_7_day_avg":15716,"x":1610841600000,"y":1759},{"age_group":"50-64 years","date":"2021-01-18","daily_doses":8950,"new_doses_7_day_avg":14348.1428571429,"x":1610928000000,"y":8950},{"age_group":"50-64 years","date":"2021-01-19","daily_doses":17737,"new_doses_7_day_avg":13894,"x":1611014400000,"y":17737},{"age_group":"50-64 years","date":"2021-01-20","daily_doses":23934,"new_doses_7_day_avg":14274.5714285714,"x":1611100800000,"y":23934},{"age_group":"50-64 years","date":"2021-01-21","daily_doses":22495,"new_doses_7_day_avg":14878.2857142857,"x":1611187200000,"y":22495},{"age_group":"50-64 years","date":"2021-01-22","daily_doses":25144,"new_doses_7_day_avg":15905.5714285714,"x":1611273600000,"y":25144},{"age_group":"50-64 years","date":"2021-01-23","daily_doses":13410,"new_doses_7_day_avg":16204.1428571429,"x":1611360000000,"y":13410},{"age_group":"50-64 years","date":"2021-01-24","daily_doses":5308,"new_doses_7_day_avg":16711.1428571429,"x":1611446400000,"y":5308},{"age_group":"50-64 years","date":"2021-01-25","daily_doses":23959,"new_doses_7_day_avg":18855.2857142857,"x":1611532800000,"y":23959},{"age_group":"50-64 years","date":"2021-01-26","daily_doses":31297,"new_doses_7_day_avg":20792.4285714286,"x":1611619200000,"y":31297},{"age_group":"50-64 years","date":"2021-01-27","daily_doses":34782,"new_doses_7_day_avg":22342.1428571429,"x":1611705600000,"y":34782},{"age_group":"50-64 years","date":"2021-01-28","daily_doses":32934,"new_doses_7_day_avg":23833.4285714286,"x":1611792000000,"y":32934},{"age_group":"50-64 years","date":"2021-01-29","daily_doses":31142,"new_doses_7_day_avg":24690.2857142857,"x":1611878400000,"y":31142},{"age_group":"50-64 years","date":"2021-01-30","daily_doses":15624,"new_doses_7_day_avg":25006.5714285714,"x":1611964800000,"y":15624},{"age_group":"50-64 years","date":"2021-01-31","daily_doses":6156,"new_doses_7_day_avg":25127.7142857143,"x":1612051200000,"y":6156},{"age_group":"50-64 years","date":"2021-02-01","daily_doses":24944,"new_doses_7_day_avg":25268.4285714286,"x":1612137600000,"y":24944},{"age_group":"50-64 years","date":"2021-02-02","daily_doses":31336,"new_doses_7_day_avg":25274,"x":1612224000000,"y":31336},{"age_group":"50-64 years","date":"2021-02-03","daily_doses":37301,"new_doses_7_day_avg":25633.8571428571,"x":1612310400000,"y":37301},{"age_group":"50-64 years","date":"2021-02-04","daily_doses":38750,"new_doses_7_day_avg":26464.7142857143,"x":1612396800000,"y":38750},{"age_group":"50-64 years","date":"2021-02-05","daily_doses":43042,"new_doses_7_day_avg":28164.7142857143,"x":1612483200000,"y":43042},{"age_group":"50-64 years","date":"2021-02-06","daily_doses":25544,"new_doses_7_day_avg":29581.8571428571,"x":1612569600000,"y":25544},{"age_group":"50-64 years","date":"2021-02-07","daily_doses":5868,"new_doses_7_day_avg":29540.7142857143,"x":1612656000000,"y":5868},{"age_group":"50-64 years","date":"2021-02-08","daily_doses":22334,"new_doses_7_day_avg":29167.8571428571,"x":1612742400000,"y":22334},{"age_group":"50-64 years","date":"2021-02-09","daily_doses":33551,"new_doses_7_day_avg":29484.2857142857,"x":1612828800000,"y":33551},{"age_group":"50-64 years","date":"2021-02-10","daily_doses":39843,"new_doses_7_day_avg":29847.4285714286,"x":1612915200000,"y":39843},{"age_group":"50-64 years","date":"2021-02-11","daily_doses":33368,"new_doses_7_day_avg":29078.5714285714,"x":1613001600000,"y":33368},{"age_group":"50-64 years","date":"2021-02-12","daily_doses":38825,"new_doses_7_day_avg":28476.1428571429,"x":1613088000000,"y":38825},{"age_group":"50-64 years","date":"2021-02-13","daily_doses":21652,"new_doses_7_day_avg":27920.1428571429,"x":1613174400000,"y":21652},{"age_group":"50-64 years","date":"2021-02-14","daily_doses":5226,"new_doses_7_day_avg":27828.4285714286,"x":1613260800000,"y":5226},{"age_group":"50-64 years","date":"2021-02-15","daily_doses":3929,"new_doses_7_day_avg":25199.1428571429,"x":1613347200000,"y":3929},{"age_group":"50-64 years","date":"2021-02-16","daily_doses":6271,"new_doses_7_day_avg":21302,"x":1613433600000,"y":6271},{"age_group":"50-64 years","date":"2021-02-17","daily_doses":5244,"new_doses_7_day_avg":16359.2857142857,"x":1613520000000,"y":5244},{"age_group":"50-64 years","date":"2021-02-18","daily_doses":9417,"new_doses_7_day_avg":12937.7142857143,"x":1613606400000,"y":9417},{"age_group":"50-64 years","date":"2021-02-19","daily_doses":14951,"new_doses_7_day_avg":9527.14285714286,"x":1613692800000,"y":14951},{"age_group":"50-64 years","date":"2021-02-20","daily_doses":19105,"new_doses_7_day_avg":9163.28571428571,"x":1613779200000,"y":19105},{"age_group":"50-64 years","date":"2021-02-21","daily_doses":13089,"new_doses_7_day_avg":10286.5714285714,"x":1613865600000,"y":13089},{"age_group":"50-64 years","date":"2021-02-22","daily_doses":25876,"new_doses_7_day_avg":13421.8571428571,"x":1613952000000,"y":25876},{"age_group":"50-64 years","date":"2021-02-23","daily_doses":29268,"new_doses_7_day_avg":16707.1428571429,"x":1614038400000,"y":29268},{"age_group":"50-64 years","date":"2021-02-24","daily_doses":49628,"new_doses_7_day_avg":23047.7142857143,"x":1614124800000,"y":49628},{"age_group":"50-64 years","date":"2021-02-25","daily_doses":63931,"new_doses_7_day_avg":30835.4285714286,"x":1614211200000,"y":63931},{"age_group":"50-64 years","date":"2021-02-26","daily_doses":71149,"new_doses_7_day_avg":38863.7142857143,"x":1614297600000,"y":71149},{"age_group":"50-64 years","date":"2021-02-27","daily_doses":47600,"new_doses_7_day_avg":42934.4285714286,"x":1614384000000,"y":47600},{"age_group":"50-64 years","date":"2021-02-28","daily_doses":20007,"new_doses_7_day_avg":43922.7142857143,"x":1614470400000,"y":20007},{"age_group":"50-64 years","date":"2021-03-01","daily_doses":41899,"new_doses_7_day_avg":46211.7142857143,"x":1614556800000,"y":41899},{"age_group":"50-64 years","date":"2021-03-02","daily_doses":63688,"new_doses_7_day_avg":51128.8571428571,"x":1614643200000,"y":63688},{"age_group":"50-64 years","date":"2021-03-03","daily_doses":68172,"new_doses_7_day_avg":53778,"x":1614729600000,"y":68172},{"age_group":"50-64 years","date":"2021-03-04","daily_doses":73455,"new_doses_7_day_avg":55138.5714285714,"x":1614816000000,"y":73455},{"age_group":"50-64 years","date":"2021-03-05","daily_doses":75500,"new_doses_7_day_avg":55760.1428571429,"x":1614902400000,"y":75500},{"age_group":"50-64 years","date":"2021-03-06","daily_doses":49802,"new_doses_7_day_avg":56074.7142857143,"x":1614988800000,"y":49802},{"age_group":"50-64 years","date":"2021-03-07","daily_doses":17286,"new_doses_7_day_avg":55686,"x":1615075200000,"y":17286},{"age_group":"50-64 years","date":"2021-03-08","daily_doses":49547,"new_doses_7_day_avg":56778.5714285714,"x":1615161600000,"y":49547},{"age_group":"50-64 years","date":"2021-03-09","daily_doses":67877,"new_doses_7_day_avg":57377,"x":1615248000000,"y":67877},{"age_group":"50-64 years","date":"2021-03-10","daily_doses":75182,"new_doses_7_day_avg":58378.4285714286,"x":1615334400000,"y":75182},{"age_group":"50-64 years","date":"2021-03-11","daily_doses":87924,"new_doses_7_day_avg":60445.4285714286,"x":1615420800000,"y":87924},{"age_group":"50-64 years","date":"2021-03-12","daily_doses":76930,"new_doses_7_day_avg":60649.7142857143,"x":1615507200000,"y":76930},{"age_group":"50-64 years","date":"2021-03-13","daily_doses":45459,"new_doses_7_day_avg":60029.2857142857,"x":1615593600000,"y":45459},{"age_group":"50-64 years","date":"2021-03-14","daily_doses":18344,"new_doses_7_day_avg":60180.4285714286,"x":1615680000000,"y":18344},{"age_group":"50-64 years","date":"2021-03-15","daily_doses":50674,"new_doses_7_day_avg":60341.4285714286,"x":1615766400000,"y":50674},{"age_group":"50-64 years","date":"2021-03-16","daily_doses":68755,"new_doses_7_day_avg":60466.8571428571,"x":1615852800000,"y":68755},{"age_group":"50-64 years","date":"2021-03-17","daily_doses":63637,"new_doses_7_day_avg":58817.5714285714,"x":1615939200000,"y":63637},{"age_group":"50-64 years","date":"2021-03-18","daily_doses":76320,"new_doses_7_day_avg":57159.8571428571,"x":1616025600000,"y":76320},{"age_group":"50-64 years","date":"2021-03-19","daily_doses":77523,"new_doses_7_day_avg":57244.5714285714,"x":1616112000000,"y":77523},{"age_group":"50-64 years","date":"2021-03-20","daily_doses":51017,"new_doses_7_day_avg":58038.5714285714,"x":1616198400000,"y":51017},{"age_group":"50-64 years","date":"2021-03-21","daily_doses":24180,"new_doses_7_day_avg":58872.2857142857,"x":1616284800000,"y":24180},{"age_group":"50-64 years","date":"2021-03-22","daily_doses":56802,"new_doses_7_day_avg":59747.7142857143,"x":1616371200000,"y":56802},{"age_group":"50-64 years","date":"2021-03-23","daily_doses":79953,"new_doses_7_day_avg":61347.4285714286,"x":1616457600000,"y":79953},{"age_group":"50-64 years","date":"2021-03-24","daily_doses":91046,"new_doses_7_day_avg":65263,"x":1616544000000,"y":91046},{"age_group":"50-64 years","date":"2021-03-25","daily_doses":96966,"new_doses_7_day_avg":68212.4285714286,"x":1616630400000,"y":96966},{"age_group":"50-64 years","date":"2021-03-26","daily_doses":100407,"new_doses_7_day_avg":71481.5714285714,"x":1616716800000,"y":100407},{"age_group":"50-64 years","date":"2021-03-27","daily_doses":55893,"new_doses_7_day_avg":72178.1428571429,"x":1616803200000,"y":55893},{"age_group":"50-64 years","date":"2021-03-28","daily_doses":30873,"new_doses_7_day_avg":73134.2857142857,"x":1616889600000,"y":30873},{"age_group":"50-64 years","date":"2021-03-29","daily_doses":61259,"new_doses_7_day_avg":73771,"x":1616976000000,"y":61259},{"age_group":"50-64 years","date":"2021-03-30","daily_doses":81624,"new_doses_7_day_avg":74009.7142857143,"x":1617062400000,"y":81624},{"age_group":"50-64 years","date":"2021-03-31","daily_doses":92898,"new_doses_7_day_avg":74274.2857142857,"x":1617148800000,"y":92898},{"age_group":"50-64 years","date":"2021-04-01","daily_doses":98258,"new_doses_7_day_avg":74458.8571428571,"x":1617235200000,"y":98258},{"age_group":"50-64 years","date":"2021-04-02","daily_doses":63471,"new_doses_7_day_avg":69182.2857142857,"x":1617321600000,"y":63471},{"age_group":"50-64 years","date":"2021-04-03","daily_doses":41163,"new_doses_7_day_avg":67078,"x":1617408000000,"y":41163},{"age_group":"50-64 years","date":"2021-04-04","daily_doses":10245,"new_doses_7_day_avg":64131.1428571429,"x":1617494400000,"y":10245},{"age_group":"50-64 years","date":"2021-04-05","daily_doses":55528,"new_doses_7_day_avg":63312.4285714286,"x":1617580800000,"y":55528},{"age_group":"50-64 years","date":"2021-04-06","daily_doses":75292,"new_doses_7_day_avg":62407.8571428571,"x":1617667200000,"y":75292},{"age_group":"50-64 years","date":"2021-04-07","daily_doses":84616,"new_doses_7_day_avg":61224.7142857143,"x":1617753600000,"y":84616},{"age_group":"50-64 years","date":"2021-04-08","daily_doses":79246,"new_doses_7_day_avg":58508.7142857143,"x":1617840000000,"y":79246},{"age_group":"50-64 years","date":"2021-04-09","daily_doses":70376,"new_doses_7_day_avg":59495.1428571429,"x":1617926400000,"y":70376},{"age_group":"50-64 years","date":"2021-04-10","daily_doses":14521,"new_doses_7_day_avg":55689.1428571429,"x":1618012800000,"y":14521}],"type":"column","tooltip":{"pointFormat":"{point.age_group}: {point.daily_doses:,.0f}"}},{"name":"65-79 years","data":[{"age_group":"65-79 years","date":"2020-12-14","daily_doses":28,"new_doses_7_day_avg":0,"x":1607904000000,"y":28},{"age_group":"65-79 years","date":"2020-12-15","daily_doses":311,"new_doses_7_day_avg":0,"x":1607990400000,"y":311},{"age_group":"65-79 years","date":"2020-12-16","daily_doses":959,"new_doses_7_day_avg":0,"x":1608076800000,"y":959},{"age_group":"65-79 years","date":"2020-12-17","daily_doses":1439,"new_doses_7_day_avg":0,"x":1608163200000,"y":1439},{"age_group":"65-79 years","date":"2020-12-18","daily_doses":2053,"new_doses_7_day_avg":0,"x":1608249600000,"y":2053},{"age_group":"65-79 years","date":"2020-12-19","daily_doses":1015,"new_doses_7_day_avg":0,"x":1608336000000,"y":1015},{"age_group":"65-79 years","date":"2020-12-20","daily_doses":508,"new_doses_7_day_avg":901.857142857143,"x":1608422400000,"y":508},{"age_group":"65-79 years","date":"2020-12-21","daily_doses":1549,"new_doses_7_day_avg":1119.14285714286,"x":1608508800000,"y":1549},{"age_group":"65-79 years","date":"2020-12-22","daily_doses":2138,"new_doses_7_day_avg":1380.14285714286,"x":1608595200000,"y":2138},{"age_group":"65-79 years","date":"2020-12-23","daily_doses":2961,"new_doses_7_day_avg":1666.14285714286,"x":1608681600000,"y":2961},{"age_group":"65-79 years","date":"2020-12-24","daily_doses":1906,"new_doses_7_day_avg":1732.85714285714,"x":1608768000000,"y":1906},{"age_group":"65-79 years","date":"2020-12-25","daily_doses":327,"new_doses_7_day_avg":1486.28571428571,"x":1608854400000,"y":327},{"age_group":"65-79 years","date":"2020-12-26","daily_doses":1740,"new_doses_7_day_avg":1589.85714285714,"x":1608940800000,"y":1740},{"age_group":"65-79 years","date":"2020-12-27","daily_doses":1125,"new_doses_7_day_avg":1678,"x":1609027200000,"y":1125},{"age_group":"65-79 years","date":"2020-12-28","daily_doses":6776,"new_doses_7_day_avg":2424.71428571429,"x":1609113600000,"y":6776},{"age_group":"65-79 years","date":"2020-12-29","daily_doses":10880,"new_doses_7_day_avg":3673.57142857143,"x":1609200000000,"y":10880},{"age_group":"65-79 years","date":"2020-12-30","daily_doses":17963,"new_doses_7_day_avg":5816.71428571429,"x":1609286400000,"y":17963},{"age_group":"65-79 years","date":"2020-12-31","daily_doses":11178,"new_doses_7_day_avg":7141.28571428571,"x":1609372800000,"y":11178},{"age_group":"65-79 years","date":"2021-01-01","daily_doses":1555,"new_doses_7_day_avg":7316.71428571429,"x":1609459200000,"y":1555},{"age_group":"65-79 years","date":"2021-01-02","daily_doses":6727,"new_doses_7_day_avg":8029.14285714286,"x":1609545600000,"y":6727},{"age_group":"65-79 years","date":"2021-01-03","daily_doses":4050,"new_doses_7_day_avg":8447,"x":1609632000000,"y":4050},{"age_group":"65-79 years","date":"2021-01-04","daily_doses":18277,"new_doses_7_day_avg":10090,"x":1609718400000,"y":18277},{"age_group":"65-79 years","date":"2021-01-05","daily_doses":20235,"new_doses_7_day_avg":11426.4285714286,"x":1609804800000,"y":20235},{"age_group":"65-79 years","date":"2021-01-06","daily_doses":22940,"new_doses_7_day_avg":12137.4285714286,"x":1609891200000,"y":22940},{"age_group":"65-79 years","date":"2021-01-07","daily_doses":26385,"new_doses_7_day_avg":14309.8571428571,"x":1609977600000,"y":26385},{"age_group":"65-79 years","date":"2021-01-08","daily_doses":26992,"new_doses_7_day_avg":17943.7142857143,"x":1610064000000,"y":26992},{"age_group":"65-79 years","date":"2021-01-09","daily_doses":15184,"new_doses_7_day_avg":19151.8571428571,"x":1610150400000,"y":15184},{"age_group":"65-79 years","date":"2021-01-10","daily_doses":4531,"new_doses_7_day_avg":19220.5714285714,"x":1610236800000,"y":4531},{"age_group":"65-79 years","date":"2021-01-11","daily_doses":24334,"new_doses_7_day_avg":20085.8571428571,"x":1610323200000,"y":24334},{"age_group":"65-79 years","date":"2021-01-12","daily_doses":29920,"new_doses_7_day_avg":21469.4285714286,"x":1610409600000,"y":29920},{"age_group":"65-79 years","date":"2021-01-13","daily_doses":31879,"new_doses_7_day_avg":22746.4285714286,"x":1610496000000,"y":31879},{"age_group":"65-79 years","date":"2021-01-14","daily_doses":36457,"new_doses_7_day_avg":24185.2857142857,"x":1610582400000,"y":36457},{"age_group":"65-79 years","date":"2021-01-15","daily_doses":31154,"new_doses_7_day_avg":24779.8571428571,"x":1610668800000,"y":31154},{"age_group":"65-79 years","date":"2021-01-16","daily_doses":25770,"new_doses_7_day_avg":26292.1428571429,"x":1610755200000,"y":25770},{"age_group":"65-79 years","date":"2021-01-17","daily_doses":6767,"new_doses_7_day_avg":26611.5714285714,"x":1610841600000,"y":6767},{"age_group":"65-79 years","date":"2021-01-18","daily_doses":12553,"new_doses_7_day_avg":24928.5714285714,"x":1610928000000,"y":12553},{"age_group":"65-79 years","date":"2021-01-19","daily_doses":23365,"new_doses_7_day_avg":23992.1428571429,"x":1611014400000,"y":23365},{"age_group":"65-79 years","date":"2021-01-20","daily_doses":34314,"new_doses_7_day_avg":24340,"x":1611100800000,"y":34314},{"age_group":"65-79 years","date":"2021-01-21","daily_doses":34861,"new_doses_7_day_avg":24112,"x":1611187200000,"y":34861},{"age_group":"65-79 years","date":"2021-01-22","daily_doses":34003,"new_doses_7_day_avg":24519,"x":1611273600000,"y":34003},{"age_group":"65-79 years","date":"2021-01-23","daily_doses":22087,"new_doses_7_day_avg":23992.8571428571,"x":1611360000000,"y":22087},{"age_group":"65-79 years","date":"2021-01-24","daily_doses":9136,"new_doses_7_day_avg":24331.2857142857,"x":1611446400000,"y":9136},{"age_group":"65-79 years","date":"2021-01-25","daily_doses":27920,"new_doses_7_day_avg":26526.5714285714,"x":1611532800000,"y":27920},{"age_group":"65-79 years","date":"2021-01-26","daily_doses":39468,"new_doses_7_day_avg":28827,"x":1611619200000,"y":39468},{"age_group":"65-79 years","date":"2021-01-27","daily_doses":49450,"new_doses_7_day_avg":30989.2857142857,"x":1611705600000,"y":49450},{"age_group":"65-79 years","date":"2021-01-28","daily_doses":51539,"new_doses_7_day_avg":33371.8571428571,"x":1611792000000,"y":51539},{"age_group":"65-79 years","date":"2021-01-29","daily_doses":48611,"new_doses_7_day_avg":35458.7142857143,"x":1611878400000,"y":48611},{"age_group":"65-79 years","date":"2021-01-30","daily_doses":24398,"new_doses_7_day_avg":35788.8571428571,"x":1611964800000,"y":24398},{"age_group":"65-79 years","date":"2021-01-31","daily_doses":7479,"new_doses_7_day_avg":35552.1428571429,"x":1612051200000,"y":7479},{"age_group":"65-79 years","date":"2021-02-01","daily_doses":39479,"new_doses_7_day_avg":37203.4285714286,"x":1612137600000,"y":39479},{"age_group":"65-79 years","date":"2021-02-02","daily_doses":55203,"new_doses_7_day_avg":39451.2857142857,"x":1612224000000,"y":55203},{"age_group":"65-79 years","date":"2021-02-03","daily_doses":62759,"new_doses_7_day_avg":41352.5714285714,"x":1612310400000,"y":62759},{"age_group":"65-79 years","date":"2021-02-04","daily_doses":73447,"new_doses_7_day_avg":44482.2857142857,"x":1612396800000,"y":73447},{"age_group":"65-79 years","date":"2021-02-05","daily_doses":74942,"new_doses_7_day_avg":48243.8571428571,"x":1612483200000,"y":74942},{"age_group":"65-79 years","date":"2021-02-06","daily_doses":50666,"new_doses_7_day_avg":51996.4285714286,"x":1612569600000,"y":50666},{"age_group":"65-79 years","date":"2021-02-07","daily_doses":15432,"new_doses_7_day_avg":53132.5714285714,"x":1612656000000,"y":15432},{"age_group":"65-79 years","date":"2021-02-08","daily_doses":38915,"new_doses_7_day_avg":53052,"x":1612742400000,"y":38915},{"age_group":"65-79 years","date":"2021-02-09","daily_doses":55619,"new_doses_7_day_avg":53111.4285714286,"x":1612828800000,"y":55619},{"age_group":"65-79 years","date":"2021-02-10","daily_doses":66557,"new_doses_7_day_avg":53654,"x":1612915200000,"y":66557},{"age_group":"65-79 years","date":"2021-02-11","daily_doses":56620,"new_doses_7_day_avg":51250.1428571429,"x":1613001600000,"y":56620},{"age_group":"65-79 years","date":"2021-02-12","daily_doses":69450,"new_doses_7_day_avg":50465.5714285714,"x":1613088000000,"y":69450},{"age_group":"65-79 years","date":"2021-02-13","daily_doses":35908,"new_doses_7_day_avg":48357.2857142857,"x":1613174400000,"y":35908},{"age_group":"65-79 years","date":"2021-02-14","daily_doses":11378,"new_doses_7_day_avg":47778.1428571429,"x":1613260800000,"y":11378},{"age_group":"65-79 years","date":"2021-02-15","daily_doses":2884,"new_doses_7_day_avg":42630.8571428571,"x":1613347200000,"y":2884},{"age_group":"65-79 years","date":"2021-02-16","daily_doses":5836,"new_doses_7_day_avg":35519,"x":1613433600000,"y":5836},{"age_group":"65-79 years","date":"2021-02-17","daily_doses":8071,"new_doses_7_day_avg":27163.8571428571,"x":1613520000000,"y":8071},{"age_group":"65-79 years","date":"2021-02-18","daily_doses":15536,"new_doses_7_day_avg":21294.7142857143,"x":1613606400000,"y":15536},{"age_group":"65-79 years","date":"2021-02-19","daily_doses":25919,"new_doses_7_day_avg":15076,"x":1613692800000,"y":25919},{"age_group":"65-79 years","date":"2021-02-20","daily_doses":31968,"new_doses_7_day_avg":14513.1428571429,"x":1613779200000,"y":31968},{"age_group":"65-79 years","date":"2021-02-21","daily_doses":24159,"new_doses_7_day_avg":16339,"x":1613865600000,"y":24159},{"age_group":"65-79 years","date":"2021-02-22","daily_doses":41664,"new_doses_7_day_avg":21879,"x":1613952000000,"y":41664},{"age_group":"65-79 years","date":"2021-02-23","daily_doses":49602,"new_doses_7_day_avg":28131.2857142857,"x":1614038400000,"y":49602},{"age_group":"65-79 years","date":"2021-02-24","daily_doses":74565,"new_doses_7_day_avg":37630.4285714286,"x":1614124800000,"y":74565},{"age_group":"65-79 years","date":"2021-02-25","daily_doses":91835,"new_doses_7_day_avg":48530.2857142857,"x":1614211200000,"y":91835},{"age_group":"65-79 years","date":"2021-02-26","daily_doses":106514,"new_doses_7_day_avg":60043.8571428571,"x":1614297600000,"y":106514},{"age_group":"65-79 years","date":"2021-02-27","daily_doses":62523,"new_doses_7_day_avg":64408.8571428571,"x":1614384000000,"y":62523},{"age_group":"65-79 years","date":"2021-02-28","daily_doses":24103,"new_doses_7_day_avg":64400.8571428571,"x":1614470400000,"y":24103},{"age_group":"65-79 years","date":"2021-03-01","daily_doses":47157,"new_doses_7_day_avg":65185.5714285714,"x":1614556800000,"y":47157},{"age_group":"65-79 years","date":"2021-03-02","daily_doses":73261,"new_doses_7_day_avg":68565.4285714286,"x":1614643200000,"y":73261},{"age_group":"65-79 years","date":"2021-03-03","daily_doses":72490,"new_doses_7_day_avg":68269,"x":1614729600000,"y":72490},{"age_group":"65-79 years","date":"2021-03-04","daily_doses":76607,"new_doses_7_day_avg":66093.5714285714,"x":1614816000000,"y":76607},{"age_group":"65-79 years","date":"2021-03-05","daily_doses":69763,"new_doses_7_day_avg":60843.4285714286,"x":1614902400000,"y":69763},{"age_group":"65-79 years","date":"2021-03-06","daily_doses":35677,"new_doses_7_day_avg":57008.2857142857,"x":1614988800000,"y":35677},{"age_group":"65-79 years","date":"2021-03-07","daily_doses":8550,"new_doses_7_day_avg":54786.4285714286,"x":1615075200000,"y":8550},{"age_group":"65-79 years","date":"2021-03-08","daily_doses":30448,"new_doses_7_day_avg":52399.4285714286,"x":1615161600000,"y":30448},{"age_group":"65-79 years","date":"2021-03-09","daily_doses":49434,"new_doses_7_day_avg":48995.5714285714,"x":1615248000000,"y":49434},{"age_group":"65-79 years","date":"2021-03-10","daily_doses":59276,"new_doses_7_day_avg":47107.8571428571,"x":1615334400000,"y":59276},{"age_group":"65-79 years","date":"2021-03-11","daily_doses":62202,"new_doses_7_day_avg":45050,"x":1615420800000,"y":62202},{"age_group":"65-79 years","date":"2021-03-12","daily_doses":53811,"new_doses_7_day_avg":42771.1428571429,"x":1615507200000,"y":53811},{"age_group":"65-79 years","date":"2021-03-13","daily_doses":26049,"new_doses_7_day_avg":41395.7142857143,"x":1615593600000,"y":26049},{"age_group":"65-79 years","date":"2021-03-14","daily_doses":9334,"new_doses_7_day_avg":41507.7142857143,"x":1615680000000,"y":9334},{"age_group":"65-79 years","date":"2021-03-15","daily_doses":28626,"new_doses_7_day_avg":41247.4285714286,"x":1615766400000,"y":28626},{"age_group":"65-79 years","date":"2021-03-16","daily_doses":35891,"new_doses_7_day_avg":39312.7142857143,"x":1615852800000,"y":35891},{"age_group":"65-79 years","date":"2021-03-17","daily_doses":32282,"new_doses_7_day_avg":35456.4285714286,"x":1615939200000,"y":32282},{"age_group":"65-79 years","date":"2021-03-18","daily_doses":39283,"new_doses_7_day_avg":32182.2857142857,"x":1616025600000,"y":39283},{"age_group":"65-79 years","date":"2021-03-19","daily_doses":39300,"new_doses_7_day_avg":30109.2857142857,"x":1616112000000,"y":39300},{"age_group":"65-79 years","date":"2021-03-20","daily_doses":23672,"new_doses_7_day_avg":29769.7142857143,"x":1616198400000,"y":23672},{"age_group":"65-79 years","date":"2021-03-21","daily_doses":9996,"new_doses_7_day_avg":29864.2857142857,"x":1616284800000,"y":9996},{"age_group":"65-79 years","date":"2021-03-22","daily_doses":27677,"new_doses_7_day_avg":29728.7142857143,"x":1616371200000,"y":27677},{"age_group":"65-79 years","date":"2021-03-23","daily_doses":41120,"new_doses_7_day_avg":30475.7142857143,"x":1616457600000,"y":41120},{"age_group":"65-79 years","date":"2021-03-24","daily_doses":46573,"new_doses_7_day_avg":32517.2857142857,"x":1616544000000,"y":46573},{"age_group":"65-79 years","date":"2021-03-25","daily_doses":52665,"new_doses_7_day_avg":34429,"x":1616630400000,"y":52665},{"age_group":"65-79 years","date":"2021-03-26","daily_doses":55638,"new_doses_7_day_avg":36763,"x":1616716800000,"y":55638},{"age_group":"65-79 years","date":"2021-03-27","daily_doses":30316,"new_doses_7_day_avg":37712.1428571429,"x":1616803200000,"y":30316},{"age_group":"65-79 years","date":"2021-03-28","daily_doses":11197,"new_doses_7_day_avg":37883.7142857143,"x":1616889600000,"y":11197},{"age_group":"65-79 years","date":"2021-03-29","daily_doses":32081,"new_doses_7_day_avg":38512.8571428571,"x":1616976000000,"y":32081},{"age_group":"65-79 years","date":"2021-03-30","daily_doses":45675,"new_doses_7_day_avg":39163.5714285714,"x":1617062400000,"y":45675},{"age_group":"65-79 years","date":"2021-03-31","daily_doses":50027,"new_doses_7_day_avg":39657,"x":1617148800000,"y":50027},{"age_group":"65-79 years","date":"2021-04-01","daily_doses":54034,"new_doses_7_day_avg":39852.5714285714,"x":1617235200000,"y":54034},{"age_group":"65-79 years","date":"2021-04-02","daily_doses":29627,"new_doses_7_day_avg":36136.7142857143,"x":1617321600000,"y":29627},{"age_group":"65-79 years","date":"2021-04-03","daily_doses":16040,"new_doses_7_day_avg":34097.2857142857,"x":1617408000000,"y":16040},{"age_group":"65-79 years","date":"2021-04-04","daily_doses":3064,"new_doses_7_day_avg":32935.4285714286,"x":1617494400000,"y":3064},{"age_group":"65-79 years","date":"2021-04-05","daily_doses":23838,"new_doses_7_day_avg":31757.8571428571,"x":1617580800000,"y":23838},{"age_group":"65-79 years","date":"2021-04-06","daily_doses":39357,"new_doses_7_day_avg":30855.2857142857,"x":1617667200000,"y":39357},{"age_group":"65-79 years","date":"2021-04-07","daily_doses":35949,"new_doses_7_day_avg":28844.1428571429,"x":1617753600000,"y":35949},{"age_group":"65-79 years","date":"2021-04-08","daily_doses":33915,"new_doses_7_day_avg":25970,"x":1617840000000,"y":33915},{"age_group":"65-79 years","date":"2021-04-09","daily_doses":24994,"new_doses_7_day_avg":25308.1428571429,"x":1617926400000,"y":24994},{"age_group":"65-79 years","date":"2021-04-10","daily_doses":5907,"new_doses_7_day_avg":23860.5714285714,"x":1618012800000,"y":5907}],"type":"column","tooltip":{"pointFormat":"{point.age_group}: {point.daily_doses:,.0f}"}},{"name":"80+ years","data":[{"age_group":"80+ years","date":"2020-12-14","daily_doses":3,"new_doses_7_day_avg":0,"x":1607904000000,"y":3},{"age_group":"80+ years","date":"2020-12-15","daily_doses":9,"new_doses_7_day_avg":0,"x":1607990400000,"y":9},{"age_group":"80+ years","date":"2020-12-16","daily_doses":36,"new_doses_7_day_avg":0,"x":1608076800000,"y":36},{"age_group":"80+ years","date":"2020-12-17","daily_doses":70,"new_doses_7_day_avg":0,"x":1608163200000,"y":70},{"age_group":"80+ years","date":"2020-12-18","daily_doses":57,"new_doses_7_day_avg":0,"x":1608249600000,"y":57},{"age_group":"80+ years","date":"2020-12-19","daily_doses":48,"new_doses_7_day_avg":0,"x":1608336000000,"y":48},{"age_group":"80+ years","date":"2020-12-20","daily_doses":90,"new_doses_7_day_avg":44.7142857142857,"x":1608422400000,"y":90},{"age_group":"80+ years","date":"2020-12-21","daily_doses":64,"new_doses_7_day_avg":53.4285714285714,"x":1608508800000,"y":64},{"age_group":"80+ years","date":"2020-12-22","daily_doses":170,"new_doses_7_day_avg":76.4285714285714,"x":1608595200000,"y":170},{"age_group":"80+ years","date":"2020-12-23","daily_doses":591,"new_doses_7_day_avg":155.714285714286,"x":1608681600000,"y":591},{"age_group":"80+ years","date":"2020-12-24","daily_doses":424,"new_doses_7_day_avg":206.285714285714,"x":1608768000000,"y":424},{"age_group":"80+ years","date":"2020-12-25","daily_doses":59,"new_doses_7_day_avg":206.571428571429,"x":1608854400000,"y":59},{"age_group":"80+ years","date":"2020-12-26","daily_doses":511,"new_doses_7_day_avg":272.714285714286,"x":1608940800000,"y":511},{"age_group":"80+ years","date":"2020-12-27","daily_doses":369,"new_doses_7_day_avg":312.571428571429,"x":1609027200000,"y":369},{"age_group":"80+ years","date":"2020-12-28","daily_doses":2824,"new_doses_7_day_avg":706.857142857143,"x":1609113600000,"y":2824},{"age_group":"80+ years","date":"2020-12-29","daily_doses":5632,"new_doses_7_day_avg":1487.14285714286,"x":1609200000000,"y":5632},{"age_group":"80+ years","date":"2020-12-30","daily_doses":7417,"new_doses_7_day_avg":2462.28571428571,"x":1609286400000,"y":7417},{"age_group":"80+ years","date":"2020-12-31","daily_doses":3267,"new_doses_7_day_avg":2868.42857142857,"x":1609372800000,"y":3267},{"age_group":"80+ years","date":"2021-01-01","daily_doses":480,"new_doses_7_day_avg":2928.57142857143,"x":1609459200000,"y":480},{"age_group":"80+ years","date":"2021-01-02","daily_doses":2142,"new_doses_7_day_avg":3161.57142857143,"x":1609545600000,"y":2142},{"age_group":"80+ years","date":"2021-01-03","daily_doses":1314,"new_doses_7_day_avg":3296.57142857143,"x":1609632000000,"y":1314},{"age_group":"80+ years","date":"2021-01-04","daily_doses":7094,"new_doses_7_day_avg":3906.57142857143,"x":1609718400000,"y":7094},{"age_group":"80+ years","date":"2021-01-05","daily_doses":6300,"new_doses_7_day_avg":4002,"x":1609804800000,"y":6300},{"age_group":"80+ years","date":"2021-01-06","daily_doses":8259,"new_doses_7_day_avg":4122.28571428571,"x":1609891200000,"y":8259},{"age_group":"80+ years","date":"2021-01-07","daily_doses":9888,"new_doses_7_day_avg":5068.14285714286,"x":1609977600000,"y":9888},{"age_group":"80+ years","date":"2021-01-08","daily_doses":9124,"new_doses_7_day_avg":6303,"x":1610064000000,"y":9124},{"age_group":"80+ years","date":"2021-01-09","daily_doses":4983,"new_doses_7_day_avg":6708.85714285714,"x":1610150400000,"y":4983},{"age_group":"80+ years","date":"2021-01-10","daily_doses":1414,"new_doses_7_day_avg":6723.14285714286,"x":1610236800000,"y":1414},{"age_group":"80+ years","date":"2021-01-11","daily_doses":8586,"new_doses_7_day_avg":6936.28571428571,"x":1610323200000,"y":8586},{"age_group":"80+ years","date":"2021-01-12","daily_doses":9605,"new_doses_7_day_avg":7408.42857142857,"x":1610409600000,"y":9605},{"age_group":"80+ years","date":"2021-01-13","daily_doses":11962,"new_doses_7_day_avg":7937.42857142857,"x":1610496000000,"y":11962},{"age_group":"80+ years","date":"2021-01-14","daily_doses":12516,"new_doses_7_day_avg":8312.85714285714,"x":1610582400000,"y":12516},{"age_group":"80+ years","date":"2021-01-15","daily_doses":9205,"new_doses_7_day_avg":8324.42857142857,"x":1610668800000,"y":9205},{"age_group":"80+ years","date":"2021-01-16","daily_doses":5550,"new_doses_7_day_avg":8405.42857142857,"x":1610755200000,"y":5550},{"age_group":"80+ years","date":"2021-01-17","daily_doses":1742,"new_doses_7_day_avg":8452.28571428571,"x":1610841600000,"y":1742},{"age_group":"80+ years","date":"2021-01-18","daily_doses":5312,"new_doses_7_day_avg":7984.57142857143,"x":1610928000000,"y":5312},{"age_group":"80+ years","date":"2021-01-19","daily_doses":8972,"new_doses_7_day_avg":7894.14285714286,"x":1611014400000,"y":8972},{"age_group":"80+ years","date":"2021-01-20","daily_doses":11468,"new_doses_7_day_avg":7823.57142857143,"x":1611100800000,"y":11468},{"age_group":"80+ years","date":"2021-01-21","daily_doses":11011,"new_doses_7_day_avg":7608.57142857143,"x":1611187200000,"y":11011},{"age_group":"80+ years","date":"2021-01-22","daily_doses":9281,"new_doses_7_day_avg":7619.42857142857,"x":1611273600000,"y":9281},{"age_group":"80+ years","date":"2021-01-23","daily_doses":6142,"new_doses_7_day_avg":7704,"x":1611360000000,"y":6142},{"age_group":"80+ years","date":"2021-01-24","daily_doses":2064,"new_doses_7_day_avg":7750,"x":1611446400000,"y":2064},{"age_group":"80+ years","date":"2021-01-25","daily_doses":9267,"new_doses_7_day_avg":8315,"x":1611532800000,"y":9267},{"age_group":"80+ years","date":"2021-01-26","daily_doses":13561,"new_doses_7_day_avg":8970.57142857143,"x":1611619200000,"y":13561},{"age_group":"80+ years","date":"2021-01-27","daily_doses":16178,"new_doses_7_day_avg":9643.42857142857,"x":1611705600000,"y":16178},{"age_group":"80+ years","date":"2021-01-28","daily_doses":16579,"new_doses_7_day_avg":10438.8571428571,"x":1611792000000,"y":16579},{"age_group":"80+ years","date":"2021-01-29","daily_doses":14371,"new_doses_7_day_avg":11166,"x":1611878400000,"y":14371},{"age_group":"80+ years","date":"2021-01-30","daily_doses":7366,"new_doses_7_day_avg":11340.8571428571,"x":1611964800000,"y":7366},{"age_group":"80+ years","date":"2021-01-31","daily_doses":3455,"new_doses_7_day_avg":11539.5714285714,"x":1612051200000,"y":3455},{"age_group":"80+ years","date":"2021-02-01","daily_doses":13479,"new_doses_7_day_avg":12141.2857142857,"x":1612137600000,"y":13479},{"age_group":"80+ years","date":"2021-02-02","daily_doses":17925,"new_doses_7_day_avg":12764.7142857143,"x":1612224000000,"y":17925},{"age_group":"80+ years","date":"2021-02-03","daily_doses":18407,"new_doses_7_day_avg":13083.1428571429,"x":1612310400000,"y":18407},{"age_group":"80+ years","date":"2021-02-04","daily_doses":20596,"new_doses_7_day_avg":13657,"x":1612396800000,"y":20596},{"age_group":"80+ years","date":"2021-02-05","daily_doses":21737,"new_doses_7_day_avg":14709.2857142857,"x":1612483200000,"y":21737},{"age_group":"80+ years","date":"2021-02-06","daily_doses":12823,"new_doses_7_day_avg":15488.8571428571,"x":1612569600000,"y":12823},{"age_group":"80+ years","date":"2021-02-07","daily_doses":3038,"new_doses_7_day_avg":15429.2857142857,"x":1612656000000,"y":3038},{"age_group":"80+ years","date":"2021-02-08","daily_doses":12164,"new_doses_7_day_avg":15241.4285714286,"x":1612742400000,"y":12164},{"age_group":"80+ years","date":"2021-02-09","daily_doses":15783,"new_doses_7_day_avg":14935.4285714286,"x":1612828800000,"y":15783},{"age_group":"80+ years","date":"2021-02-10","daily_doses":19805,"new_doses_7_day_avg":15135.1428571429,"x":1612915200000,"y":19805},{"age_group":"80+ years","date":"2021-02-11","daily_doses":15872,"new_doses_7_day_avg":14460.2857142857,"x":1613001600000,"y":15872},{"age_group":"80+ years","date":"2021-02-12","daily_doses":18665,"new_doses_7_day_avg":14021.4285714286,"x":1613088000000,"y":18665},{"age_group":"80+ years","date":"2021-02-13","daily_doses":8833,"new_doses_7_day_avg":13451.4285714286,"x":1613174400000,"y":8833},{"age_group":"80+ years","date":"2021-02-14","daily_doses":2130,"new_doses_7_day_avg":13321.7142857143,"x":1613260800000,"y":2130},{"age_group":"80+ years","date":"2021-02-15","daily_doses":743,"new_doses_7_day_avg":11690.1428571429,"x":1613347200000,"y":743},{"age_group":"80+ years","date":"2021-02-16","daily_doses":1528,"new_doses_7_day_avg":9653.71428571429,"x":1613433600000,"y":1528},{"age_group":"80+ years","date":"2021-02-17","daily_doses":2470,"new_doses_7_day_avg":7177.28571428571,"x":1613520000000,"y":2470},{"age_group":"80+ years","date":"2021-02-18","daily_doses":4166,"new_doses_7_day_avg":5505,"x":1613606400000,"y":4166},{"age_group":"80+ years","date":"2021-02-19","daily_doses":6356,"new_doses_7_day_avg":3746.57142857143,"x":1613692800000,"y":6356},{"age_group":"80+ years","date":"2021-02-20","daily_doses":9408,"new_doses_7_day_avg":3828.71428571429,"x":1613779200000,"y":9408},{"age_group":"80+ years","date":"2021-02-21","daily_doses":6263,"new_doses_7_day_avg":4419.14285714286,"x":1613865600000,"y":6263},{"age_group":"80+ years","date":"2021-02-22","daily_doses":11565,"new_doses_7_day_avg":5965.14285714286,"x":1613952000000,"y":11565},{"age_group":"80+ years","date":"2021-02-23","daily_doses":13106,"new_doses_7_day_avg":7619.14285714286,"x":1614038400000,"y":13106},{"age_group":"80+ years","date":"2021-02-24","daily_doses":17686,"new_doses_7_day_avg":9792.85714285714,"x":1614124800000,"y":17686},{"age_group":"80+ years","date":"2021-02-25","daily_doses":23331,"new_doses_7_day_avg":12530.7142857143,"x":1614211200000,"y":23331},{"age_group":"80+ years","date":"2021-02-26","daily_doses":25846,"new_doses_7_day_avg":15315,"x":1614297600000,"y":25846},{"age_group":"80+ years","date":"2021-02-27","daily_doses":14726,"new_doses_7_day_avg":16074.7142857143,"x":1614384000000,"y":14726},{"age_group":"80+ years","date":"2021-02-28","daily_doses":5452,"new_doses_7_day_avg":15958.8571428571,"x":1614470400000,"y":5452},{"age_group":"80+ years","date":"2021-03-01","daily_doses":11437,"new_doses_7_day_avg":15940.5714285714,"x":1614556800000,"y":11437},{"age_group":"80+ years","date":"2021-03-02","daily_doses":17082,"new_doses_7_day_avg":16508.5714285714,"x":1614643200000,"y":17082},{"age_group":"80+ years","date":"2021-03-03","daily_doses":17693,"new_doses_7_day_avg":16509.5714285714,"x":1614729600000,"y":17693},{"age_group":"80+ years","date":"2021-03-04","daily_doses":18743,"new_doses_7_day_avg":15854.1428571429,"x":1614816000000,"y":18743},{"age_group":"80+ years","date":"2021-03-05","daily_doses":17410,"new_doses_7_day_avg":14649,"x":1614902400000,"y":17410},{"age_group":"80+ years","date":"2021-03-06","daily_doses":8034,"new_doses_7_day_avg":13693,"x":1614988800000,"y":8034},{"age_group":"80+ years","date":"2021-03-07","daily_doses":1816,"new_doses_7_day_avg":13173.5714285714,"x":1615075200000,"y":1816},{"age_group":"80+ years","date":"2021-03-08","daily_doses":6805,"new_doses_7_day_avg":12511.8571428571,"x":1615161600000,"y":6805},{"age_group":"80+ years","date":"2021-03-09","daily_doses":11200,"new_doses_7_day_avg":11671.5714285714,"x":1615248000000,"y":11200},{"age_group":"80+ years","date":"2021-03-10","daily_doses":14152,"new_doses_7_day_avg":11165.7142857143,"x":1615334400000,"y":14152},{"age_group":"80+ years","date":"2021-03-11","daily_doses":15117,"new_doses_7_day_avg":10647.7142857143,"x":1615420800000,"y":15117},{"age_group":"80+ years","date":"2021-03-12","daily_doses":13154,"new_doses_7_day_avg":10039.7142857143,"x":1615507200000,"y":13154},{"age_group":"80+ years","date":"2021-03-13","daily_doses":5685,"new_doses_7_day_avg":9704.14285714286,"x":1615593600000,"y":5685},{"age_group":"80+ years","date":"2021-03-14","daily_doses":1954,"new_doses_7_day_avg":9723.85714285714,"x":1615680000000,"y":1954},{"age_group":"80+ years","date":"2021-03-15","daily_doses":6134,"new_doses_7_day_avg":9628,"x":1615766400000,"y":6134},{"age_group":"80+ years","date":"2021-03-16","daily_doses":8078,"new_doses_7_day_avg":9182,"x":1615852800000,"y":8078},{"age_group":"80+ years","date":"2021-03-17","daily_doses":7487,"new_doses_7_day_avg":8229.85714285714,"x":1615939200000,"y":7487},{"age_group":"80+ years","date":"2021-03-18","daily_doses":9311,"new_doses_7_day_avg":7400.42857142857,"x":1616025600000,"y":9311},{"age_group":"80+ years","date":"2021-03-19","daily_doses":9572,"new_doses_7_day_avg":6888.71428571429,"x":1616112000000,"y":9572},{"age_group":"80+ years","date":"2021-03-20","daily_doses":7163,"new_doses_7_day_avg":7099.85714285714,"x":1616198400000,"y":7163},{"age_group":"80+ years","date":"2021-03-21","daily_doses":2787,"new_doses_7_day_avg":7218.85714285714,"x":1616284800000,"y":2787},{"age_group":"80+ years","date":"2021-03-22","daily_doses":6357,"new_doses_7_day_avg":7250.71428571429,"x":1616371200000,"y":6357},{"age_group":"80+ years","date":"2021-03-23","daily_doses":9308,"new_doses_7_day_avg":7426.42857142857,"x":1616457600000,"y":9308},{"age_group":"80+ years","date":"2021-03-24","daily_doses":11356,"new_doses_7_day_avg":7979.14285714286,"x":1616544000000,"y":11356},{"age_group":"80+ years","date":"2021-03-25","daily_doses":13669,"new_doses_7_day_avg":8601.71428571429,"x":1616630400000,"y":13669},{"age_group":"80+ years","date":"2021-03-26","daily_doses":13863,"new_doses_7_day_avg":9214.71428571429,"x":1616716800000,"y":13863},{"age_group":"80+ years","date":"2021-03-27","daily_doses":6772,"new_doses_7_day_avg":9158.85714285714,"x":1616803200000,"y":6772},{"age_group":"80+ years","date":"2021-03-28","daily_doses":2202,"new_doses_7_day_avg":9075.28571428571,"x":1616889600000,"y":2202},{"age_group":"80+ years","date":"2021-03-29","daily_doses":7354,"new_doses_7_day_avg":9217.71428571429,"x":1616976000000,"y":7354},{"age_group":"80+ years","date":"2021-03-30","daily_doses":10488,"new_doses_7_day_avg":9386.28571428571,"x":1617062400000,"y":10488},{"age_group":"80+ years","date":"2021-03-31","daily_doses":11750,"new_doses_7_day_avg":9442.57142857143,"x":1617148800000,"y":11750},{"age_group":"80+ years","date":"2021-04-01","daily_doses":12327,"new_doses_7_day_avg":9250.85714285714,"x":1617235200000,"y":12327},{"age_group":"80+ years","date":"2021-04-02","daily_doses":6413,"new_doses_7_day_avg":8186.57142857143,"x":1617321600000,"y":6413},{"age_group":"80+ years","date":"2021-04-03","daily_doses":3116,"new_doses_7_day_avg":7664.28571428571,"x":1617408000000,"y":3116},{"age_group":"80+ years","date":"2021-04-04","daily_doses":600,"new_doses_7_day_avg":7435.42857142857,"x":1617494400000,"y":600},{"age_group":"80+ years","date":"2021-04-05","daily_doses":5395,"new_doses_7_day_avg":7155.57142857143,"x":1617580800000,"y":5395},{"age_group":"80+ years","date":"2021-04-06","daily_doses":8252,"new_doses_7_day_avg":6836.14285714286,"x":1617667200000,"y":8252},{"age_group":"80+ years","date":"2021-04-07","daily_doses":7870,"new_doses_7_day_avg":6281.85714285714,"x":1617753600000,"y":7870},{"age_group":"80+ years","date":"2021-04-08","daily_doses":7679,"new_doses_7_day_avg":5617.85714285714,"x":1617840000000,"y":7679},{"age_group":"80+ years","date":"2021-04-09","daily_doses":5418,"new_doses_7_day_avg":5475.71428571429,"x":1617926400000,"y":5418},{"age_group":"80+ years","date":"2021-04-10","daily_doses":1140,"new_doses_7_day_avg":5193.42857142857,"x":1618012800000,"y":1140}],"type":"column","tooltip":{"pointFormat":"{point.age_group}: {point.daily_doses:,.0f}"}},{"name":"Unknown","data":[{"age_group":"Unknown","date":"2020-12-15","daily_doses":2,"new_doses_7_day_avg":0,"x":1607990400000,"y":2},{"age_group":"Unknown","date":"2020-12-16","daily_doses":6,"new_doses_7_day_avg":0,"x":1608076800000,"y":6},{"age_group":"Unknown","date":"2020-12-17","daily_doses":11,"new_doses_7_day_avg":0,"x":1608163200000,"y":11},{"age_group":"Unknown","date":"2020-12-18","daily_doses":35,"new_doses_7_day_avg":0,"x":1608249600000,"y":35},{"age_group":"Unknown","date":"2020-12-19","daily_doses":14,"new_doses_7_day_avg":0,"x":1608336000000,"y":14},{"age_group":"Unknown","date":"2020-12-20","daily_doses":10,"new_doses_7_day_avg":0,"x":1608422400000,"y":10},{"age_group":"Unknown","date":"2020-12-21","daily_doses":23,"new_doses_7_day_avg":14.4285714285714,"x":1608508800000,"y":23},{"age_group":"Unknown","date":"2020-12-22","daily_doses":18,"new_doses_7_day_avg":16.7142857142857,"x":1608595200000,"y":18},{"age_group":"Unknown","date":"2020-12-23","daily_doses":44,"new_doses_7_day_avg":22.1428571428571,"x":1608681600000,"y":44},{"age_group":"Unknown","date":"2020-12-24","daily_doses":12,"new_doses_7_day_avg":22.2857142857143,"x":1608768000000,"y":12},{"age_group":"Unknown","date":"2020-12-25","daily_doses":3,"new_doses_7_day_avg":17.7142857142857,"x":1608854400000,"y":3},{"age_group":"Unknown","date":"2020-12-26","daily_doses":19,"new_doses_7_day_avg":18.4285714285714,"x":1608940800000,"y":19},{"age_group":"Unknown","date":"2020-12-27","daily_doses":6,"new_doses_7_day_avg":17.8571428571429,"x":1609027200000,"y":6},{"age_group":"Unknown","date":"2020-12-28","daily_doses":56,"new_doses_7_day_avg":22.5714285714286,"x":1609113600000,"y":56},{"age_group":"Unknown","date":"2020-12-29","daily_doses":76,"new_doses_7_day_avg":30.8571428571429,"x":1609200000000,"y":76},{"age_group":"Unknown","date":"2020-12-30","daily_doses":79,"new_doses_7_day_avg":35.8571428571429,"x":1609286400000,"y":79},{"age_group":"Unknown","date":"2020-12-31","daily_doses":49,"new_doses_7_day_avg":41.1428571428571,"x":1609372800000,"y":49},{"age_group":"Unknown","date":"2021-01-01","daily_doses":7,"new_doses_7_day_avg":41.7142857142857,"x":1609459200000,"y":7},{"age_group":"Unknown","date":"2021-01-02","daily_doses":16,"new_doses_7_day_avg":41.2857142857143,"x":1609545600000,"y":16},{"age_group":"Unknown","date":"2021-01-03","daily_doses":13,"new_doses_7_day_avg":42.2857142857143,"x":1609632000000,"y":13},{"age_group":"Unknown","date":"2021-01-04","daily_doses":48,"new_doses_7_day_avg":41.1428571428571,"x":1609718400000,"y":48},{"age_group":"Unknown","date":"2021-01-05","daily_doses":60,"new_doses_7_day_avg":38.8571428571429,"x":1609804800000,"y":60},{"age_group":"Unknown","date":"2021-01-06","daily_doses":35,"new_doses_7_day_avg":32.5714285714286,"x":1609891200000,"y":35},{"age_group":"Unknown","date":"2021-01-07","daily_doses":61,"new_doses_7_day_avg":34.2857142857143,"x":1609977600000,"y":61},{"age_group":"Unknown","date":"2021-01-08","daily_doses":33,"new_doses_7_day_avg":38,"x":1610064000000,"y":33},{"age_group":"Unknown","date":"2021-01-09","daily_doses":15,"new_doses_7_day_avg":37.8571428571429,"x":1610150400000,"y":15},{"age_group":"Unknown","date":"2021-01-10","daily_doses":3,"new_doses_7_day_avg":36.4285714285714,"x":1610236800000,"y":3},{"age_group":"Unknown","date":"2021-01-11","daily_doses":55,"new_doses_7_day_avg":37.4285714285714,"x":1610323200000,"y":55},{"age_group":"Unknown","date":"2021-01-12","daily_doses":72,"new_doses_7_day_avg":39.1428571428571,"x":1610409600000,"y":72},{"age_group":"Unknown","date":"2021-01-13","daily_doses":85,"new_doses_7_day_avg":46.2857142857143,"x":1610496000000,"y":85},{"age_group":"Unknown","date":"2021-01-14","daily_doses":58,"new_doses_7_day_avg":45.8571428571429,"x":1610582400000,"y":58},{"age_group":"Unknown","date":"2021-01-15","daily_doses":62,"new_doses_7_day_avg":50,"x":1610668800000,"y":62},{"age_group":"Unknown","date":"2021-01-16","daily_doses":24,"new_doses_7_day_avg":51.2857142857143,"x":1610755200000,"y":24},{"age_group":"Unknown","date":"2021-01-17","daily_doses":4,"new_doses_7_day_avg":51.4285714285714,"x":1610841600000,"y":4},{"age_group":"Unknown","date":"2021-01-18","daily_doses":19,"new_doses_7_day_avg":46.2857142857143,"x":1610928000000,"y":19},{"age_group":"Unknown","date":"2021-01-19","daily_doses":48,"new_doses_7_day_avg":42.8571428571429,"x":1611014400000,"y":48},{"age_group":"Unknown","date":"2021-01-20","daily_doses":62,"new_doses_7_day_avg":39.5714285714286,"x":1611100800000,"y":62},{"age_group":"Unknown","date":"2021-01-21","daily_doses":58,"new_doses_7_day_avg":39.5714285714286,"x":1611187200000,"y":58},{"age_group":"Unknown","date":"2021-01-22","daily_doses":67,"new_doses_7_day_avg":40.2857142857143,"x":1611273600000,"y":67},{"age_group":"Unknown","date":"2021-01-23","daily_doses":36,"new_doses_7_day_avg":42,"x":1611360000000,"y":36},{"age_group":"Unknown","date":"2021-01-24","daily_doses":5,"new_doses_7_day_avg":42.1428571428571,"x":1611446400000,"y":5},{"age_group":"Unknown","date":"2021-01-25","daily_doses":70,"new_doses_7_day_avg":49.4285714285714,"x":1611532800000,"y":70},{"age_group":"Unknown","date":"2021-01-26","daily_doses":56,"new_doses_7_day_avg":50.5714285714286,"x":1611619200000,"y":56},{"age_group":"Unknown","date":"2021-01-27","daily_doses":77,"new_doses_7_day_avg":52.7142857142857,"x":1611705600000,"y":77},{"age_group":"Unknown","date":"2021-01-28","daily_doses":60,"new_doses_7_day_avg":53,"x":1611792000000,"y":60},{"age_group":"Unknown","date":"2021-01-29","daily_doses":64,"new_doses_7_day_avg":52.5714285714286,"x":1611878400000,"y":64},{"age_group":"Unknown","date":"2021-01-30","daily_doses":25,"new_doses_7_day_avg":51,"x":1611964800000,"y":25},{"age_group":"Unknown","date":"2021-01-31","daily_doses":3,"new_doses_7_day_avg":50.7142857142857,"x":1612051200000,"y":3},{"age_group":"Unknown","date":"2021-02-01","daily_doses":73,"new_doses_7_day_avg":51.1428571428571,"x":1612137600000,"y":73},{"age_group":"Unknown","date":"2021-02-02","daily_doses":91,"new_doses_7_day_avg":56.1428571428571,"x":1612224000000,"y":91},{"age_group":"Unknown","date":"2021-02-03","daily_doses":53,"new_doses_7_day_avg":52.7142857142857,"x":1612310400000,"y":53},{"age_group":"Unknown","date":"2021-02-04","daily_doses":74,"new_doses_7_day_avg":54.7142857142857,"x":1612396800000,"y":74},{"age_group":"Unknown","date":"2021-02-05","daily_doses":68,"new_doses_7_day_avg":55.2857142857143,"x":1612483200000,"y":68},{"age_group":"Unknown","date":"2021-02-06","daily_doses":53,"new_doses_7_day_avg":59.2857142857143,"x":1612569600000,"y":53},{"age_group":"Unknown","date":"2021-02-07","daily_doses":4,"new_doses_7_day_avg":59.4285714285714,"x":1612656000000,"y":4},{"age_group":"Unknown","date":"2021-02-08","daily_doses":28,"new_doses_7_day_avg":53,"x":1612742400000,"y":28},{"age_group":"Unknown","date":"2021-02-09","daily_doses":42,"new_doses_7_day_avg":46,"x":1612828800000,"y":42},{"age_group":"Unknown","date":"2021-02-10","daily_doses":65,"new_doses_7_day_avg":47.7142857142857,"x":1612915200000,"y":65},{"age_group":"Unknown","date":"2021-02-11","daily_doses":38,"new_doses_7_day_avg":42.5714285714286,"x":1613001600000,"y":38},{"age_group":"Unknown","date":"2021-02-12","daily_doses":46,"new_doses_7_day_avg":39.4285714285714,"x":1613088000000,"y":46},{"age_group":"Unknown","date":"2021-02-13","daily_doses":23,"new_doses_7_day_avg":35.1428571428571,"x":1613174400000,"y":23},{"age_group":"Unknown","date":"2021-02-14","daily_doses":2,"new_doses_7_day_avg":34.8571428571429,"x":1613260800000,"y":2},{"age_group":"Unknown","date":"2021-02-15","daily_doses":9,"new_doses_7_day_avg":32.1428571428571,"x":1613347200000,"y":9},{"age_group":"Unknown","date":"2021-02-16","daily_doses":4,"new_doses_7_day_avg":26.7142857142857,"x":1613433600000,"y":4},{"age_group":"Unknown","date":"2021-02-17","daily_doses":7,"new_doses_7_day_avg":18.4285714285714,"x":1613520000000,"y":7},{"age_group":"Unknown","date":"2021-02-18","daily_doses":14,"new_doses_7_day_avg":15,"x":1613606400000,"y":14},{"age_group":"Unknown","date":"2021-02-19","daily_doses":16,"new_doses_7_day_avg":10.7142857142857,"x":1613692800000,"y":16},{"age_group":"Unknown","date":"2021-02-20","daily_doses":28,"new_doses_7_day_avg":11.4285714285714,"x":1613779200000,"y":28},{"age_group":"Unknown","date":"2021-02-21","daily_doses":10,"new_doses_7_day_avg":12.5714285714286,"x":1613865600000,"y":10},{"age_group":"Unknown","date":"2021-02-22","daily_doses":23,"new_doses_7_day_avg":14.5714285714286,"x":1613952000000,"y":23},{"age_group":"Unknown","date":"2021-02-23","daily_doses":42,"new_doses_7_day_avg":20,"x":1614038400000,"y":42},{"age_group":"Unknown","date":"2021-02-24","daily_doses":35,"new_doses_7_day_avg":24,"x":1614124800000,"y":35},{"age_group":"Unknown","date":"2021-02-25","daily_doses":44,"new_doses_7_day_avg":28.2857142857143,"x":1614211200000,"y":44},{"age_group":"Unknown","date":"2021-02-26","daily_doses":67,"new_doses_7_day_avg":35.5714285714286,"x":1614297600000,"y":67},{"age_group":"Unknown","date":"2021-02-27","daily_doses":30,"new_doses_7_day_avg":35.8571428571429,"x":1614384000000,"y":30},{"age_group":"Unknown","date":"2021-02-28","daily_doses":6,"new_doses_7_day_avg":35.2857142857143,"x":1614470400000,"y":6},{"age_group":"Unknown","date":"2021-03-01","daily_doses":23,"new_doses_7_day_avg":35.2857142857143,"x":1614556800000,"y":23},{"age_group":"Unknown","date":"2021-03-02","daily_doses":44,"new_doses_7_day_avg":35.5714285714286,"x":1614643200000,"y":44},{"age_group":"Unknown","date":"2021-03-03","daily_doses":47,"new_doses_7_day_avg":37.2857142857143,"x":1614729600000,"y":47},{"age_group":"Unknown","date":"2021-03-04","daily_doses":63,"new_doses_7_day_avg":40,"x":1614816000000,"y":63},{"age_group":"Unknown","date":"2021-03-05","daily_doses":58,"new_doses_7_day_avg":38.7142857142857,"x":1614902400000,"y":58},{"age_group":"Unknown","date":"2021-03-06","daily_doses":32,"new_doses_7_day_avg":39,"x":1614988800000,"y":32},{"age_group":"Unknown","date":"2021-03-07","daily_doses":8,"new_doses_7_day_avg":39.2857142857143,"x":1615075200000,"y":8},{"age_group":"Unknown","date":"2021-03-08","daily_doses":31,"new_doses_7_day_avg":40.4285714285714,"x":1615161600000,"y":31},{"age_group":"Unknown","date":"2021-03-09","daily_doses":47,"new_doses_7_day_avg":40.8571428571429,"x":1615248000000,"y":47},{"age_group":"Unknown","date":"2021-03-10","daily_doses":57,"new_doses_7_day_avg":42.2857142857143,"x":1615334400000,"y":57},{"age_group":"Unknown","date":"2021-03-11","daily_doses":71,"new_doses_7_day_avg":43.4285714285714,"x":1615420800000,"y":71},{"age_group":"Unknown","date":"2021-03-12","daily_doses":87,"new_doses_7_day_avg":47.5714285714286,"x":1615507200000,"y":87},{"age_group":"Unknown","date":"2021-03-13","daily_doses":26,"new_doses_7_day_avg":46.7142857142857,"x":1615593600000,"y":26},{"age_group":"Unknown","date":"2021-03-14","daily_doses":5,"new_doses_7_day_avg":46.2857142857143,"x":1615680000000,"y":5},{"age_group":"Unknown","date":"2021-03-15","daily_doses":34,"new_doses_7_day_avg":46.7142857142857,"x":1615766400000,"y":34},{"age_group":"Unknown","date":"2021-03-16","daily_doses":40,"new_doses_7_day_avg":45.7142857142857,"x":1615852800000,"y":40},{"age_group":"Unknown","date":"2021-03-17","daily_doses":43,"new_doses_7_day_avg":43.7142857142857,"x":1615939200000,"y":43},{"age_group":"Unknown","date":"2021-03-18","daily_doses":60,"new_doses_7_day_avg":42.1428571428571,"x":1616025600000,"y":60},{"age_group":"Unknown","date":"2021-03-19","daily_doses":55,"new_doses_7_day_avg":37.5714285714286,"x":1616112000000,"y":55},{"age_group":"Unknown","date":"2021-03-20","daily_doses":41,"new_doses_7_day_avg":39.7142857142857,"x":1616198400000,"y":41},{"age_group":"Unknown","date":"2021-03-21","daily_doses":10,"new_doses_7_day_avg":40.4285714285714,"x":1616284800000,"y":10},{"age_group":"Unknown","date":"2021-03-22","daily_doses":33,"new_doses_7_day_avg":40.2857142857143,"x":1616371200000,"y":33},{"age_group":"Unknown","date":"2021-03-23","daily_doses":57,"new_doses_7_day_avg":42.7142857142857,"x":1616457600000,"y":57},{"age_group":"Unknown","date":"2021-03-24","daily_doses":61,"new_doses_7_day_avg":45.2857142857143,"x":1616544000000,"y":61},{"age_group":"Unknown","date":"2021-03-25","daily_doses":76,"new_doses_7_day_avg":47.5714285714286,"x":1616630400000,"y":76},{"age_group":"Unknown","date":"2021-03-26","daily_doses":51,"new_doses_7_day_avg":47,"x":1616716800000,"y":51},{"age_group":"Unknown","date":"2021-03-27","daily_doses":30,"new_doses_7_day_avg":45.4285714285714,"x":1616803200000,"y":30},{"age_group":"Unknown","date":"2021-03-28","daily_doses":10,"new_doses_7_day_avg":45.4285714285714,"x":1616889600000,"y":10},{"age_group":"Unknown","date":"2021-03-29","daily_doses":46,"new_doses_7_day_avg":47.2857142857143,"x":1616976000000,"y":46},{"age_group":"Unknown","date":"2021-03-30","daily_doses":56,"new_doses_7_day_avg":47.1428571428571,"x":1617062400000,"y":56},{"age_group":"Unknown","date":"2021-03-31","daily_doses":79,"new_doses_7_day_avg":49.7142857142857,"x":1617148800000,"y":79},{"age_group":"Unknown","date":"2021-04-01","daily_doses":78,"new_doses_7_day_avg":50,"x":1617235200000,"y":78},{"age_group":"Unknown","date":"2021-04-02","daily_doses":54,"new_doses_7_day_avg":50.4285714285714,"x":1617321600000,"y":54},{"age_group":"Unknown","date":"2021-04-03","daily_doses":37,"new_doses_7_day_avg":51.4285714285714,"x":1617408000000,"y":37},{"age_group":"Unknown","date":"2021-04-05","daily_doses":25,"new_doses_7_day_avg":53.5714285714286,"x":1617580800000,"y":25},{"age_group":"Unknown","date":"2021-04-06","daily_doses":44,"new_doses_7_day_avg":53.2857142857143,"x":1617667200000,"y":44},{"age_group":"Unknown","date":"2021-04-07","daily_doses":101,"new_doses_7_day_avg":59.7142857142857,"x":1617753600000,"y":101},{"age_group":"Unknown","date":"2021-04-08","daily_doses":107,"new_doses_7_day_avg":63.7142857142857,"x":1617840000000,"y":107},{"age_group":"Unknown","date":"2021-04-09","daily_doses":113,"new_doses_7_day_avg":68.7142857142857,"x":1617926400000,"y":113},{"age_group":"Unknown","date":"2021-04-10","daily_doses":16,"new_doses_7_day_avg":63.2857142857143,"x":1618012800000,"y":16}],"type":"column","tooltip":{"pointFormat":"{point.age_group}: {point.daily_doses:,.0f}"}},{"group":"group","data":[{"date":"2020-12-14","daily_doses":451,"new_doses_7_day_avg":0,"x":1607904000000,"y":0},{"date":"2020-12-15","daily_doses":5730,"new_doses_7_day_avg":0,"x":1607990400000,"y":0},{"date":"2020-12-16","daily_doses":18807,"new_doses_7_day_avg":0,"x":1608076800000,"y":0},{"date":"2020-12-17","daily_doses":24254,"new_doses_7_day_avg":0,"x":1608163200000,"y":0},{"date":"2020-12-18","daily_doses":38064,"new_doses_7_day_avg":0,"x":1608249600000,"y":0},{"date":"2020-12-19","daily_doses":18255,"new_doses_7_day_avg":0,"x":1608336000000,"y":0},{"date":"2020-12-20","daily_doses":9970,"new_doses_7_day_avg":16504.4285714286,"x":1608422400000,"y":16504.4285714286},{"date":"2020-12-21","daily_doses":28105,"new_doses_7_day_avg":20455,"x":1608508800000,"y":20455},{"date":"2020-12-22","daily_doses":27124,"new_doses_7_day_avg":23511.2857142857,"x":1608595200000,"y":23511.2857142857},{"date":"2020-12-23","daily_doses":39375,"new_doses_7_day_avg":26449.5714285714,"x":1608681600000,"y":26449.5714285714},{"date":"2020-12-24","daily_doses":17392,"new_doses_7_day_avg":25469.2857142857,"x":1608768000000,"y":25469.2857142857},{"date":"2020-12-25","daily_doses":2517,"new_doses_7_day_avg":20391.1428571429,"x":1608854400000,"y":20391.1428571429},{"date":"2020-12-26","daily_doses":12220,"new_doses_7_day_avg":19529,"x":1608940800000,"y":19529},{"date":"2020-12-27","daily_doses":9085,"new_doses_7_day_avg":19402.5714285714,"x":1609027200000,"y":19402.5714285714},{"date":"2020-12-28","daily_doses":48611,"new_doses_7_day_avg":22332,"x":1609113600000,"y":22332},{"date":"2020-12-29","daily_doses":66288,"new_doses_7_day_avg":27926.8571428571,"x":1609200000000,"y":27926.8571428571},{"date":"2020-12-30","daily_doses":85107,"new_doses_7_day_avg":34460,"x":1609286400000,"y":34460},{"date":"2020-12-31","daily_doses":49503,"new_doses_7_day_avg":39047.2857142857,"x":1609372800000,"y":39047.2857142857},{"date":"2021-01-01","daily_doses":5814,"new_doses_7_day_avg":39518.2857142857,"x":1609459200000,"y":39518.2857142857},{"date":"2021-01-02","daily_doses":25818,"new_doses_7_day_avg":41460.8571428571,"x":1609545600000,"y":41460.8571428571},{"date":"2021-01-03","daily_doses":15668,"new_doses_7_day_avg":42401.2857142857,"x":1609632000000,"y":42401.2857142857},{"date":"2021-01-04","daily_doses":66550,"new_doses_7_day_avg":44964,"x":1609718400000,"y":44964},{"date":"2021-01-05","daily_doses":72969,"new_doses_7_day_avg":45918.4285714286,"x":1609804800000,"y":45918.4285714286},{"date":"2021-01-06","daily_doses":90989,"new_doses_7_day_avg":46758.7142857143,"x":1609891200000,"y":46758.7142857143},{"date":"2021-01-07","daily_doses":102841,"new_doses_7_day_avg":54378.4285714286,"x":1609977600000,"y":54378.4285714286},{"date":"2021-01-08","daily_doses":107624,"new_doses_7_day_avg":68922.7142857143,"x":1610064000000,"y":68922.7142857143},{"date":"2021-01-09","daily_doses":50705,"new_doses_7_day_avg":72478,"x":1610150400000,"y":72478},{"date":"2021-01-10","daily_doses":19041,"new_doses_7_day_avg":72959.8571428571,"x":1610236800000,"y":72959.8571428571},{"date":"2021-01-11","daily_doses":80511,"new_doses_7_day_avg":74954.2857142857,"x":1610323200000,"y":74954.2857142857},{"date":"2021-01-12","daily_doses":91336,"new_doses_7_day_avg":77578.1428571429,"x":1610409600000,"y":77578.1428571429},{"date":"2021-01-13","daily_doses":95306,"new_doses_7_day_avg":78194.8571428571,"x":1610496000000,"y":78194.8571428571},{"date":"2021-01-14","daily_doses":90154,"new_doses_7_day_avg":76382.4285714286,"x":1610582400000,"y":76382.4285714286},{"date":"2021-01-15","daily_doses":82569,"new_doses_7_day_avg":72803.1428571429,"x":1610668800000,"y":72803.1428571429},{"date":"2021-01-16","daily_doses":55886,"new_doses_7_day_avg":73543.2857142857,"x":1610755200000,"y":73543.2857142857},{"date":"2021-01-17","daily_doses":13033,"new_doses_7_day_avg":72685,"x":1610841600000,"y":72685},{"date":"2021-01-18","daily_doses":39404,"new_doses_7_day_avg":66812.5714285714,"x":1610928000000,"y":66812.5714285714},{"date":"2021-01-19","daily_doses":73022,"new_doses_7_day_avg":64196.2857142857,"x":1611014400000,"y":64196.2857142857},{"date":"2021-01-20","daily_doses":101216,"new_doses_7_day_avg":65040.5714285714,"x":1611100800000,"y":65040.5714285714},{"date":"2021-01-21","daily_doses":96659,"new_doses_7_day_avg":65969.8571428571,"x":1611187200000,"y":65969.8571428571},{"date":"2021-01-22","daily_doses":103508,"new_doses_7_day_avg":68961.1428571429,"x":1611273600000,"y":68961.1428571429},{"date":"2021-01-23","daily_doses":60620,"new_doses_7_day_avg":69637.4285714286,"x":1611360000000,"y":69637.4285714286},{"date":"2021-01-24","daily_doses":24380,"new_doses_7_day_avg":71258.4285714286,"x":1611446400000,"y":71258.4285714286},{"date":"2021-01-25","daily_doses":96949,"new_doses_7_day_avg":79479.1428571429,"x":1611532800000,"y":79479.1428571429},{"date":"2021-01-26","daily_doses":127205,"new_doses_7_day_avg":87219.5714285714,"x":1611619200000,"y":87219.5714285714},{"date":"2021-01-27","daily_doses":145697,"new_doses_7_day_avg":93574,"x":1611705600000,"y":93574},{"date":"2021-01-28","daily_doses":141521,"new_doses_7_day_avg":99982.8571428571,"x":1611792000000,"y":99982.8571428571},{"date":"2021-01-29","daily_doses":133066,"new_doses_7_day_avg":104205.428571429,"x":1611878400000,"y":104205.428571429},{"date":"2021-01-30","daily_doses":67195,"new_doses_7_day_avg":105144.714285714,"x":1611964800000,"y":105144.714285714},{"date":"2021-01-31","daily_doses":24935,"new_doses_7_day_avg":105224,"x":1612051200000,"y":105224},{"date":"2021-02-01","daily_doses":110486,"new_doses_7_day_avg":107157.857142857,"x":1612137600000,"y":107157.857142857},{"date":"2021-02-02","daily_doses":138792,"new_doses_7_day_avg":108813.142857143,"x":1612224000000,"y":108813.142857143},{"date":"2021-02-03","daily_doses":163412,"new_doses_7_day_avg":111343.857142857,"x":1612310400000,"y":111343.857142857},{"date":"2021-02-04","daily_doses":177229,"new_doses_7_day_avg":116445,"x":1612396800000,"y":116445},{"date":"2021-02-05","daily_doses":189929,"new_doses_7_day_avg":124568.285714286,"x":1612483200000,"y":124568.285714286},{"date":"2021-02-06","daily_doses":117414,"new_doses_7_day_avg":131742.428571429,"x":1612569600000,"y":131742.428571429},{"date":"2021-02-07","daily_doses":29919,"new_doses_7_day_avg":132454.428571429,"x":1612656000000,"y":132454.428571429},{"date":"2021-02-08","daily_doses":98341,"new_doses_7_day_avg":130719.428571429,"x":1612742400000,"y":130719.428571429},{"date":"2021-02-09","daily_doses":141615,"new_doses_7_day_avg":131122.714285714,"x":1612828800000,"y":131122.714285714},{"date":"2021-02-10","daily_doses":170486,"new_doses_7_day_avg":132133.285714286,"x":1612915200000,"y":132133.285714286},{"date":"2021-02-11","daily_doses":141365,"new_doses_7_day_avg":127009.857142857,"x":1613001600000,"y":127009.857142857},{"date":"2021-02-12","daily_doses":170092,"new_doses_7_day_avg":124176,"x":1613088000000,"y":124176},{"date":"2021-02-13","daily_doses":91384,"new_doses_7_day_avg":120457.428571429,"x":1613174400000,"y":120457.428571429},{"date":"2021-02-14","daily_doses":23904,"new_doses_7_day_avg":119598.142857143,"x":1613260800000,"y":119598.142857143},{"date":"2021-02-15","daily_doses":13781,"new_doses_7_day_avg":107518.142857143,"x":1613347200000,"y":107518.142857143},{"date":"2021-02-16","daily_doses":21242,"new_doses_7_day_avg":90322,"x":1613433600000,"y":90322},{"date":"2021-02-17","daily_doses":21559,"new_doses_7_day_avg":69046.7142857143,"x":1613520000000,"y":69046.7142857143},{"date":"2021-02-18","daily_doses":38666,"new_doses_7_day_avg":54375.4285714286,"x":1613606400000,"y":54375.4285714286},{"date":"2021-02-19","daily_doses":62743,"new_doses_7_day_avg":39039.8571428571,"x":1613692800000,"y":39039.8571428571},{"date":"2021-02-20","daily_doses":79773,"new_doses_7_day_avg":37381.1428571429,"x":1613779200000,"y":37381.1428571429},{"date":"2021-02-21","daily_doses":54680,"new_doses_7_day_avg":41777.7142857143,"x":1613865600000,"y":41777.7142857143},{"date":"2021-02-22","daily_doses":105735,"new_doses_7_day_avg":54914,"x":1613952000000,"y":54914},{"date":"2021-02-23","daily_doses":120282,"new_doses_7_day_avg":69062.5714285714,"x":1614038400000,"y":69062.5714285714},{"date":"2021-02-24","daily_doses":191407,"new_doses_7_day_avg":93326.5714285714,"x":1614124800000,"y":93326.5714285714},{"date":"2021-02-25","daily_doses":245731,"new_doses_7_day_avg":122907.285714286,"x":1614211200000,"y":122907.285714286},{"date":"2021-02-26","daily_doses":278090,"new_doses_7_day_avg":153671.142857143,"x":1614297600000,"y":153671.142857143},{"date":"2021-02-27","daily_doses":174611,"new_doses_7_day_avg":167219.428571429,"x":1614384000000,"y":167219.428571429},{"date":"2021-02-28","daily_doses":70115,"new_doses_7_day_avg":169424.428571429,"x":1614470400000,"y":169424.428571429},{"date":"2021-03-01","daily_doses":143915,"new_doses_7_day_avg":174878.714285714,"x":1614556800000,"y":174878.714285714},{"date":"2021-03-02","daily_doses":218510,"new_doses_7_day_avg":188911.285714286,"x":1614643200000,"y":188911.285714286},{"date":"2021-03-03","daily_doses":231803,"new_doses_7_day_avg":194682.142857143,"x":1614729600000,"y":194682.142857143},{"date":"2021-03-04","daily_doses":251420,"new_doses_7_day_avg":195494.857142857,"x":1614816000000,"y":195494.857142857},{"date":"2021-03-05","daily_doses":255828,"new_doses_7_day_avg":192314.571428571,"x":1614902400000,"y":192314.571428571},{"date":"2021-03-06","daily_doses":156755,"new_doses_7_day_avg":189763.714285714,"x":1614988800000,"y":189763.714285714},{"date":"2021-03-07","daily_doses":56374,"new_doses_7_day_avg":187800.714285714,"x":1615075200000,"y":187800.714285714},{"date":"2021-03-08","daily_doses":146600,"new_doses_7_day_avg":188184.285714286,"x":1615161600000,"y":188184.285714286},{"date":"2021-03-09","daily_doses":205938,"new_doses_7_day_avg":186388.285714286,"x":1615248000000,"y":186388.285714286},{"date":"2021-03-10","daily_doses":241580,"new_doses_7_day_avg":187785,"x":1615334400000,"y":187785},{"date":"2021-03-11","daily_doses":275206,"new_doses_7_day_avg":191183,"x":1615420800000,"y":191183},{"date":"2021-03-12","daily_doses":248541,"new_doses_7_day_avg":190142,"x":1615507200000,"y":190142},{"date":"2021-03-13","daily_doses":141139,"new_doses_7_day_avg":187911.142857143,"x":1615593600000,"y":187911.142857143},{"date":"2021-03-14","daily_doses":60138,"new_doses_7_day_avg":188448.857142857,"x":1615680000000,"y":188448.857142857},{"date":"2021-03-15","daily_doses":148407,"new_doses_7_day_avg":188707,"x":1615766400000,"y":188707},{"date":"2021-03-16","daily_doses":189251,"new_doses_7_day_avg":186323.142857143,"x":1615852800000,"y":186323.142857143},{"date":"2021-03-17","daily_doses":177069,"new_doses_7_day_avg":177107.285714286,"x":1615939200000,"y":177107.285714286},{"date":"2021-03-18","daily_doses":212425,"new_doses_7_day_avg":168138.571428571,"x":1616025600000,"y":168138.571428571},{"date":"2021-03-19","daily_doses":220027,"new_doses_7_day_avg":164065.142857143,"x":1616112000000,"y":164065.142857143},{"date":"2021-03-20","daily_doses":140595,"new_doses_7_day_avg":163987.428571429,"x":1616198400000,"y":163987.428571429},{"date":"2021-03-21","daily_doses":64471,"new_doses_7_day_avg":164606.428571429,"x":1616284800000,"y":164606.428571429},{"date":"2021-03-22","daily_doses":157102,"new_doses_7_day_avg":165848.571428571,"x":1616371200000,"y":165848.571428571},{"date":"2021-03-23","daily_doses":228840,"new_doses_7_day_avg":171504.142857143,"x":1616457600000,"y":171504.142857143},{"date":"2021-03-24","daily_doses":260098,"new_doses_7_day_avg":183365.428571429,"x":1616544000000,"y":183365.428571429},{"date":"2021-03-25","daily_doses":289666,"new_doses_7_day_avg":194399.857142857,"x":1616630400000,"y":194399.857142857},{"date":"2021-03-26","daily_doses":304461,"new_doses_7_day_avg":206461.857142857,"x":1616716800000,"y":206461.857142857},{"date":"2021-03-27","daily_doses":174676,"new_doses_7_day_avg":211330.571428571,"x":1616803200000,"y":211330.571428571},{"date":"2021-03-28","daily_doses":94202,"new_doses_7_day_avg":215577.857142857,"x":1616889600000,"y":215577.857142857},{"date":"2021-03-29","daily_doses":208957,"new_doses_7_day_avg":222985.714285714,"x":1616976000000,"y":222985.714285714},{"date":"2021-03-30","daily_doses":277280,"new_doses_7_day_avg":229905.714285714,"x":1617062400000,"y":229905.714285714},{"date":"2021-03-31","daily_doses":330635,"new_doses_7_day_avg":239982.428571429,"x":1617148800000,"y":239982.428571429},{"date":"2021-04-01","daily_doses":349304,"new_doses_7_day_avg":248502.142857143,"x":1617235200000,"y":248502.142857143},{"date":"2021-04-02","daily_doses":248189,"new_doses_7_day_avg":240463.285714286,"x":1617321600000,"y":240463.285714286},{"date":"2021-04-03","daily_doses":154625,"new_doses_7_day_avg":237598.857142857,"x":1617408000000,"y":237598.857142857},{"date":"2021-04-04","daily_doses":42776,"new_doses_7_day_avg":230252.285714286,"x":1617494400000,"y":230252.285714286},{"date":"2021-04-05","daily_doses":207447,"new_doses_7_day_avg":230036.571428571,"x":1617580800000,"y":230036.571428571},{"date":"2021-04-06","daily_doses":267701,"new_doses_7_day_avg":228668.142857143,"x":1617667200000,"y":228668.142857143},{"date":"2021-04-07","daily_doses":303896,"new_doses_7_day_avg":224848.285714286,"x":1617753600000,"y":224848.285714286},{"date":"2021-04-08","daily_doses":285947,"new_doses_7_day_avg":215797.285714286,"x":1617840000000,"y":215797.285714286},{"date":"2021-04-09","daily_doses":242342,"new_doses_7_day_avg":214962,"x":1617926400000,"y":214962},{"date":"2021-04-10","daily_doses":52579,"new_doses_7_day_avg":200384,"x":1618012800000,"y":200384}],"type":"area","tooltip":{"pointFormat":"7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"},"color":"#bf5700","name":"7-Day Avg."}],"subtitle":{"text":"Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. Data last pulled on Apr 12, 2021 at 10:31 AM.<br>LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.<\/span>","useHTML":true},"tooltip":{"shared":true,"formatter":"function(tooltip){\n          function isArray(obj) {\n          return Object.prototype.toString.call(obj) === '[object Array]';\n          }\n\n          function splat(obj) {\n          return isArray(obj) ? obj : [obj];\n          }\n\n          var items = this.points || splat(this), series = items[0].series, s;\n\n          // sort the values\n          items.sort(function(a, b){\n          return ((a.y < b.y) ? -1 : ((a.y > b.y) ? 1 : 0));\n          });\n          items.reverse();\n\n          return tooltip.defaultFormatter.call(this, tooltip);\n        }","useHTML":true,"headerFormat":"<small>{point.key}<\/small><table>","pointFormat":"<b>{point.name}<\/b>\n                   New Doses: {point.y:,.0f}","footerFormat":"<\/table>"},"colors":["#1170aa","#c85200","#ffbc79","#57606c","#5fa2ce"],"legend":{"enabled":true},"rangeSelector":{"allButtonsEnabled":false,"enabled":true,"verticalAlign":"top","selected":3,"inputBoxBorderColor":"white"}},"theme":{"colors":["#005f86","#00a9b7","#9cadb7","#d6d2c4"],"chart":{"style":{"fontFamily":"\"Libre Franklin\", -apple-system, BlinkMacSystemFont,\n                                                                  \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","color":"#333f48","fontSize":"12px","fontWeight":"bold","textTransform":"initial"},"backgroundColor":"#fff"},"title":{"align":"left","style":{"fontFamily":"\"Libre Franklin\", -apple-system, BlinkMacSystemFont,\n                                                                  \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","fontWeight":"800","color":"#2d2d2d","textTransform":"initial","fontSize":"28px"}},"subtitle":{"align":"left","style":{"fontFamily":"\"Libre Franklin\", -apple-system, BlinkMacSystemFont,\n                                                                     \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","color":"#7d7d7d","textTransform":"initial","fontWeight":"400","fontSize":"14px"}},"legend":{"align":"center","verticalAlign":"top","style":{"fontFamily":"\"Libre Franklin\", -apple-system, BlinkMacSystemFont,\n                                                                   \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","color":"#6d6d6d"},"itemStyle":{"fontFamily":"\"Libre Franklin\", -apple-system, BlinkMacSystemFont,\n                                                                      \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","color":"#6d6d6d"},"itemHoverStyle":{"color":"gray"}},"xAxis":{"gridLineWidth":0,"gridLineColor":"#9d9d9d","lineColor":"rgba(0,0,0,0.7)","minorGridLineColor":"rgba(0,0,0,0.7)","tickColor":"#9d9d9d","tickWidth":1,"labels":{"style":{"fontFamily":"\"Libre Franklin\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","color":"#2d2d2d"}},"title":{"style":{"color":"#333f48","fontSize":"12px","fontWeight":"500"}}},"yAxis":{"gridLineColor":"rgba(0,0,0,0.15)","lineColor":"rgba(0,0,0,0.15)","minorGridLineColor":"rgba(0,0,0,0.15)","tickColor":"#9d9d9d","tickWidth":2,"labels":{"style":{"fontFamily":"\"Libre Franklin\", -apple-system, BlinkMacSystemFont,\n                                                                 \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif","color":"#333f48"}},"title":{"style":{"color":"#fff","fontSize":"12px","color.1":"#fff","fontWeight":"500"}},"gridLineWidth":0.5},"plotOptions":{"line":{"marker":{"enabled":false}},"spline":{"marker":{"enabled":false}},"area":{"marker":{"enabled":false}},"areaspline":{"marker":{"enabled":false}},"arearange":{"marker":{"enabled":false}},"bubble":{"maxSize":"10%"}},"marker":{"fillColor":["#005f86","#00a9b7","#9cadb7","#d6d2c4"],"lineColor":"#000","radius":3,"lineWidth":1,"symbol":"circle"},"credits":{"style":{"color":"#2d2d2d","fontSize":"10px"},"align":"left"}},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","drillUpText":"Back to {series.name}","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"thousandsSep":",","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"stock","fonts":"\"Libre+Franklin\",+-apple-system,+BlinkMacSystemFont,+\"Segoe+UI\",+Roboto,+\"Helvetica+Neue\",+Arial","debug":false},"evals":["hc_opts.tooltip.formatter"],"jsHooks":[]}</script>
+</div>
+<h2 id="national-comparison">National Comparison</h2>
+<div class="layout-chunk" data-layout="l-page">
+<p><img src="pace_files/figure-html5/ggplot2%20national%20comparison-1.png" width="1056" /></p>
+</div>
+<!-- # Daily Doses Administered -->
+<!-- The following charts show data for the daily administration of vaccines across the general population of Texas as well as the different age groups reported by the Texas Department of State Health Services through their Texas Accessible Vaccine Dashboard Data. -->
+<!-- ## All Age Groups {.unnumbered} -->
+<!-- ## Ages 16-49 years {.unnumbered} -->
+<!-- ```{r daily-dose-chart-16, echo=FALSE, layout="l-page"} -->
+<!-- library(quantmod) -->
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
+<!--   clean_names() %>%  -->
+<!--   filter(age_group=="16-49 years") %>%  -->
+<!--   group_by(date=vaccination_date) %>% -->
+<!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
+<!--   mutate(date=as.Date(date)) %>%  -->
+<!--   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0, -->
+<!--                                    align = "right")) %>% -->
+<!--   mutate(date = as.Date(date, format("%b %d %Y"))) %>%  -->
+<!--   ungroup() %>%  -->
+<!--   drop_na() -->
+<!--   hcoptslang <- getOption("highcharter.lang") -->
+<!--   hcoptslang$thousandsSep <- "," -->
+<!--   options(highcharter.lang = hcoptslang) -->
+<!-- myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG") -->
+<!-- highchart(type = "stock") %>%  -->
+<!--       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses), -->
+<!--                     tooltip = list(pointFormat = "Daily Doses Administered: {point.daily_doses:,.0f}"), -->
+<!--                     color = "#333f48", name="Daily Doses Administered") %>% -->
+<!--       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg), -->
+<!--                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"), -->
+<!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
+<!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
+<!--       hc_title( -->
+<!--         text ="Daily Administered Doses - 16 to 49 Years", -->
+<!--         useHTML = TRUE) %>% -->
+<!-- hc_subtitle( -->
+<!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
+<!--         useHTML = TRUE) %>%  -->
+<!--       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px",  -->
+<!--                                                   color="#333f48",fontWeight="500")), -->
+<!--                min = min(vaccine_summ_daily$daily_doses), -->
+<!--                max = max(vaccine_summ_daily$daily_doses), -->
+<!--                labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>%  -->
+<!--       # hc_xAxis(title=NULL, -->
+<!--       #          plotLines=plotLines) %>%  -->
+<!--       # hc_tooltip(table = TRUE, sort = TRUE, -->
+<!--       #            pointFormat = "<b>{point.name}</b><br> -->
+<!--       #              New Doses: {point.y:,.0f}") %>%  -->
+<!--       hc_legend(enabled=FALSE) %>%  -->
+<!--       hc_credits( -->
+<!--         enabled = TRUE, -->
+<!--         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data", -->
+<!--         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>% -->
+<!--       hc_add_theme(lbjdata::hc_theme_lbj()) %>%  -->
+<!--       hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE,  -->
+<!--                        verticalAlign = "top", -->
+<!--                        selected = 3, inputBoxBorderColor= 'white') -->
+<!-- ``` -->
+<!-- ## Ages 50-64 years {.unlisted} -->
+<!-- ```{r daily-dose-chart-50, echo=FALSE, layout="l-page"} -->
+<!-- library(quantmod) -->
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
+<!--   clean_names() %>%  -->
+<!--   filter(age_group=="50-64 years") %>%  -->
+<!--   group_by(date=vaccination_date) %>% -->
+<!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
+<!--   mutate(date=as.Date(date)) %>%  -->
+<!--   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0, -->
+<!--                                    align = "right")) %>% -->
+<!--   mutate(date = as.Date(date, format("%b %d %Y"))) %>%  -->
+<!--   ungroup() %>%  -->
+<!--   drop_na() -->
+<!--   hcoptslang <- getOption("highcharter.lang") -->
+<!--   hcoptslang$thousandsSep <- "," -->
+<!--   options(highcharter.lang = hcoptslang) -->
+<!-- myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG") -->
+<!-- highchart(type = "stock") %>%  -->
+<!--       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses), -->
+<!--                     tooltip = list(pointFormat = "Daily Doses Administered: {point.daily_doses:,.0f}"), -->
+<!--                     color = "#333f48", name="Daily Doses Administered") %>% -->
+<!--       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg), -->
+<!--                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"), -->
+<!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
+<!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
+<!--       hc_title( -->
+<!--         text ="Daily Administered Doses - 50 to 64 years", -->
+<!--         useHTML = TRUE) %>% -->
+<!-- hc_subtitle( -->
+<!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
+<!--         useHTML = TRUE) %>%  -->
+<!--       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px",  -->
+<!--                                                   color="#333f48",fontWeight="500")), -->
+<!--                min = min(vaccine_summ_daily$daily_doses), -->
+<!--                max = max(vaccine_summ_daily$daily_doses), -->
+<!--                labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>%  -->
+<!--       # hc_xAxis(title=NULL, -->
+<!--       #          plotLines=plotLines) %>%  -->
+<!--       # hc_tooltip(table = TRUE, sort = TRUE, -->
+<!--       #            pointFormat = "<b>{point.name}</b><br> -->
+<!--       #              New Doses: {point.y:,.0f}") %>%  -->
+<!--       hc_legend(enabled=FALSE) %>%  -->
+<!--       hc_credits( -->
+<!--         enabled = TRUE, -->
+<!--         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data", -->
+<!--         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>% -->
+<!--       hc_add_theme(lbjdata::hc_theme_lbj()) %>%  -->
+<!--       hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE,  -->
+<!--                        verticalAlign = "top", -->
+<!--                        selected = 3, inputBoxBorderColor= 'white') -->
+<!-- ``` -->
+<!-- ## Ages 65-79 years {.unlisted} -->
+<!-- ```{r daily-dose-chart-65, echo=FALSE, layout="l-page"} -->
+<!-- library(quantmod) -->
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
+<!--   clean_names() %>%  -->
+<!--   filter(age_group=="65-79 years") %>%  -->
+<!--   group_by(date=vaccination_date) %>% -->
+<!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
+<!--   mutate(date=as.Date(date)) %>%  -->
+<!--   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0, -->
+<!--                                    align = "right")) %>% -->
+<!--   mutate(date = as.Date(date, format("%b %d %Y"))) %>%  -->
+<!--   ungroup() %>%  -->
+<!--   drop_na() -->
+<!--   hcoptslang <- getOption("highcharter.lang") -->
+<!--   hcoptslang$thousandsSep <- "," -->
+<!--   options(highcharter.lang = hcoptslang) -->
+<!-- myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG") -->
+<!-- highchart(type = "stock") %>%  -->
+<!--       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses), -->
+<!--                     tooltip = list(pointFormat = "Daily Doses Administered: {point.daily_doses:,.0f}"), -->
+<!--                     color = "#333f48", name="Daily Doses Administered") %>% -->
+<!--       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg), -->
+<!--                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"), -->
+<!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
+<!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
+<!--       hc_title( -->
+<!--         text ="Daily Administered Doses - 65 to 79", -->
+<!--         useHTML = TRUE) %>% -->
+<!-- hc_subtitle( -->
+<!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
+<!--         useHTML = TRUE) %>%  -->
+<!--       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px",  -->
+<!--                                                   color="#333f48",fontWeight="500")), -->
+<!--                min = min(vaccine_summ_daily$daily_doses), -->
+<!--                max = max(vaccine_summ_daily$daily_doses), -->
+<!--                labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>%  -->
+<!--       # hc_xAxis(title=NULL, -->
+<!--       #          plotLines=plotLines) %>%  -->
+<!--       # hc_tooltip(table = TRUE, sort = TRUE, -->
+<!--       #            pointFormat = "<b>{point.name}</b><br> -->
+<!--       #              New Doses: {point.y:,.0f}") %>%  -->
+<!--       hc_legend(enabled=FALSE) %>%  -->
+<!--       hc_credits( -->
+<!--         enabled = TRUE, -->
+<!--         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data", -->
+<!--         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>% -->
+<!--       hc_add_theme(lbjdata::hc_theme_lbj()) %>%  -->
+<!--       hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE,  -->
+<!--                        verticalAlign = "top", -->
+<!--                        selected = 3, inputBoxBorderColor= 'white') -->
+<!-- ``` -->
+<!-- ## Ages 80 years or older {.unlisted} -->
+<!-- ```{r daily-dose-chart-80, echo=FALSE, layout="l-page"} -->
+<!-- library(quantmod) -->
+<!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
+<!--   clean_names() %>%  -->
+<!--   filter(age_group=="80+ years") %>%  -->
+<!--   group_by(date=vaccination_date) %>% -->
+<!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
+<!--   mutate(date=as.Date(date)) %>%  -->
+<!--   mutate(new_doses_7_day_avg= rollmean(daily_doses, 7, fill =0, -->
+<!--                                    align = "right")) %>% -->
+<!--   mutate(date = as.Date(date, format("%b %d %Y"))) %>%  -->
+<!--   ungroup() %>%  -->
+<!--   drop_na() -->
+<!--   hcoptslang <- getOption("highcharter.lang") -->
+<!--   hcoptslang$thousandsSep <- "," -->
+<!--   options(highcharter.lang = hcoptslang) -->
+<!-- myMenuItems <- c("downloadCSV", "downloadXLS","separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG") -->
+<!-- highchart(type = "stock") %>%  -->
+<!--       hc_add_series(vaccine_summ_daily, type = "column", hcaes(x = date, y = daily_doses), -->
+<!--                     tooltip = list(pointFormat = "Daily Doses Administered: {point.daily_doses:,.0f}"), -->
+<!--                     color = "#333f48", name="Daily Doses Administered") %>% -->
+<!--       hc_add_series(vaccine_summ_daily, type = "area", hcaes(x = date, y = new_doses_7_day_avg), -->
+<!--                     tooltip = list(pointFormat = "7-Day Avg.: {point.new_doses_7_day_avg:,.0f}"), -->
+<!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
+<!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
+<!--       hc_title( -->
+<!--         text ="Daily Administered Doses - 80 years or older", -->
+<!--         useHTML = TRUE) %>% -->
+<!-- hc_subtitle( -->
+<!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
+<!--         useHTML = TRUE) %>%  -->
+<!--       hc_yAxis(title = list(text ="New Doses Administered Per Day", style = list(color = "#333f48", fontSize = "12px",  -->
+<!--                                                   color="#333f48",fontWeight="500")), -->
+<!--                min = min(vaccine_summ_daily$daily_doses), -->
+<!--                max = max(vaccine_summ_daily$daily_doses), -->
+<!--                labels =list(style = list(fontFamily = '"Libre Franklin", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif', color="#2d2d2d"))) %>%  -->
+<!--       # hc_xAxis(title=NULL, -->
+<!--       #          plotLines=plotLines) %>%  -->
+<!--       # hc_tooltip(table = TRUE, sort = TRUE, -->
+<!--       #            pointFormat = "<b>{point.name}</b><br> -->
+<!--       #              New Doses: {point.y:,.0f}") %>%  -->
+<!--       hc_legend(enabled=FALSE) %>%  -->
+<!--       hc_credits( -->
+<!--         enabled = TRUE, -->
+<!--         text = "Source: Texas DSHS - COVID-19 Accessible Vaccine Dashboard Data", -->
+<!--         href = "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") %>% -->
+<!--       hc_add_theme(lbjdata::hc_theme_lbj()) %>%  -->
+<!--       hc_rangeSelector(allButtonsEnabled= FALSE, enabled = TRUE,  -->
+<!--                        verticalAlign = "top", -->
+<!--                        selected = 3, inputBoxBorderColor= 'white') -->
+<!-- ``` -->
+<h1 id="distribution-trends">Distribution Trends</h1>
+<p>The next chart captures where the reported supply of doses has been distributed, by the type of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently received shipments of doses and how much were they shipped?</p>
+<p><strong>Note as of Mar 31</strong>: The chart showing how much DSHS has shipped to each provider type across Texas has been temporarily removed due to the fact that DSHS appears to have stopped publishing a column showing how much was shipped to each provider in their daily updates of the <a href="https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv">“Texas Vaccine Provider Data”</a>.</p>
+<p>Similar to the last one, this chart focuses on reported availability. In other words, how much of the shipped doses are provider types reporting to be still available at the time the chart was generated?</p>
+<div class="layout-chunk" data-layout="l-page">
+<p><img src="pace_files/figure-html5/unnamed-chunk-2-1.png" width="960" /></p>
+</div>
+<!-- <details class = "l-body"> -->
+<!-- <summary><strong>Notes about the table below</strong></summary> -->
+<!-- * Data shown below comes from the "Accessible Vaccine Dashboard Data" published by the Texas Department of State Health Services, which can be found at this link: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls -->
+<!-- * It was last pulled on Apr 12, 2021 at 10:31 AM -->
+<!-- </details> -->
+<!-- <details class = "l-body"> -->
+<!-- <summary><strong> Data dictionary for the table below </strong></summary> -->
+<!-- * **County**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the county for which DSHS has collected data. -->
+<!-- * **Popuplation (16+)"**:  This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons aged 16 years and older in Texas. This number is reported given that vaccines authorized for emergency use have only authorized for use in persons aged 16 years and older.  -->
+<!-- * **Total Doses Allocated**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of total doses allocated/shipped to a given Texas county. -->
+<!-- * **Full Vaccinations**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons who are fully vaccinated in a given Texas county. -->
+<!-- * **Doses Allocated (Per Capita)**: This is a custom calculation that is derived by taking the number of total doses allocated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.   -->
+<!-- * **Full Vaccinations (Per Capita)**: This is a custom calculation that is derived by taking the number of persons who are fully vaccinated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.   -->
+<!-- </details> -->
+<!-- ## Vaccine Data Table  -->
+<h1 id="vaccine-pace-tracker">Vaccine Pace Tracker</h1>
+<p>The last tool to track the pace of distribution is an interactive comparison of the state and counties across Texas. The tool allows users to track the statewide pace of vaccine progress and the county-level pace of vaccine progress. Because the state is only focused on the population aged 16 and above, we only measure progress against this population.</p>
+<details class="l-body">
+<summary>
+<strong>Question | </strong>Why do they only measure the population aged 16 and above?
+</summary>
+<p><br> According to <a href="https://dshs.texas.gov/coronavirus/immunize/vaccine-faqs.aspx#safety">the Texas Department of State Health Services</a>, “At this time, experts do not know how safe the COVID-19 vaccine is for children. People 16 years old and older are currently eligible to get the vaccine if they are in a priority population.”</p>
+</details>
+<p>The two charts represent the entire populations of the state and selected county. In the boxes below, there are three indicators.</p>
+<ol type="1">
+<li><strong>Dose Distribution</strong>: This box shows how many doses have been administered out of the doses that have actually been allocated to that entity (either the state or the selected county).</li>
+<li><strong>Daily Average</strong>: This is an ongoing calculation of daily averages that starts on Dec 15. The only thing it considers is how many doses are going into arms each day.</li>
+<li><strong>When 70% is Vaccinated</strong>: Based on that daily average and knowing most of the approved vaccines require two doses, this box tries to guesstimate when 70% of the population aged 16 and older will be vaccinated. This is not a herd immunity projection, rather a look ahead as to when most of the population aged 16 and older will likely be vaccinated.</li>
+</ol>
+<div class="layout-chunk" data-layout="l-page">
+<iframe src="https://mrworthington.shinyapps.io/tx_vaccine-pace/?showcase=0" width="624" height="1800px">
+</iframe>
+</div>
+<h2 class="appendix" id="photography-credit">Photography Credit</h2>
+<p><span>Photo by <a href="https://unsplash.com/@cdc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">CDC</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/utexas-lbjp-data/tx_vaccine_site/issues/new">create an issue</a> on the source repository.</p>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<div class="distill-site-nav distill-site-footer">
+<p>© Copyright 2021 <a href="https://lbj.utexas.edu">The LBJ School of Public Affairs</a>.</p>
+</div>
+<!--/radix_placeholder_navigation_after_body-->
+
+
+</body>
+
+</html>
