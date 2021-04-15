@@ -776,6 +776,8 @@ reactable(data =vaccine_cnty_summ,
 
 ```
 
+
++
 # Vaccine Pace Tracker
 
 The last tool to track the pace of distribution is an interactive comparison of the state and counties across Texas. The tool allows users to track the statewide pace of vaccine progress and the county-level pace of vaccine progress. Because the state is only focused on the population aged 16 and above, we only measure progress against this population. 
