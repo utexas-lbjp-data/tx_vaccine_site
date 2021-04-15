@@ -2271,6 +2271,7 @@ Go to:
 <li><a href="#vaccines-equity">Vaccines + Equity</a>
 <ul>
 <li><a href="#statewide-demographic-summaries">Statewide Demographic Summaries</a></li>
+<li><a href="#spatial-distributions-by-county">Spatial Distributions, by County</a></li>
 </ul></li>
 <li><a href="#vaccines-access">Vaccines + Access</a>
 <ul>
@@ -2289,6 +2290,12 @@ Go to:
 <p>The next chart is broken up into six different panels–one for each classification of a race or ethnicity. Within each of those panels, there’s two sets of five-columned bar charts which represent the reported gender. The dark blue colored bars (facing upwards) represent the female population within each race and ethnicity classification while the gray colored bars (facing downwards) represent the male population within each race and ethnicity classification. Each column within a set of blue or gray colored bars represents a different age group.</p>
 <div class="layout-chunk" data-layout="l-page">
 <p><img src="equity_files/figure-html5/dem_chart_ggplot-1.png" width="960" /><img src="equity_files/figure-html5/dem_chart_ggplot-2.png" width="960" /></p>
+</div>
+<h2 id="spatial-distributions-by-county">Spatial Distributions, by County</h2>
+<p>One of the datasets that the Texas Department of State Health Services publishes iz zip-code level administration data. While seeing the data at a statewide level with zip-codes is helpful, it also compares geographic areas that may have access to different levels of supply. Considering that, we’ve created a resource that allows users to select a county and visualize distribution trends at the county level so that you can spatial trends for zip codes in a county when compared only to other zip codes in a county. Once a user selects a county, the map shows you the rate of doses administered for every 1,000 persons in each zip code.</p>
+<div class="layout-chunk" data-layout="l-screen">
+<iframe src="https://mrworthington.shinyapps.io/cnty_zip_explorer/?showcase=0" width="624" height="820px">
+</iframe>
 </div>
 <h1 id="vaccines-access">Vaccines + Access</h1>
 <!-- ##  Where Accessible Populations Live in Texas -->
