@@ -292,7 +292,7 @@ hc_subtitle(
 cdc_last_update <- "Apr 18, 2021" 
 cdc_last_time <- "6:00AM"
 
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-11.csv",
+cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-12.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
