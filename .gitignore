@@ -3,7 +3,6 @@
 .RData
 .Ruserdata
 README.Rmd
-.DS_Store
 .RData 2
 .DS_Store
 .RData 3
@@ -11,3 +10,5 @@ README.Rmd
 .RData 4
 .RData 5
 .RData 6
+.RData 7
+.DS_Store
