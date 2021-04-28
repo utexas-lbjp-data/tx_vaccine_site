@@ -357,7 +357,7 @@ df %>%
 
 ## Spatial Distributions, by County
 
-One of the datasets that the Texas Department of State Health Services publishes iz zip-code level administration data. While seeing the data at a statewide level with zip-codes is helpful, it also compares geographic areas that may have access to different levels of supply. Considering that, we've created a resource that allows users to select a county and visualize distribution trends at the county level so that you can spatial trends for zip codes in a county when compared only to other zip codes in a county. Once a user selects a county, the map shows you the rate of doses administered for every 1,000 persons in each zip code.
+One of the datasets that the Texas Department of State Health Services publishes is zip-code level administration data. While seeing the data at a statewide level with zip-codes is helpful, it also compares geographic areas that may have access to different levels of supply. Considering that, we've created a resource that allows users to select a county and visualize distribution trends at the county level so that you can spatial trends for zip codes in a county when compared only to other zip codes in a county. Once a user selects a county, the map shows you the rate of doses administered for every 1,000 persons in each zip code.
 
 ```{r vaccine-zip-cnty-map, echo=FALSE, message=FALSE, warning=FALSE, layout = "l-screen"}
 knitr::include_app("https://mrworthington.shinyapps.io/cnty_zip_explorer/", height = "820px")
