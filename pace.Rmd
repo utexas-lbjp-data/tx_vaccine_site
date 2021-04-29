@@ -600,6 +600,18 @@ ggsave(paste0("figures/",today,"_","tx_us_comparison_vaccine_administration.png"
 
 <!-- ``` -->
 
+<!-- # Vaccine Hesitancy -->
+
+<!-- Recently, the U.S. Department of Health and Human Services began publishing predicted estimates for vaccine hesitancy across the United States across different geographies in the US.  -->
+
+```{r eval=FALSE, include=FALSE}
+library(mapview)
+
+vax_hesitancy <- RSocrata::read.socrata("https://data.cdc.gov/resource/djj9-kh3p.csv")
+
+```
+
+
 # Distribution Trends
 
 The next chart captures where the reported supply of doses has been distributed, by the type of vaccine provider. The state classifies provider types, which allows to see very simply: what kinds of providers have recently received shipments of doses and how much were they shipped?
