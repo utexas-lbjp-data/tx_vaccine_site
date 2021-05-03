@@ -1,0 +1,404 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap');
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Light/1d3e1be9-e2ca-44c3-b674-7228a7c97407-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Light/1d3e1be9-e2ca-44c3-b674-7228a7c97407-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Light/1d3e1be9-e2ca-44c3-b674-7228a7c97407-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Light/1d3e1be9-e2ca-44c3-b674-7228a7c97407-1.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 300;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Light-Italic/15a2d62b-ca5c-45cb-9b3d-29bef80c6e9d-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Light-Italic/15a2d62b-ca5c-45cb-9b3d-29bef80c6e9d-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Light-Italic/15a2d62b-ca5c-45cb-9b3d-29bef80c6e9d-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Light-Italic/15a2d62b-ca5c-45cb-9b3d-29bef80c6e9d-1.ttf") format("truetype");
+	font-style: italic;
+	font-weight: 300;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Regular/019c3a13-b3d7-4c5a-be27-07a8334a43e6-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Regular/019c3a13-b3d7-4c5a-be27-07a8334a43e6-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Regular/019c3a13-b3d7-4c5a-be27-07a8334a43e6-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Regular/019c3a13-b3d7-4c5a-be27-07a8334a43e6-1.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Regular-Italic/3295fa07-2a3f-4cd1-ba86-e06161453a51-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Regular-Italic/3295fa07-2a3f-4cd1-ba86-e06161453a51-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Regular-Italic/3295fa07-2a3f-4cd1-ba86-e06161453a51-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Regular-Italic/3295fa07-2a3f-4cd1-ba86-e06161453a51-1.ttf") format("truetype");
+	font-style: italic;
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Medium/8e221891-e89b-4eae-95ca-6346d9a41d20-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Medium/8e221891-e89b-4eae-95ca-6346d9a41d20-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Medium/8e221891-e89b-4eae-95ca-6346d9a41d20-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Medium/8e221891-e89b-4eae-95ca-6346d9a41d20-1.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 500;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Medium-Italic/289d6a90-eab9-4614-9e7d-c0df14839178-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Medium-Italic/289d6a90-eab9-4614-9e7d-c0df14839178-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Medium-Italic/289d6a90-eab9-4614-9e7d-c0df14839178-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Medium-Italic/289d6a90-eab9-4614-9e7d-c0df14839178-1.ttf") format("truetype");
+	font-style: italic;
+	font-weight: 500;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Bold/d4a4a960-2cf2-430e-8b13-cbf6f261ddb9-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Bold/d4a4a960-2cf2-430e-8b13-cbf6f261ddb9-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Bold/d4a4a960-2cf2-430e-8b13-cbf6f261ddb9-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Bold/d4a4a960-2cf2-430e-8b13-cbf6f261ddb9-1.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 700;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Bold-Italic/f037bfb1-69d7-4441-8d43-3b8c2c6e77d3-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Bold-Italic/f037bfb1-69d7-4441-8d43-3b8c2c6e77d3-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Bold-Italic/f037bfb1-69d7-4441-8d43-3b8c2c6e77d3-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Bold-Italic/f037bfb1-69d7-4441-8d43-3b8c2c6e77d3-1.ttf") format("truetype");
+	font-style: italic;
+	font-weight: 700;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Black/bc06c909-a731-43ae-a772-ea42520c81b9-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Black/bc06c909-a731-43ae-a772-ea42520c81b9-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Black/bc06c909-a731-43ae-a772-ea42520c81b9-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Black/bc06c909-a731-43ae-a772-ea42520c81b9-1.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 900;
+}
+
+@font-face {
+	font-family: "Benton-Sans";
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Black-Italic/9afa6c31-8572-45ee-8575-c3c541f31e3f-2.eot");
+	src: url("https://www.bu.edu/cdn/fonts/Benton-Sans-Black-Italic/9afa6c31-8572-45ee-8575-c3c541f31e3f-2.eot?") format("embedded-opentype"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Black-Italic/9afa6c31-8572-45ee-8575-c3c541f31e3f-3.woff") format("woff"),
+			 url("https://www.bu.edu/cdn/fonts/Benton-Sans-Black-Italic/9afa6c31-8572-45ee-8575-c3c541f31e3f-1.ttf") format("truetype");
+	font-style: italic;
+	font-weight: 900;
+}
+
+.rid_a91adcde_415243 {
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.syndicate #body {
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.cdc {
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+d-article hr {
+grid-column: screen;
+width: 100%;
+border: none;
+border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+margin-top: 0px !important;
+margin-bottom: 0px !important;
+}
+
+d-byline .byline {
+grid-template-columns: 1fr 1fr;
+grid-column: text;
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.distill-site-header .logo {
+padding: 10px;
+}
+
+d-article > d-code, d-article section > d-code {
+display: block;
+overflow-x: scroll !important;
+background: #f8f8f8 !important;
+border: 1px solid #ccc !important;
+border-radius: 1px !important;
+text-shadow: 0 0px white !important;
+font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+
+}
+
+.highcharts-background{
+  width: 100% !important;
+}
+
+.highcharts-plot-background{
+  width: 100% !important;
+}
+
+
+.highcharts-container{
+  width: 100% !important;
+}
+
+.highcharts-root{
+  width: 100% !important;
+}
+
+.posts-list .posts-list-caption {
+grid-column: screen;
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;font-weight: 400;
+color: #7d7d7d;
+letter-spacing: 0px;
+}
+
+d-article h4 {
+font-weight: 700;
+text-transform: revert;
+font-size: 15px;
+line-height: 1.4em;
+}
+
+d-article a {
+color: #4d4d4d;
+}
+
+.distill-site-nav {
+  color: #ffffff;
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;  font-size: 15px;
+  font-weight: 600;
+  background: #333f48;
+/*  border-bottom: 0px solid #bf5700;
+  -webkit-box-shadow: 1px 1px 18px #4d4d4d;
+  -moz-box-shadow: 1px 1px 18px #4d4d4d;
+  box-shadow: 1px 1px 18px #4d4d4d; */
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.nav-dropdown-content .nav-dropdown-header {
+display: block;
+padding: 5px 24px;
+padding-bottom: 0;
+text-transform: uppercase;
+font-size: 14px;
+color: #bf5700;
+white-space: nowrap;
+font-weight: 300;
+}
+
+.posts-list .post-preview .thumbnail {
+float: right;
+width: 30%;
+max-height: 20vh;
+margin-bottom: 0;
+}
+
+.nav-right .nav-dropdown-content {
+color: #333f48;
+}
+
+.distill-site-header .nav-left {
+  margin-left: 0px;
+  
+}
+
+.distill-site-header .nav-right {
+/* margin-right: 20px; */
+text-transform: initial;
+font-size: 14px;
+letter-spacing: 1px;
+}
+
+.distill-site-nav a:hover {
+color: #2d2d2d !important;
+background: #9cadb7;
+}
+
+d-title {
+padding-top: 10rem;
+background: #4d4d4d;
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+font-weight: 800;
+color: #fff;
+}
+
+d-title h1 {
+font-weight: 800;
+}
+
+details {
+  background-color: hsla(206, 95%, 20%, 0.2);
+  cursor: pointer;
+  color: #2d2d2d;
+  margin-bottom:1vh;
+  padding: 1em;
+  border: none;
+  text-align: left;
+  outline: none;
+}
+
+.active, details:hover {
+  transition: max-height 0.2s ease-out;
+  /* background-color: #acc2c2; */
+}
+
+details {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  border-radius: 4px;
+}
+
+details.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+summary::-webkit-details-marker {
+  display: none
+}
+
+summary::after {
+  float: right;
+  font-family: "Font Awesome 5 Free";
+  content: "\f0fe";
+}
+
+details[open] summary::after {
+  float: right;
+  font-family: "Font Awesome 5 Free";
+  content: "\f146";
+}
+
+details h4 {
+margin: 0;
+color: #2d2d2d !important;
+line-height: inherit;
+}
+
+code {
+color: #2A7DE1;
+font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+}
+
+d-article {
+  color: #6B6D6F;
+}
+
+d-article iframe {
+border: 0px solid rgba(0, 0, 0, 0.1);
+margin-bottom: 2.0em;
+width: 100%;
+}
+
+d-article h1 {
+    font-weight: 800;
+    color: #2d2d2d;
+    font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0px !important;
+}
+
+::selection {
+color: #2d2d2d;
+text-shadow: none;
+background: rgba(156,173,183, 0.4) !important;
+}
+
+.posts-list .metadata .publishedDate {
+font-family: 'Benton-Sans',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+text-transform: uppercase;
+font-size: 1rem;
+letter-spacing: .9px;
+color: #9d9d9d;
+}
+
+.posts-list .post-preview h2 {
+color: #2d2d2d;
+}
+
+.posts-list .post-preview h2 {
+font-size: 30px !important;
+font-weight: 700 !important;
+letter-spacing:0px !important;
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+d-article h1 {
+font-weight: 800;
+color: #333f48;
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+letter-spacing: 3px;
+}
+
+d-article h2 {
+font-size: 24px;
+font-family: 'Benton-Sans',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+font-weight: 600;
+color: #005f86;
+border-bottom: 1.3px solid rgba(140, 143, 147, 0.5);
+}
+
+.nav-dropdown .nav-dropbtn {
+border: none;
+outline: none;
+text-transform: initial;
+color: rgba(255, 255, 255, 1);
+padding: 16px 10px;
+background-color: transparent;
+font-family: inherit;
+font-size: inherit;
+font-weight: inherit;
+margin: 0;
+margin-top: 1px;
+z-index: 2;
+}
+
+.highcharts-container text {
+font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif  !important;
+}
+
+body {
+    font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+    overflow-y: auto
+}
+
+.posts-list .description h2, .posts-list .description p {
+    font-family: 'Benton-Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.distill-site-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.distill-site-nav a:hover {
+  color: white;
+}
+
+.distill-site-header {
+}
+
+.distill-site-footer {
+}
+
+@media print {
+  .distill-site-nav {
+    display: none;
+  }
+}
