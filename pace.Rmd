@@ -289,10 +289,10 @@ hc_subtitle(
 
 ```{r ggplot2 national comparison, echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=4.5, layout="l-page"}
 
-cdc_last_update <- "Apr 29, 2021" 
+cdc_last_update <- "May 10, 2021" 
 cdc_last_time <- "6:00AM"
 
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-13.csv",
+cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-14.csv",
                                 skip = 2, na = "N/A") %>% 
   clean_names() %>% 
   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
