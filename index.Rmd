@@ -40,7 +40,7 @@ meta() %>%
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
-knitr::opts_chunk$set()
+knitr::opts_chunk$set() 
 library(gt)
 library(tidyverse)
 library(ggforce)
@@ -79,14 +79,14 @@ date_text <- format(latest_date$date, format="%b %d, %Y")
 
 pop_16_num <- read_excel(filepath, sheet = 2, skip=0) %>% 
   clean_names() %>% 
-  filter(county_name=="Texas") %>% 
-  select(population_16)
+  filter(county_name=="Texas") %>%
+  select(population_12)
 
 pop_16_text <- read_excel(filepath, sheet = 2, skip=0) %>% 
   clean_names() %>% 
   filter(county_name=="Texas") %>% 
-  select(population_16) %>% 
-  mutate(population_16 = scales::comma(as.numeric(population_16)))
+  select(population_12) %>% 
+  mutate(population_12 = scales::comma(as.numeric(population_12)))
 
 full_vax_text <- read_excel(filepath, sheet = 2, skip=0) %>% 
   clean_names() %>% 
@@ -97,8 +97,8 @@ full_vax_text <- read_excel(filepath, sheet = 2, skip=0) %>%
 full_vax_pct_text <- read_excel(filepath, sheet = 2, skip=0) %>% 
   clean_names() %>% 
   filter(county_name=="Texas") %>%
-  select(people_fully_vaccinated, population_16) %>% 
-  mutate(pct_fully_vax = as.numeric(people_fully_vaccinated)/as.numeric(population_16)) %>% 
+  select(people_fully_vaccinated, population_12) %>% 
+  mutate(pct_fully_vax = as.numeric(people_fully_vaccinated)/as.numeric(population_12)) %>% 
   mutate(pct_fully_vax = scales::percent(round(pct_fully_vax, digits=3))) %>% 
   select(pct_fully_vax)
 
@@ -112,8 +112,8 @@ partial_vax_pct_text <- read_excel(filepath, sheet = 2, skip=0) %>%
   clean_names() %>% 
   filter(county_name=="Texas") %>%
   select(people_vaccinated_with_at_least_one_dose) %>% 
-  mutate(population_16 = pop_16_num) %>% 
-  mutate(at_least_one_pct = as.numeric(people_vaccinated_with_at_least_one_dose)/as.numeric(population_16)) %>% 
+  mutate(population_12 = pop_16_num) %>% 
+  mutate(at_least_one_pct = as.numeric(people_vaccinated_with_at_least_one_dose)/as.numeric(population_12)) %>% 
   mutate(at_least_one_pct = scales::percent(round(at_least_one_pct, digits=4))) %>% 
   select(at_least_one_pct)
 
@@ -127,8 +127,8 @@ yesterday_vax_pct_text <- vaccine_summ %>%
   drop_na(date) %>% 
   filter(date==max(as.Date(date))) %>% 
   select(daily_doses) %>% 
-  mutate(population_16 = pop_16_num) %>% 
-  mutate(daily_doses_oct = as.numeric(daily_doses)/as.numeric(population_16)) %>% 
+  mutate(population_12 = pop_16_num) %>% 
+  mutate(daily_doses_oct = as.numeric(daily_doses)/as.numeric(population_12)) %>% 
   mutate(daily_doses_oct = scales::percent(round(daily_doses_oct, digits=4), accuracy = .01)) %>% 
   select(daily_doses_oct)
 
@@ -142,8 +142,8 @@ avg7day_vax_pct_text <- vaccine_summ %>%
   drop_na(date) %>% 
   filter(date==max(as.Date(date))) %>% 
   select(new_doses_7_day_avg) %>% 
-  mutate(population_16 = pop_16_num) %>% 
-  mutate(avg7_day_pct = as.numeric(new_doses_7_day_avg)/as.numeric(population_16)) %>% 
+  mutate(population_12 = pop_16_num) %>% 
+  mutate(avg7_day_pct = as.numeric(new_doses_7_day_avg)/as.numeric(population_12)) %>% 
   mutate(avg7_day_pct = scales::percent(round(avg7_day_pct, digits=4), accuracy = .01)) %>% 
   select(avg7_day_pct)
 
@@ -151,14 +151,14 @@ avg7day_vax_pct_text <- vaccine_summ %>%
 
 The reach of COVID-19 on Texas and the world has been devastating. As our state joins a global effort to put coronavirus into our past, we are tracking the Texas vaccine roll-out as it unfolds in real-time.
 
-Texas has <u>`r pop_16_text`</u> people above the age of 16 who are currently eligible for the vaccine. As of <u>`r date_text`</u>, the state has:
+Texas has <u>`r pop_16_text`</u> people aged 12 and older who are currently eligible for the vaccine. As of <u>`r date_text`</u>, the state has:
 
 :::{line-height="1.4px"}
 
-> <i class="fad fa-battery-full fa-fw fa-lg" style="color:#f8971f"></i> | **Fully Vaccinated:** <u>`r full_vax_text`</u> people or <u>`r full_vax_pct_text`</u> of the population 16+</br>
-> <i class="fad fa-battery-half fa-fw fa-lg" style="color:#f8971f"></i> | **Vaccinated w/ At Least One Dose:** <u>`r partial_vax_text`</u> people or <u>`r partial_vax_pct_text`</u> of the population 16+</br>
-> <i class="fad fa-calendar fa-fw fa-lg" style="color:#f8971f"></i> | **Administered**: <u>`r yesterday_vax_text`</u> doses in one day on `r date_text` or <u>`r yesterday_vax_pct_text`</u> of the population 16+</br>
-> <i class="fad fa-tachometer-alt-average fa-fw fa-lg" style="color:#f8971f"></i> | **A 7-Day Average** of <u>`r avg7day_vax_text`</u> administered per day  or <u>`r avg7day_vax_pct_text`</u> of the population 16+</br>
+> <i class="fad fa-battery-full fa-fw fa-lg" style="color:#f8971f"></i> | **Fully Vaccinated:** <u>`r full_vax_text`</u> people or <u>`r full_vax_pct_text`</u> of the population 12+</br>
+> <i class="fad fa-battery-half fa-fw fa-lg" style="color:#f8971f"></i> | **Vaccinated w/ At Least One Dose:** <u>`r partial_vax_text`</u> people or <u>`r partial_vax_pct_text`</u> of the population 12+</br>
+> <i class="fad fa-calendar fa-fw fa-lg" style="color:#f8971f"></i> | **Administered**: <u>`r yesterday_vax_text`</u> doses in one day on `r date_text` or <u>`r yesterday_vax_pct_text`</u> of the population 12+</br>
+> <i class="fad fa-tachometer-alt-average fa-fw fa-lg" style="color:#f8971f"></i> | **A 7-Day Average** of <u>`r avg7day_vax_text`</u> administered per day  or <u>`r avg7day_vax_pct_text`</u> of the population 12+</br>
 
 :::
 

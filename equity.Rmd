@@ -327,15 +327,15 @@ df %>%
 
   
   read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
-  clean_names() %>%
+  clean_names() |> 
   filter(str_detect(gender, "Unknown"),
-         !str_detect(race_ethnicity, "Total")) %>% 
+         !str_detect(race_ethnicity, "Total")) |> 
   ggplot(aes(x = age_group, y = doses_administered, fill = age_group)) +
   geom_bar(stat = "identity", width = 1) +
   facet_wrap(~race_ethnicity, nrow=1) +
   scale_y_continuous(labels = function(y) paste0(abs(y / 1000), "k")) +
   scale_x_discrete(labels = function(x) gsub("Age | years", "", x)) +
-  scale_fill_manual(values = c("#005f86","#9cadb7","#bf5700", "#333f48", "#579d42")) +
+  scale_fill_manual(values = c("#f8971f", "#005f86","#9cadb7","#bf5700", "#333f48", "#579d42")) +
   guides(fill=guide_legend(title = "Legend", keyheight = .8)) +
   theme_minimal(base_family = "Graphik") +
   theme(plot.title = element_text(family = "Graphik-Bold", color = "#333f48", size =20),

@@ -43,15 +43,15 @@ time_lbl <- format(Sys.time(), format = "%I:%M %p")
 vaccine_summ <- read_excel(filepath, sheet = "By County", skip=0) %>% 
   clean_names() %>% 
   filter(county_name=="Texas") %>% 
-  mutate(across(total_doses_allocated:population_phase_1b_any_medical_condition, as.numeric)) %>%
+  mutate(across(total_doses_allocated:population_education_and_child_care_personnel, as.numeric)) %>%
   select(county_name, population_16, people_fully_vaccinated, total_doses_allocated, starts_with("population_phase_")) %>% 
   mutate(population_phase_remaining = population_16 - (population_phase_1a_healthcare_workers +
                                                        population_phase_1a_long_term_care_residents +
-                                                       population_phase_1b_any_medical_condition),
+                                                       population_16_64_any_medical_condition),
          remaining_box_start = population_16 - population_phase_remaining) %>%
   rename(`Phase 1A - Healthcare Workers`=population_phase_1a_healthcare_workers, 
          `Phase 1A - Long Term Care`=population_phase_1a_long_term_care_residents, 
-         `Phase 1B - 65+ and High Risk`=population_phase_1b_any_medical_condition,
+         `Phase 1B - 65+ and High Risk`=population_16_64_any_medical_condition,
          `Future Phases`=population_phase_remaining) %>%
   pivot_longer(cols=contains("Phase"), names_to = "phase_pop_est", values_to = "value") %>%
   mutate(order = case_when(
@@ -181,12 +181,12 @@ supply_by_provider_type %>%
 
 ## Eligible Populations
 
-As of Monday, March 29, 2021, everyone age 16 and older is now eligible to receive a COVID-19 vaccine in Texas. To learn more about each of the populations, expand the summaries below.
+As of Monday, May 12, 2021, everyone age 12 and older is now eligible to receive a COVID-19 vaccine in Texas. To learn more about each of the populations, expand the summaries below.
 
 <details class = "l-body">
 <summary><strong>Eligible Population | </strong>Ages 16 and older</summary>
 
-As of Monday, March 29, 2021, everyone age 16 and older is now eligible to receive a COVID-19 vaccine in Texas. This comes from the [Texas Department of State Health Services (DSHS)](https://www.dshs.texas.gov/news/releases/2021/20210323.aspx). 
+As of Monday, May 12, 2021, everyone age 12 and older is now eligible to receive a COVID-19 vaccine in Texas. This comes from the [Texas Department of State Health Services (DSHS)](https://dshs.texas.gov/news/releases/2021/20210512.aspx). 
 
 DSHS has directed vaccine providers to prioritize people 80 years old or older when scheduling appointments and accommodate anyone in that age group who presents for vaccination, whether or not they have an appointment, by immediately moving them to the front of the line. That will ensure vaccination of anyone 80 or older with as small a burden on themselves as possible.
 
