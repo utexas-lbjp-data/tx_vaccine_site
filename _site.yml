@@ -5,7 +5,7 @@ description: |
   Tracking COVID-19 Vaccines in Texas
 output_dir: "_site"
 repository_url: https://github.com/utexas-lbjp-data/tx_vaccine_site
-exclude: ["README.md", "New Vaccine Data.Rmd", "Access.Rmd", "experimental"]
+exclude: ["README.md", "New Vaccine Data.Rmd", "Access.Rmd", "experimental", "providers.Rmd"]
 navbar:
   logo:
     image: lbj_logo.png
@@ -14,16 +14,18 @@ navbar:
   right:
     # - text: "Home"
     #   href: index.html
-    - text: "Dashboards"
-      menu:
-        - text: "English"
-        - text: "---------"
-        - text: "Explore Providers"
-          href: providers.html
-        - text: "Explore Pace"
-          href: pace.html       
-        - text: "Explore Equity"
-          href: equity.html             
+    - text: "Explore Pace"
+      href: pace.html
+    - text: "Explore Equity"
+      href: equity.html
+    # - text: "Dashboards"
+    #   menu:
+        # - text: "English"
+        # - text: "---------"
+        # - text: "Explore Providers"
+        #   href: providers.html
+
+
         # - text: "Espanol"
         #   href: about.html
         # - text: "Pace Explorer"
@@ -32,32 +34,32 @@ navbar:
         #   href: pace.html
         # - text: "Espanol"
         #   href: pace.html
-    - text: "Vaccine Resources"
-      menu:
-        - text: "English"
-        - text: "---------"
-        - text: "Moderna"
-          href: moderna.html
-        - text: "Pfizer"
-          href: pfizer.html
-        - text: "Espanol"
-        - text: "---------"
-        - text: "Moderna"
-          href: moderna_es.html
-        - text: "Pfizer"
-          href: pfizer_es.html
+    # - text: "Vaccine Resources"
+    #   menu:
+    #     - text: "English"
+    #     - text: "---------"
+    #     - text: "Moderna"
+    #       href: moderna.html
+    #     - text: "Pfizer"
+    #       href: pfizer.html
+    #     - text: "Espanol"
+    #     - text: "---------"
+    #     - text: "Moderna"
+    #       href: moderna_es.html
+    #     - text: "Pfizer"
+    #       href: pfizer_es.html
     - text: "About"
       menu:
-    #     # - text: "Our Schools"
-    #     # - text: "---------"
-    #     # - text: "The LBJ School"
-    #     #   href: https://lbj.utexas.edu
-    #     # - text: "Dell Medical School"
-    #     #   href: https://dellmed.utexas.edu
-    #     - text: "Our Research"
-    #     - text: "---------"
+        # - text: "Our Institution"
+        # - text: "---------"
+        - text: "The LBJ School's Data Initiatives"
+          href: https://lbjdata.org
+        - text: "The LBJ School of Public Affairs"
+          href: https://lbj.utexas.edu
+        - text: "Our Research"
+        - text: "---------"
     #     - text: "Credits"
-    #       href: index.html       
+    #       href: index.html
         - text: "Methods & Data"
           href: methods.html
         # - text: "Espanol"
@@ -69,7 +71,7 @@ navbar:
         # - text: "Espanol"
         #   href: pace.html
     # - text: "Blog"
-    #   href: blog.html       
+    #   href: blog.html
     - icon: fab fa-github
       href: https://github.com/utexas-lbjp-data
     - icon: fab fa-facebook

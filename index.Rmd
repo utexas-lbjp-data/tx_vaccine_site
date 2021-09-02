@@ -5,8 +5,8 @@ color1: "#5A59A3"
 color2: "#C66060"
 angle: 130
 links:
-  - label: Providers
-    url: "providers.html"
+  # - label: Providers
+  #   url: "providers.html"
   - label: Pace
     url: "pace.html"
   - label: Equity

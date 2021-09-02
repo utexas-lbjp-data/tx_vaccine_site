@@ -206,7 +206,7 @@ vaccine_summ %>%
        x = NULL,
        y = NULL,
        color = NULL,
-       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington") +
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls\nChart by: @mrworthington")
   ggsave(paste0("figures/",today,"_","tx_vaccine_summary.png"), dpi = 300, width = 11, height = 4.5)
 
 ```
@@ -285,11 +285,17 @@ hc_subtitle(
 ```
 
 
-## National Comparison
+<!-- ## National Comparison -->
 
-```{r ggplot2 national comparison, echo=FALSE, message=FALSE, warning=FALSE, fig.width=11, fig.height=4.5, layout="l-page"}
+```{r ggplot2 national comparison, eval=FALSE, fig.height=4.5, fig.width=11, message=FALSE, warning=FALSE, include=FALSE, layout="l-page"}
 
-cdc_last_update <- "May 10, 2021" 
+library(RSocrata)
+
+cdc_vaccine_summary <- read.socrata("https://data.cdc.gov/resource/unsk-b7fc.csv") |> 
+  filter(date==as.Date(max(date))) |> 
+  select(date:location, contains("100k"), contains("pct"))
+
+cdc_last_update <- "May 10, 2021"
 cdc_last_time <- "6:00AM"
 
 cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-14.csv",
@@ -349,7 +355,7 @@ cdc_vaccine_summary_ggplot2 %>%
        subtitle = paste0("Shown are rankings of vaccine administration, based on the number of doses administered for every 100,000 people\nin a given state. Data is from the CDC. Data reflects reporting as of ",cdc_last_update," at ", cdc_last_time),
        y = "Doses Delivered Per 100k Persons",
        x = "States and DC",
-       caption = "Source: 'COVID Data Tracker - Vaccines', Center for Disease Control.") +
+       caption = "Source: 'COVID Data Tracker - Vaccines', Center for Disease Control.")
 ggsave(paste0("figures/",today,"_","tx_us_comparison_vaccine_administration.png"), device = "png", dpi = 300, width =11, height = 5)
 
 ```

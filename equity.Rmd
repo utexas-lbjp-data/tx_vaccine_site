@@ -322,8 +322,8 @@ df %>%
        x = NULL,
        y = NULL,
        color = NULL,
-       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") +
-  ggsave(paste0("figures/",today,"_","tx_shots_by_race_age_known_gender.png"), dpi = 300, width = 11, height = 8)
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls")
+  # ggsave(paste0("figures/",today,"_","tx_shots_by_race_age_known_gender.png"), dpi = 300, width = 11, height = 8)
 
   
   read_excel(filepath, sheet = "By Age, Gender, Race", skip=0) %>% 
@@ -349,7 +349,7 @@ df %>%
        x = NULL,
        y = NULL,
        color = NULL,
-       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls") +
+       caption = "Data File: 'Accessible Vaccine Dashboard Data'\nLink: https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls")
   ggsave(paste0("figures/",today,"_","tx_shots_by_race_age_unknown_gender.png"), dpi = 300, width = 11, height = 8)
   
 
