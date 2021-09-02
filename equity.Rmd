@@ -468,7 +468,7 @@ walking_isos <- read_rds("clean_data/walking_isos_30.rds")
 walking_combined <- read_rds("clean_data/walking_combined_30.rds")
 
 # vars_2019 <- load_variables(2019, "acs5") #%>% 
-#   filter(str_detect(concept,"POPULATION 16 YEARS AND OVER"),
+#   filter(str_detect(concept,"POPULATION 12 YEARS AND OVER"),
 #          label=="Estimate!!Total:")
 
 # demvars <-  c(White = "B03002_003",
@@ -648,9 +648,9 @@ date_pulled <- unique(vaccine_sites_sf$date_pulled)
         legend.text = element_text(size=16),
         plot.margin = margin(t=15, r=15, b=10, l = 15)) +
   labs(title = "~5.6m Texans are a 30+min drive from a Vaccine Hub",
-       subtitle = paste0("Shown below are census blocks where the population aged 16 years and older would\nhave to drive 30 minutes or more to one of the state's existing Vaccine Hubs. Areas\nmarked in orange are within a 30 min drive to a Vaccine Hub.\nHub Locations Accurate as of ", date_pulled, "."),
+       subtitle = paste0("Shown below are census blocks where the population aged 12 years and older would\nhave to drive 30 minutes or more to one of the state's existing Vaccine Hubs. Areas\nmarked in orange are within a 30 min drive to a Vaccine Hub.\nHub Locations Accurate as of ", date_pulled, "."),
        fill = "Legend",
-       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 16+ Population Estimate)") 
+       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 12+ Population Estimate)") 
   
 ```
 
@@ -749,9 +749,9 @@ date_pulled <- unique(vaccine_sites_sf$date_pulled)
         legend.text = element_text(size=16),
         plot.margin = margin(t=15, r=15, b=15, l = 15)) +
   labs(title = "~2 million Texans are a 30+min drive from a pharmacy",
-       subtitle = paste0("Shown below are census blocks where the population aged 16 years and older would\nhave to drive 30 minutes or more to one of the state's existing pharmacies providing\nCOVID-19 vaccines.Areas marked in orange are within a 30 min drive to a pharmacy.\nPharmacy Locations Accurate as of ", date_pulled, "."),
+       subtitle = paste0("Shown below are census blocks where the population aged 12 years and older would\nhave to drive 30 minutes or more to one of the state's existing pharmacies providing\nCOVID-19 vaccines.Areas marked in orange are within a 30 min drive to a pharmacy.\nPharmacy Locations Accurate as of ", date_pulled, "."),
        fill = "Legend",
-       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 16+ Population Estimate)") 
+       caption = "Provider Data: 'Texas Vaccine Provider Data', Texas Department of State Health Services.\nLink: https://genesis.soc.texas.gov/files/accessibility/vaccineprovideraccessibilitydata.csv\nPopulation Data: U.S. Census Bureau, ACS 5-Year Series ('B23027_001' = 12+ Population Estimate)") 
   
   # +
   # ggsave(paste0("figures/",today,"_","inaccessible_pharmacies_map.png"), dpi = 300, width = 13.5, height = 11.5)

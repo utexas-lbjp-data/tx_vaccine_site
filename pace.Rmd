@@ -117,10 +117,10 @@ states <- tigris::states(cb=TRUE) %>%
 
 ## Texas Summary
 
-The chart attempts to capture a holistic snapshot of multiple data points related to state's current efforts to vaccinate the population. At a high level, this chart is a single box that represents everyone in Texas aged 16 years and older. Within the box, you can see how much of is made up of eligible phases and how much of it is made up of the remaining population aged 16 years and older. And then, two lines mark the following:
+The chart attempts to capture a holistic snapshot of multiple data points related to state's current efforts to vaccinate the population. At a high level, this chart is a single box that represents everyone in Texas aged 12 years and older. Within the box, you can see how much of is made up of eligible phases and how much of it is made up of the remaining population aged 12 years and older. And then, two lines mark the following:
 
-* **Doses Shipped:** How many doses have been shipped compared to the entire 16+ population?
-* **Persons Fully Vaccinated:** How many people have been fully vaccinated compared to the entire 16+ population?
+* **Doses Shipped:** How many doses have been shipped compared to the entire 12+ population?
+* **Persons Fully Vaccinated:** How many people have been fully vaccinated compared to the entire 12+ population?
 
 ```{r state summary, echo=FALSE, fig.width=11, layout="l-page"}
 
@@ -175,7 +175,7 @@ vaccine_summ %>%
   geom_text(data = . %>% filter(phase_pop_est != "Future Phases"), angle=90, color="white", size = 3, family = "Graphik-Semibold",
             aes(y=county_name, x=lab_pos, label = reorder(phase_pop_est,desc(order)))) +
   geom_text(data = vaccine_summ %>% filter(phase_pop_est == "Future Phases"), color="#2d2d2d", size = 6,  hjust = 0.35,
-            family = "Graphik-Semibold", aes(y=county_name, x=lab_pos), label = "Phase 1C + Pop. (16+)") +
+            family = "Graphik-Semibold", aes(y=county_name, x=lab_pos), label = "Phase 1C + Pop. (12+)") +
   geom_vline(aes(xintercept=total_doses_allocated), linetype = 2, size = .9, color = "#2d2d2d") +
   geom_vline(aes(xintercept=people_fully_vaccinated), linetype = 2, size = .9, color = "#2d2d2d") +
   scale_x_continuous(labels = scales::unit_format(unit = "M", accuracy = 1, scale = 1e-6)) +
@@ -366,15 +366,15 @@ ggsave(paste0("figures/",today,"_","tx_us_comparison_vaccine_administration.png"
 
 <!-- ## All Age Groups {.unnumbered} -->
 
-<!-- ## Ages 16-49 years {.unnumbered} -->
+<!-- ## Ages 12-49 years {.unnumbered} -->
 
-<!-- ```{r daily-dose-chart-16, echo=FALSE, layout="l-page"} -->
+<!-- ```{r daily-dose-chart-12, echo=FALSE, layout="l-page"} -->
 
 <!-- library(quantmod) -->
 
 <!-- vaccine_summ_daily <- read_excel(filepath, sheet = 4, skip=0, col_types = c("text", "date", "numeric")) %>%  -->
 <!--   clean_names() %>%  -->
-<!--   filter(age_group=="16-49 years") %>%  -->
+<!--   filter(age_group=="12-49 years") %>%  -->
 <!--   group_by(date=vaccination_date) %>% -->
 <!--   summarise(daily_doses = sum(doses_administered)) %>%  -->
 <!--   mutate(date=as.Date(date)) %>%  -->
@@ -399,7 +399,7 @@ ggsave(paste0("figures/",today,"_","tx_us_comparison_vaccine_administration.png"
 <!--                     color = "#bf5700", name="7-Day Avg.") %>%  -->
 <!--       hc_plotOptions(area = list(fillOpacity=.1)) %>%  -->
 <!--       hc_title( -->
-<!--         text ="Daily Administered Doses - 16 to 49 Years", -->
+<!--         text ="Daily Administered Doses - 12 to 49 Years", -->
 <!--         useHTML = TRUE) %>% -->
 <!-- hc_subtitle( -->
 <!--         text ="Shown are the number of reported daily administered doses across the state of Texas and the 7-day average of daily adminsitered doses. LEGEND - <span style='color: #bf5700'>7-DAY ROLLING AVG.</span>", -->
@@ -702,11 +702,11 @@ supply_by_provider_type %>%
 <!-- <summary><strong> Data dictionary for the table below </strong></summary> -->
 
 <!-- * **County**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the county for which DSHS has collected data. -->
-<!-- * **Popuplation (16+)"**:  This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons aged 16 years and older in Texas. This number is reported given that vaccines authorized for emergency use have only authorized for use in persons aged 16 years and older.  -->
+<!-- * **Popuplation (12+)"**:  This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons aged 12 years and older in Texas. This number is reported given that vaccines authorized for emergency use have only authorized for use in persons aged 12 years and older.  -->
 <!-- * **Total Doses Allocated**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of total doses allocated/shipped to a given Texas county. -->
 <!-- * **Full Vaccinations**: This comes from the DSHS "Accessible Vaccine Dashboard Data" file and represents the number of persons who are fully vaccinated in a given Texas county. -->
-<!-- * **Doses Allocated (Per Capita)**: This is a custom calculation that is derived by taking the number of total doses allocated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.   -->
-<!-- * **Full Vaccinations (Per Capita)**: This is a custom calculation that is derived by taking the number of persons who are fully vaccinated and dividing it by the population aged 16 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.   -->
+<!-- * **Doses Allocated (Per Capita)**: This is a custom calculation that is derived by taking the number of total doses allocated and dividing it by the population aged 12 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.   -->
+<!-- * **Full Vaccinations (Per Capita)**: This is a custom calculation that is derived by taking the number of persons who are fully vaccinated and dividing it by the population aged 12 years and older, both numbers provided by DSHS. The result of that is then multipled by 100,000 for standardization and rounded up.   -->
 
 <!-- </details> -->
 
@@ -755,7 +755,7 @@ reactable(data =vaccine_cnty_summ,
             county_name = colDef(name = "County", show = TRUE, width = 110,
                                  style = list(borderRight = "1px solid rgba(0, 0, 0, 0.1)")),
             population_16 = colDef(show = TRUE, width = 180,
-                                   header = with_tooltip("Population (16+)", "Number of Persons"),
+                                   header = with_tooltip("Population (12+)", "Number of Persons"),
                                    format = colFormat(separators = TRUE),
                                    align = "center",
                                    style = list(borderRight = "1.5px solid rgba(0, 0, 0, 0.2)")),
@@ -798,13 +798,13 @@ reactable(data =vaccine_cnty_summ,
 +
 # Vaccine Pace Tracker
 
-The last tool to track the pace of distribution is an interactive comparison of the state and counties across Texas. The tool allows users to track the statewide pace of vaccine progress and the county-level pace of vaccine progress. Because the state is only focused on the population aged 16 and above, we only measure progress against this population. 
+The last tool to track the pace of distribution is an interactive comparison of the state and counties across Texas. The tool allows users to track the statewide pace of vaccine progress and the county-level pace of vaccine progress. Because the state is only focused on the population aged 12 and above, we only measure progress against this population. 
 
 <details class = "l-body">
-<summary><strong>Question  | </strong>Why do they only measure the population aged 16 and above?</summary>
+<summary><strong>Question  | </strong>Why do they only measure the population aged 12 and above?</summary>
 
 <br>
-According to [the Texas Department of State Health Services](https://dshs.texas.gov/coronavirus/immunize/vaccine-faqs.aspx#safety), "At this time, experts do not know how safe the COVID-19 vaccine is for children. People 16 years old and older are currently eligible to get the vaccine if they are in a priority population."
+According to [the Texas Department of State Health Services](https://dshs.texas.gov/coronavirus/immunize/vaccine-faqs.aspx#safety), "At this time, experts do not know how safe the COVID-19 vaccine is for children. People 12 years old and older are currently eligible to get the vaccine if they are in a priority population."
 
 </details>
 
@@ -812,7 +812,7 @@ The two charts represent the entire populations of the state and selected county
 
 1. **Dose Distribution**: This box shows how many doses have been administered out of the doses that have actually been allocated to that entity (either the state or the selected county).
 1. **Daily Average**: This is an ongoing calculation of daily averages that starts on Dec 15. The only thing it considers is how many doses are going into arms each day. 
-1. **When 70% is Vaccinated**: Based on that daily average and knowing most of the approved vaccines require two doses, this box tries to guesstimate when 70% of the population aged 16 and older will be vaccinated. This is not a herd immunity projection, rather a look ahead as to when most of the population aged 16 and older will likely be vaccinated. 
+1. **When 70% is Vaccinated**: Based on that daily average and knowing most of the approved vaccines require two doses, this box tries to guesstimate when 70% of the population aged 12 and older will be vaccinated. This is not a herd immunity projection, rather a look ahead as to when most of the population aged 12 and older will likely be vaccinated. 
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, layout = "l-page"}
