@@ -196,7 +196,8 @@ dem_data_full <- bind_rows(dem_cf_data,
                                               '% of State Population'))) %>% 
   arrange((measure_f))
 
-equity_chart <- ggplot() +
+equity_chart <-
+  ggplot() +
     geom_col(data=dem_data_full %>% 
                # filter(dem_group!="Unknown") %>% 
                select(-measure),
@@ -735,7 +736,7 @@ date_pulled <- unique(vaccine_sites_sf$date_pulled)
   ggplot() +
   geom_sf(data = inaccessible_vaccine_pharm, aes(fill = "Inaccessible Population (+30min Drive)"), color = NA) +
   geom_sf(data = tidycensus::county_laea %>% filter(str_detect(GEOID, "^48")), fill=NA, color = "#d6d2c4") +
-  geom_sf(data = driving_combined_30, aes(fill = "Accessible Population"), color = NA) +
+  # geom_sf(data = driving_combined_30, aes(fill = "Accessible Population"), color = NA) 
   scale_fill_manual(values = c("Inaccessible Population (+30min Drive)"="#9cadb7","Accessible Population"="#bf5700")) +
   # guides(guide = guide_legend(override.aes = list(linetype = "blank", shape = NA))) +
   theme_minimal(base_family = "Graphik") +
