@@ -291,18 +291,20 @@ hc_subtitle(
 
 library(RSocrata)
 
+cdc_data <- read_csv("https://data.cdc.gov/resource/unsk-b7fc.csv")
+
 cdc_vaccine_summary <- read.socrata("https://data.cdc.gov/resource/unsk-b7fc.csv") |> 
   filter(date==as.Date(max(date))) |> 
   select(date:location, contains("100k"), contains("pct"))
 
-cdc_last_update <- "May 10, 2021"
-cdc_last_time <- "6:00AM"
-
-cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-14.csv",
-                                skip = 2, na = "N/A") %>% 
-  clean_names() %>% 
-  select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
-  drop_na(doses_delivered_per_100k)
+# cdc_last_update <- "May 10, 2021"
+# cdc_last_time <- "6:00AM"
+# 
+# cdc_vaccine_summary <- read_csv("raw_data/covid19_vaccinations_in_the_united_states-14.csv",
+#                                 skip = 2, na = "N/A") %>% 
+#   clean_names() %>% 
+#   select(area=state_territory_federal_entity, contains("_per_100k"), starts_with("percent"), -contains("18")) %>%
+#   drop_na(doses_delivered_per_100k)
 
 cdc_vaccine_summary_ggplot2 <- cdc_vaccine_summary %>% 
   mutate_at(vars(contains("_per_100k")), as.numeric) %>% 
